@@ -16,8 +16,13 @@ export default async function LoginPage() {
           <h1 className="text-[34px] font-semibold tracking-tight">{t("app.name")}</h1>
           <p className="mt-1 text-muted">{t("app.office")}</p>
         </div>
-        <LoginForm labels={{ title: t("login.title"), user: t("login.username"), pass: t("login.password"), submit: t("login.submit"), error: t("login.error") }} />
-        <p className="mt-6 text-center text-[13px] text-muted">{t("login.demo")}</p>
+        <LoginForm
+          labels={{ title: t("login.title"), user: t("login.username"), pass: t("login.password"), submit: t("login.submit"), error: t("login.error"), demo: t("login.demo"), samePass: t("login.samePass") }}
+          accounts={[
+            { username: "tahsildar", title: t("login.officer"), hint: t("login.officerHint") },
+            { username: "citizen", title: t("login.citizen"), hint: t("login.citizenHint") },
+          ]}
+        />
       </div>
     </main>
   );
