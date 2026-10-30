@@ -18,6 +18,9 @@ import type { GrievancePayload, PattaPayload } from "@/lib/types";
 
 const DOC_TYPE_KEY: Record<string, MessageKey> = { sale_deed: "doc.sale_deed", tax_receipt: "doc.tax_receipt", ration_card: "doc.ration_card" };
 
+// Reading a deed (Classify + Extract + AI) takes ~15–25 s; the server actions on this page share its limit.
+export const maxDuration = 60;
+
 export default async function ApplicationPage({ params }: { params: Promise<{ id: string }> }) {
   const id = Number((await params).id);
   if (!Number.isInteger(id)) notFound();
