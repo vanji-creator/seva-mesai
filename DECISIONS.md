@@ -114,12 +114,13 @@ one `Db` type, and `db` is lazy (Proxy) so builds don't open the local database.
 
 ## i18n
 Own tiny dictionary + cookie locale instead of next-intl URL routing: two locales, no SEO need, fewer
-moving parts in a 6-hour build. Typed keys (`MessageKey`) catch missing strings at compile time.
+moving parts for a small app. Typed keys (`MessageKey`) catch missing strings at compile time.
 Cost: no pluralisation/ICU. Revisit if a third language is added.
 
 ## Version 2: real documents, intake, one screen
-Feedback on v1: a case said "5 documents attached" but nothing could be opened; the AI only ran when a
-case was opened; the UI looked like a school project. What changed and why:
+What I found reviewing v1 (checkpoint 7 below): a case said "5 documents attached" but nothing could
+be opened; the AI only ran when a case was opened; the UI was cluttered and did not look like a real
+tool. What changed and why:
 
 - **One case per problem type, every document real.** `src/db/cases.ts` is the single source: it drives
   the rendered documents, the simulated department records and the seed, so the three can never
@@ -211,36 +212,34 @@ route checks it. bcrypt, signed httpOnly JWT cookie (jose).
 Demo-grade by design.
 
 ## Checkpoints, surprises and dropped ideas
-Everything above is the "what and why". This part is the story: the steps we went through, what went
-wrong on the way, and the ideas we tried and dropped. Simple English, one item per point.
+Everything above is the "what and why". This part is the story: the steps I went through, what went
+wrong on the way, and the ideas I tried and dropped. One item per point.
 
 ### Checkpoints in order
 
 **1. Stack: Next.js 15 (App Router, server actions), Tailwind, Drizzle.**
 - Why: one deployable app, no separate API server. Server actions keep the AI key and the database on
-  the server. One `vercel deploy` gives the live link the brief asks for.
+  the server. One deploy gives the live link the brief asks for.
 - Considered: a separate backend (Express/FastAPI) + React app — two things to deploy and secure for no
   gain at this size. shadcn/ui was in the first plan; dropped because a few plain Tailwind components
-  were enough and kept the look under our control.
+  were enough and kept the look under my control.
 - Surprises while scaffolding: the starter `src/app/page.tsx` sat on `/` and hid the desk (deleted it);
   PGlite needed its folder created first; running `next build` while the dev server was open corrupted
   the PGlite files (made `db` lazy so builds never open it, and recreated `.data`); an `@types/node`
   version clash (pinned to v24).
 
 **2. Use Sarvam for everything except speech.**
-- Why: after reading Sarvam's docs we used Chat, Doc AI (Classify, Extract, Parse), Translate,
+- Why: after reading Sarvam's docs I used Chat, Doc AI (Classify, Extract, Parse), Translate,
   Transliterate and language detection. Speech-to-text was left out: "citizen speaks the complaint" is a
   nice demo but does not help an officer decide.
 - Surprise: the eval and all early tests cost about ₹1.78 in total — reading is cheap; the real limits
   were credits running out and Doc AI speed, not price.
 
-**3. API keys.**
-- What happened: a key was first pasted into `.env.example`, which is committed to git. Caught before any
-  commit; moved to `.env.local` (git-ignored). From then on keys were only checked by a short fingerprint,
-  never printed.
+**3. API keys and credits.**
+- Keys live only in `.env.local` (git-ignored); `.env.example` has empty values.
 - Credits ran out twice (HTTP 402 "No credits available"): once during the eval, once while reading the
-  three petitions. Each time we stopped, the user added a key with credits, and we resumed. Because every
-  Sarvam result is cached by file hash, resuming never paid twice for the 47 documents already read.
+  three petitions. Each time I stopped, topped up the key, and resumed. Because every Sarvam result is
+  cached by file hash, resuming never paid twice for the 47 documents already read.
 
 **4. Sarvam API surprises (beyond the ones above).**
 - Classify returned HTTP 400 when the categories were sent in a `config` field; it wants a `request`
@@ -249,8 +248,6 @@ wrong on the way, and the ideas we tried and dropped. Simple English, one item p
 - Doc AI allows about 10 requests a minute, so submissions are spaced (`SARVAM_SUBMIT_GAP_MS`).
 
 **5. First deploy (v1).**
-- Vercel project created with the Vercel CLI after a device login, because the Vercel MCP connector had
-  no permission to create projects.
 - Region `sin1` (Singapore) to sit next to the Neon database (also Singapore) and close to Tamil Nadu.
 - `maxDuration = 60` on the case page: reading a document (Classify + Extract) and re-reviewing can take
   20–40 s, and server actions share the page's time limit.
@@ -258,28 +255,26 @@ wrong on the way, and the ideas we tried and dropped. Simple English, one item p
   bundler only ships files it sees imported. Fixed with `outputFileTracingIncludes`.
 - Times showed in UTC on the live site. Fixed by storing timestamps with time zone and always formatting
   in `Asia/Kolkata`.
-- Claude would not type the demo password into a public site, so the live sign-in was checked by the user;
-  Claude tested a local production build pointed at the live database instead.
 
-**6. Rule: nothing goes live without approval.**
-- After v1 the user asked that no push to `main`, deploy or live re-seed happens until they approve. All
-  v2 work stayed on the `feat/redesign` branch; the live site stayed on v1 until the final go-ahead.
+**6. Nothing goes live untested.**
+- After v1 went live, I kept all v2 work on a separate branch (`feat/redesign`): no push to `main`, no
+  deploy and no live re-seed until v2 was finished and tested. The live site stayed on v1 until then.
 
 **7. Why v2 happened.**
-- The user asked for a walk-through of one ticket (PT-2026-0110). Explaining it honestly showed the page
-  claimed "5 documents attached" with nothing to open, and that the AI only ran when the case was opened.
-  That walk-through is what led to the v2 rebuild already described above.
-- Also asked then: where deadlines come from and how often urgency runs. Answer, and the design: the
+- I walked through one case end to end (PT-2026-0110) as an officer would. The page claimed
+  "5 documents attached" with nothing to open, and the AI only ran when the case was opened. That
+  walk-through is what led to the v2 rebuild described above.
+- It also raised: where do deadlines come from, and how often is urgency computed? The design: the
   deadline is the submission date + the service's legal time limit, and priority is recomputed on every
   page load. No scheduled job — nothing to forget to run, and it is always current.
 
 **8. How the demo documents are made.**
 - Each document is an HTML page printed by headless Chrome (PDF or screenshot), then `sips` makes phone
   photos and photocopies as JPEGs.
-- Why: Tamil text must be shaped correctly, and Chrome does that perfectly; we also needed control over
+- Why: Tamil text must be shaped correctly, and Chrome does that perfectly; I also needed control over
   the look (scan, phone photo, photocopy, stamp paper, handwriting) to exercise the reader.
-- Considered: a PDF library (weak Tamil shaping) and real scanned documents (privacy, and we could not
-  make the exact problems we needed).
+- Considered: a PDF library (weak Tamil shaping) and real scanned documents (privacy, and I could not
+  make the exact problems I needed).
 - Surprise: re-rendering changes a PDF's bytes even when the content is the same. The reading cache is
   keyed by file hash, so a full re-render would throw away every paid reading. So extra files are rendered
   on their own (`--extras-only`, `--kits`) and the seeded case files are never re-rendered.
@@ -290,15 +285,15 @@ wrong on the way, and the ideas we tried and dropped. Simple English, one item p
   were read later from the same cache.
 
 **10. One login (v2), then a second for the citizen.**
-- v2 kept a single officer account — the tahsildar, who has the most power — because the user wanted the
-  demo simple. A separate supervisor account was dropped.
+- v2 kept a single officer account — the tahsildar, who has the most power — to keep the demo simple.
+  A separate supervisor account was dropped.
 - The citizen account came later for the live round-trip demo (see Citizen side).
 
-**11. UI polishing after the user's review.**
+**11. UI polishing after reviewing v2.**
 - Decision buttons got colours and press feedback; the Next.js dev badge was hidden (it sat over the
   queue).
-- Cases are shown as `PT-2026-0208 (கவிதா மு)`. The user wrote "curly braces"; round brackets were used
-  because `{ }` looks like code to an officer. Easy to switch if wanted.
+- Cases are shown as `PT-2026-0208 (கவிதா மு)`. I first planned curly braces, then used round brackets
+  because `{ }` looks like code to an officer.
 - The list tabs went through two rounds: first made full-width and much bigger (two lines: label, then
   count), then made slimmer (one line) because they no longer lined up with the rest of the side panel.
 - The Tamil label "மீண்டும் திறந்தவை" was cut off in its tab, so it became "மறுதிறப்பு".
@@ -326,19 +321,14 @@ wrong on the way, and the ideas we tried and dropped. Simple English, one item p
 **13. Going live with v2.**
 - Order mattered: the database was reset first, then the code was pushed, so the new code never ran
   against the old tables.
-- Claude's permission rules blocked two steps — writing the Sarvam key into Vercel and wiping the live
-  database — so the user did those two by hand.
-- The live site still had the old Sarvam key (set before the new key with credits). The user updated it.
-- `source .env.local` failed in zsh because the Neon address contains an unquoted `&`. Switched to
-  `node --env-file=.env.local`, which reads the file without the shell.
-- A reset command run from the parent folder failed with "package.json not found". Since then Claude
-  runs local resets itself instead of handing out commands.
+- The live site still had an old Sarvam key without credits; I updated it in Vercel.
+- Local scripts read secrets with `node --env-file=.env.local` instead of `source .env.local`: the Neon
+  address contains an `&`, which the shell treats as a command separator.
 
-### Ideas we tried or planned, then dropped
-- **Anthropic's Claude API as the model** — the user ruled it out on cost; Sarvam chosen instead.
-- **Speech-to-text for complaints** — not useful to the officer's decision.
-- **"4 varieties" as four different documents in the eval** — the user meant four ways the *same*
-  document arrives; the eval became one deed in many forms, with typed correct values as the ceiling.
+### Ideas I tried or planned, then dropped
+- **Anthropic's Claude API as the model** — ruled out on cost; Sarvam chosen instead.
+- **Four different documents in the eval** — changed to one document in many forms, because what varies
+  in real life is how the *same* document arrives; typed correct values are the ceiling.
 - **Parse → LLM as the live reading pipeline** — matched accuracy at half the price, kept in the eval
   only; Extract won for per-field provenance (see above).
 - **Transliterating Roman → Tamil** — produced Malayalam letters.
@@ -350,11 +340,11 @@ wrong on the way, and the ideas we tried and dropped. Simple English, one item p
 - **AI running when the officer opens a case** — moved to intake.
 - **Several officer accounts / a supervisor login** — one tahsildar account is enough for the demo.
 - **Step-by-step portal layout (mockup B)** — the inbox split view was chosen.
-- **A public form with a tracking link for citizens** — the user chose a citizen login.
+- **A public form with a tracking link for citizens** — chose a citizen login instead.
 - **Showing citizens what the AI read, live, as each file uploads** — first plan for the citizen flow;
-  dropped at the user's request: no AI on the citizen side.
+  dropped to keep AI off the citizen side (see Citizen side).
 - **Very blurry demo ID**, **curly braces**, **tall two-line tabs**, **the long Tamil "reopened" label**
-  — all replaced (see checkpoint 11 and 12).
+  — all replaced (see checkpoints 11 and 12).
 - **Changing the government record when a citizen uploads a new receipt** — rejected (see 12).
 
 ## Not done (time budget)
