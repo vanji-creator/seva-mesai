@@ -157,7 +157,7 @@ Caveats: 4 deeds per cell, synthetic degradation, one document type.
 
 ## Tests
 
-`npm test` (43 tests): every demo case produces exactly its intended findings from perfect readings;
+`npm test` (45 tests): every demo case produces exactly its intended findings from perfect readings;
 the fact table; unread / unrelated / missing documents; name matching across scripts; priority;
 grievance classification; the AI guardrail; the eval scorer.
 
