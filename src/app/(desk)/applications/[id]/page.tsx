@@ -4,7 +4,7 @@ import { and, desc, eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import { aiAnalyses, applications, decisions, officers } from "@/db/schema";
 import { SLA_DAYS, aresToCents, type DocKind } from "@/db/cases";
-import { DecisionBar } from "@/components/DecisionBar";
+import { DecisionBar, ReopenBar } from "@/components/DecisionBar";
 import { Documents, type DocView } from "@/components/case/Documents";
 import { FactTable } from "@/components/case/FactTable";
 import { Findings } from "@/components/case/Findings";
@@ -75,6 +75,7 @@ export default async function CasePage({ params }: { params: Promise<{ id: strin
     .orderBy(desc(decisions.id));
 
   const pending = app.status === "pending";
+  const reopened = pending && history.some(({ d }) => d.action === "reopened");
   const isPatta = app.type === "patta";
   const p = priority(app);
   const sla = isPatta ? SLA_DAYS.patta : Math.round((app.slaDueAt.getTime() - app.submittedAt.getTime()) / 86_400_000);
@@ -94,8 +95,14 @@ export default async function CasePage({ params }: { params: Promise<{ id: strin
       <div className="mx-auto w-full max-w-[980px] flex-1 space-y-10 px-6 py-8 lg:px-10">
         <header>
           <Link href="/" className="mb-4 inline-block text-[15px] text-accent lg:hidden">‹ {t("case.back")}</Link>
-          <div className="text-[13px] text-muted">{app.refNo} · {t(`type.${app.type}`)}</div>
-          <h1 className="mt-1 text-[32px] font-semibold tracking-tight">{locale === "ta" ? app.applicantNameTa : app.applicantName}</h1>
+          <div className="text-[13px] text-muted">
+            {t(`type.${app.type}`)}
+            {reopened && <span className="ml-2 rounded-full bg-accent-soft px-2 py-0.5 text-[11px] font-medium text-accent">{t("status.reopened")}</span>}
+          </div>
+          <h1 className="mt-1 text-[32px] font-semibold tracking-tight">
+            <span className="tabular-nums">{app.refNo}</span>{" "}
+            <span className="font-normal text-muted">({locale === "ta" ? app.applicantNameTa : app.applicantName})</span>
+          </h1>
           <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[15px] text-muted">
             <span>{locale === "ta" ? app.villageTa : app.village}</span>
             <span>{t("case.submitted")} {formatDate(app.submittedAt, locale)}</span>
@@ -184,14 +191,23 @@ export default async function CasePage({ params }: { params: Promise<{ id: strin
         )}
       </div>
 
-      {pending && (
+      {pending ? (
         <DecisionBar
+          key={`${id}-${history.length}`}
           applicationId={id}
           suggested={review?.suggestion ?? null}
+          draftReply={review?.draftReply ?? null}
           labels={{
             yours: t("act.yours"), approve: isPatta ? t("act.approve") : t("act.approve.grievance"), return: t("act.return"), reject: t("act.reject"),
-            reason: t("act.reason"), required: t("act.required"), confirm: t("act.confirm"), cancel: t("act.cancel"), suggested: t("act.suggested"),
+            remarksOptional: t("act.remarksOptional"), remarksRequired: t("act.remarksRequired"), required: t("act.required"),
+            confirm: t("act.confirm"), cancel: t("act.cancel"), aiDraft: t("act.aiDraft"), useDraft: t("act.useDraft"), ownWords: t("act.ownWords"),
           }}
+        />
+      ) : (
+        <ReopenBar
+          key={`${id}-${history.length}`}
+          applicationId={id}
+          labels={{ closed: t("act.closed"), reopen: t("act.reopen"), reason: t("act.reopenReason"), required: t("act.required"), confirm: t("act.confirm"), cancel: t("act.cancel") }}
         />
       )}
     </div>

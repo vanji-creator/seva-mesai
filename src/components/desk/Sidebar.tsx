@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { logoutAction } from "@/app/actions";
 import { LangToggle } from "@/components/LangToggle";
 import { getQueue } from "@/lib/case/queue";
-import { getT } from "@/lib/i18n";
+import { formatDate, getT } from "@/lib/i18n";
 import type { Officer } from "@/lib/auth";
 import { QueueList } from "./QueueList";
 
@@ -20,16 +20,16 @@ export async function Sidebar({ officer }: { officer: Officer }) {
         </Link>
         <LangToggle locale={locale} label={t("lang.switch")} />
       </header>
-      <h2 className="px-5 pb-2 text-[22px] font-semibold tracking-tight">
-        {t("desk.pending")} <span className="text-faint">{items.length}</span>
-      </h2>
       <Suspense>
         <QueueList
-          items={items}
+          items={items.map((i) => ({ ...i, decidedOn: i.decidedAt ? formatDate(i.decidedAt, locale) : null }))}
           labels={{
-            urgent: t("desk.urgent"), attention: t("desk.attention"), normal: t("desk.normal"), empty: t("desk.empty"),
+            urgent: t("desk.urgent"), attention: t("desk.attention"), normal: t("desk.normal"),
             allClear: t("desk.allClear"), all: t("desk.all"), patta: t("desk.patta"), grievance: t("desk.grievance"),
             overdue: t("due.overdue"), left: t("due.left"), today: t("due.today"),
+            pending: t("desk.pending"), reopened: t("desk.reopened"), completed: t("desk.completed"),
+            emptyPending: t("desk.empty"), emptyReopened: t("desk.emptyReopened"), emptyCompleted: t("desk.emptyCompleted"),
+            approved: t("status.approved"), returned: t("status.returned"), rejected: t("status.rejected"),
           }}
         />
       </Suspense>

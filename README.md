@@ -38,8 +38,10 @@ For each case, already done before it is opened:
    to the citizen — in Tamil and English.
 
 The officer can **add a document** (upload, or a demo sample), **read a document again**, or
-**re-check** — each re-runs the reading, checks and review. **Approve / Return / Reject** needs a
-written reason for return or reject, and is logged with whether it followed the AI.
+**re-check** — each re-runs the reading, checks and review. **Approve / Return / Reject** takes
+remarks (required to return or reject; the AI's draft reply can be used with one click and edited) and
+is logged with whether it followed the AI. The queue has three lists — **Pending**, **Reopened**,
+**Completed** — and a decided case can be **reopened** with a reason.
 
 ## The demo cases — one per problem type
 

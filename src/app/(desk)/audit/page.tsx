@@ -15,7 +15,8 @@ export default async function AuditPage() {
     .innerJoin(officers, eq(decisions.officerId, officers.id))
     .innerJoin(applications, eq(decisions.applicationId, applications.id))
     .orderBy(desc(decisions.id));
-  const withAi = rows.filter((r) => r.d.followedAi !== null);
+  const decided = rows.filter((r) => r.d.action !== "reopened");
+  const withAi = decided.filter((r) => r.d.followedAi !== null);
   const followed = withAi.length ? Math.round((withAi.filter((r) => r.d.followedAi).length / withAi.length) * 100) : null;
 
   return (
@@ -23,7 +24,7 @@ export default async function AuditPage() {
       <Link href="/" className="text-[15px] text-accent lg:hidden">‹ {t("case.back")}</Link>
       <h1 className="text-[32px] font-semibold tracking-tight">{t("audit.title")}</h1>
       <div className="flex gap-12">
-        <div><div className="text-4xl font-semibold tabular-nums">{rows.length}</div><div className="text-sm text-muted">{t("audit.total")}</div></div>
+        <div><div className="text-4xl font-semibold tabular-nums">{decided.length}</div><div className="text-sm text-muted">{t("audit.total")}</div></div>
         <div><div className="text-4xl font-semibold tabular-nums text-accent">{followed === null ? "—" : `${followed}%`}</div><div className="text-sm text-muted">{t("audit.followed")}</div></div>
       </div>
       {rows.length === 0 ? (
@@ -33,8 +34,8 @@ export default async function AuditPage() {
           {rows.map(({ d, o, a }) => (
             <li key={d.id} className="grid gap-1 px-4 py-3 text-[15px] sm:grid-cols-[1fr_auto]">
               <div>
-                <Link href={`/applications/${a.id}`} className="font-medium hover:text-accent">{locale === "ta" ? a.applicantNameTa : a.applicantName}</Link>
-                <span className="text-muted"> · {a.refNo} · {t(`status.${d.action}`)}</span>
+                <Link href={`/applications/${a.id}`} className="font-medium tabular-nums hover:text-accent">{a.refNo}</Link>
+                <span className="text-muted"> ({locale === "ta" ? a.applicantNameTa : a.applicantName}) · {t(`status.${d.action}`)}</span>
                 {d.reason && <p className="text-muted">{d.reason}</p>}
               </div>
               <div className="text-right text-[13px] text-faint">

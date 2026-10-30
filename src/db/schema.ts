@@ -93,7 +93,8 @@ export const decisions = pgTable("decisions", {
   officerId: integer("officer_id")
     .notNull()
     .references(() => officers.id),
-  action: text("action").$type<"approved" | "rejected" | "returned">().notNull(),
+  /** A decision, or "reopened" when a decided case is sent back to the desk. */
+  action: text("action").$type<"approved" | "rejected" | "returned" | "reopened">().notNull(),
   reason: text("reason"),
   aiSuggestion: text("ai_suggestion").$type<Suggestion>(),
   followedAi: boolean("followed_ai"),

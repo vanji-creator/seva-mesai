@@ -5,7 +5,7 @@ import path from "node:path";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, ne } from "drizzle-orm";
 import { db } from "@/db/client";
 import { aiAnalyses, applications, decisions, documents } from "@/db/schema";
 import type { DocKind } from "@/db/cases";
@@ -150,6 +150,22 @@ export async function decideAction(applicationId: number, action: "approved" | "
     applicationId, officerId: officer.id, action, reason: text || null, aiSuggestion: ai,
     followedAi: ai ? ai === TO_SUGGESTION[action] : null,
   });
+  revalidatePath("/", "layout");
+  return { ok: true as const };
+}
+
+/** Sends a decided case back to the desk. A reason is required, and it is kept in the history. */
+export async function reopenAction(applicationId: number, reason: string) {
+  const officer = await requireOfficer();
+  const text = reason.trim();
+  if (text.length < 3) return { error: "reason" as const };
+  const updated = await db
+    .update(applications)
+    .set({ status: "pending" })
+    .where(and(eq(applications.id, applicationId), ne(applications.status, "pending")))
+    .returning({ id: applications.id });
+  if (!updated.length) return { error: "open" as const };
+  await db.insert(decisions).values({ applicationId, officerId: officer.id, action: "reopened", reason: text });
   revalidatePath("/", "layout");
   return { ok: true as const };
 }

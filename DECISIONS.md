@@ -167,6 +167,20 @@ blue accent, colour only for disagreement and urgency. The AI suggestion is labe
 buttons, never pre-selected. Documents open in a viewer with "what was read" beside the image, so every
 value can be checked by eye. Phones: the queue is the home screen, a case is full screen.
 
+**Three lists: pending, reopened, completed.** Kept separate so the counts add up and a reopened file
+(someone came back, a decision was wrong) is visibly different from new work. Reopening needs a written
+reason and is a row in `decisions` (`action = "reopened"`), so the history and audit show who reopened
+what and why; it is excluded from the "followed AI" rate. Cases are listed by reference number with the
+applicant in brackets — officers search and speak by file number.
+
+**Remarks, and the AI draft as an offer.** The decision box is "reason / remarks": optional to approve,
+required to return or reject (enforced on the server too). The AI's draft reply is offered above it with
+one click to use, then editable; it is offered only when the chosen decision matches the AI's
+suggestion, because a draft written for "return" would be wrong under "approve".
+
+Decision buttons are tinted green / amber / red at rest, deepen on hover and press, and turn solid once
+chosen, so every click visibly registers.
+
 ## Auth
 One seeded account (`tahsildar`, supervisor: desk and audit). bcrypt, signed httpOnly JWT cookie (jose).
 Demo-grade by design.

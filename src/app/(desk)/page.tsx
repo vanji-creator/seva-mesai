@@ -6,7 +6,7 @@ import { getT } from "@/lib/i18n";
 export default async function Desk() {
   const officer = await requireOfficer();
   const { t, locale } = await getT();
-  const items = await getQueue(locale);
+  const items = (await getQueue(locale)).filter((i) => i.stage !== "completed");
   const count = (b: string) => items.filter((i) => i.band === b).length;
   const late = items.filter((i) => i.daysLeft < 0).length;
 

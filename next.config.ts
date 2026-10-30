@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
     "/applications/[id]": ["./public/case-docs/**/*"],
   },
   experimental: { serverActions: { bodySizeLimit: "5mb" } },
+  // The floating "N" dev badge sits over the queue; it never appears in production anyway.
+  devIndicators: false,
 };
 
 export default nextConfig;
