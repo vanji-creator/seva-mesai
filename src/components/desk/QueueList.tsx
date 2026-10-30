@@ -73,14 +73,20 @@ export function QueueList({
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       {/* Which list: pending, reopened, completed. */}
-      <div className="mx-4 mb-3 grid grid-cols-3 rounded-[10px] bg-black/[0.06] p-0.5 text-[13px]">
+      {/* Full-width tab strip, edge to edge: the main switch between lists. */}
+      <div className="mb-3 grid grid-cols-3 divide-x divide-line border-y border-line bg-black/[0.03] text-[15px]">
         {STAGES.map((s) => (
           <Link
             key={s}
             href={`${pathname}${query(s, filter)}`}
-            className={clsx("truncate rounded-lg px-2 py-1.5 text-center transition", view === s ? "bg-white font-medium shadow-[0_1px_2px_rgba(0,0,0,0.1)]" : "text-muted hover:text-fg")}
+            aria-current={view === s ? "page" : undefined}
+            className={clsx(
+              "flex flex-col items-center justify-center gap-0.5 truncate px-2 py-3 text-center transition active:bg-black/[0.08]",
+              view === s ? "bg-white font-semibold text-fg shadow-[inset_0_-2px_0_var(--accent)]" : "text-muted hover:bg-black/[0.04] hover:text-fg",
+            )}
           >
-            {labels[s]} <span className="tabular-nums opacity-60">{items.filter((i) => i.stage === s).length}</span>
+            <span className="max-w-full truncate">{labels[s]}</span>
+            <span className={clsx("text-[13px] tabular-nums", view === s ? "text-accent" : "opacity-60")}>{items.filter((i) => i.stage === s).length}</span>
           </Link>
         ))}
       </div>
