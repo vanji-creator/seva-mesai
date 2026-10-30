@@ -37,6 +37,9 @@ export interface CaseInput {
 }
 
 export const REQUIRED: DocKind[] = ["application_form", "sale_deed", "patta", "ec", "tax_receipt", "id_proof"];
+/** Online applications need no application-form document: what the citizen typed on the portal is the application. */
+export const ONLINE_REQUIRED: DocKind[] = REQUIRED.filter((k) => k !== "application_form");
+export const requiredDocs = (a: { channel?: string }) => (a.channel === "online" ? ONLINE_REQUIRED : REQUIRED);
 
 export const FACT_LABEL: Record<FactKey, { ta: string; en: string }> = {
   deedNo: { ta: "பத்திர எண்", en: "Deed no." },
@@ -76,7 +79,8 @@ const OTHER_DOC: Record<string, { ta: string; en: string }> = {
 
 const SAME = 0.9;
 const SPELLING = 0.65;
-const LOW_CONFIDENCE = 0.8;
+/** Below this, a field reading is not trusted: the officer checks the original by eye. */
+export const LOW_CONFIDENCE = 0.8;
 
 type V = Record<string, unknown>;
 const val = (r: DocReading | undefined): V | null => (r?.values as V) ?? null;
@@ -113,7 +117,7 @@ export function checkPattaCase(input: CaseInput) {
   const add = (x: Finding) => f.push(x);
 
   // ---- documents present / readable / belonging
-  for (const k of REQUIRED) {
+  for (const k of requiredDocs(a)) {
     if (!docs[k]) add({ code: `DOC_MISSING_${k.toUpperCase()}`, severity: "blocker", ta: `${DOC_TA[k]} இணைக்கப்படவில்லை`, en: `${DOC_EN[k][0].toUpperCase()}${DOC_EN[k].slice(1)} is not attached` });
   }
   const unread = (Object.entries(docs) as [DocKind, DocReading][]).filter(([, r]) => r.engine === "pending").map(([k]) => k);

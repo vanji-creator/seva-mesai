@@ -1,4 +1,4 @@
-import { and, desc, eq, inArray } from "drizzle-orm";
+import { and, desc, eq, inArray, ne } from "drizzle-orm";
 import { db } from "@/db/client";
 import { aiAnalyses, applications, decisions } from "@/db/schema";
 import { priority, type Band } from "@/lib/priority";
@@ -29,7 +29,8 @@ export interface QueueItem {
  * background job, so it is always current. Completed cases are ordered most recently decided first.
  */
 export async function getQueue(locale: Locale): Promise<QueueItem[]> {
-  const apps = await db.select().from(applications);
+  // Drafts are still with the citizen; officers never see them.
+  const apps = (await db.select().from(applications).where(ne(applications.status, "draft"))) as (typeof applications.$inferSelect & { status: QueueItem["status"] })[];
   if (!apps.length) return [];
   const ids = apps.map((a) => a.id);
   const reviews = await db

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { PATTA_CASES } from "@/db/cases";
+import { DEMO_KITS, PATTA_CASES } from "@/db/cases";
 import { truthInput } from "@/lib/case/truth";
 import { checkPattaCase } from "@/lib/verify/caseCheck";
 
@@ -77,5 +77,23 @@ describe("documents", () => {
   });
   it("requires all six documents", () => {
     expect(REQUIRED).toHaveLength(6);
+  });
+});
+
+describe("demo kits (citizen applies online)", () => {
+  const online = (id: string, tax?: "later") => {
+    const k = DEMO_KITS.find((x) => x.id === id)!;
+    const c = tax && k.taxLater ? { ...k, tax: k.taxLater } : k;
+    const input = truthInput(c);
+    input.application = { ...input.application, channel: "online" };
+    return checkPattaCase(input);
+  };
+  it("an online application needs no application-form document", () => {
+    expect(online("kit-a").findings.map((f) => f.code)).toEqual(["ALL_CLEAR"]);
+    expect(online("kit-a").suggestion).toBe("approve");
+  });
+  it("kit B: old receipt with dues -> return; receipt after paying -> approve", () => {
+    expect(online("kit-b").findings.map((f) => f.code)).toEqual(["TAX_DUES"]);
+    expect(online("kit-b", "later").suggestion).toBe("approve");
   });
 });

@@ -3,12 +3,13 @@
  * (+ macOS `sips` for JPEG compression). All content is fictional and marked "மாதிரி / SAMPLE".
  *
  *   npm run render:cases
+ *   npm run render:cases -- --kits     (only the citizen demo kits, public/demo-kits/)
  */
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import {
-  GRIEVANCE_CASES, PATTA_CASES, applicationValues, formatHectareAres, lookExt,
+  DEMO_KITS, GRIEVANCE_CASES, PATTA_CASES, applicationValues, formatHectareAres, lookExt,
   type DocKind, type GrievanceCase, type Look, type PattaCase,
 } from "../src/db/cases";
 
@@ -199,6 +200,12 @@ function wrap(inner: string, look: Look, opts: { stampLabel?: string } = {}) {
     close = `</div><div style="position:absolute;inset:0;background:linear-gradient(115deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.25) 70%,rgba(0,0,0,.38))"></div></div>`;
     width = 1000; height = 1250;
   }
+  if (look === "blurry") {
+    open = `<div style="width:1000px;height:1250px;background:radial-gradient(circle at 60% 30%,#6d5a48,#2e241b);display:flex;align-items:center;justify-content:center;overflow:hidden">
+      <div style="transform:rotateZ(4deg) scale(1.3);filter:blur(2.4px) brightness(.88) contrast(.8)">`;
+    close = `</div></div>`;
+    width = 1000; height = 1250;
+  }
   if (look === "photocopy") {
     open = `<div style="position:relative;width:780px;filter:grayscale(1) contrast(1.8) brightness(1.08) blur(1px);transform:rotate(1deg);transform-origin:top left">`;
     close = `<div style="position:absolute;inset:0;background:${NOISE};opacity:.7;mix-blend-mode:multiply"></div>
@@ -257,9 +264,46 @@ function renderExtras() {
   rmSync(BUILD, { recursive: true, force: true });
 }
 
+/**
+ * Document sets the presenter uploads as the citizen in the live demo: one folder and one .zip per kit,
+ * plus kit B's receipt after paying the dues (uploaded when the tahsildar returns the file).
+ * Rendered separately so the seeded cases' files (and their paid readings) never change.
+ */
+const KIT_NAMES: Record<string, string> = { sale_deed: "1-sale-deed", patta: "2-patta", ec: "3-encumbrance-certificate", tax_receipt: "4-tax-receipt", id_proof: "5-id-card" };
+function renderKits() {
+  const root = path.resolve(__dirname, "../public/demo-kits");
+  rmSync(root, { recursive: true, force: true });
+  mkdirSync(BUILD, { recursive: true });
+  const fit: Partial<Record<DocKind, number>> = { id_proof: 420, tax_receipt: 700, patta: 520, ec: 600 };
+  for (const k of DEMO_KITS) {
+    const tmp = path.join(BUILD, k.id);
+    mkdirSync(tmp, { recursive: true });
+    const bodies: Partial<Record<DocKind, () => string>> = {
+      sale_deed: () => saleDeed(k, k.docs.sale_deed!), patta: () => patta(k), ec: () => ec(k), tax_receipt: () => taxReceipt(k), id_proof: () => idProof(k),
+    };
+    const dir = path.join(root, k.id);
+    mkdirSync(dir, { recursive: true });
+    for (const [kind, look] of Object.entries(k.docs) as [DocKind, Look][]) {
+      render(tmp, kind, look, bodies[kind]!(), { stampLabel: k.sro.ta, height: look === "phone_photo" || look === "blurry" ? undefined : fit[kind] });
+      const ext = lookExt(look);
+      copyFileSync(path.join(tmp, `${kind}.${ext}`), path.join(dir, `${KIT_NAMES[kind]}.${ext}`));
+    }
+    execFileSync("zip", ["-jq", path.join(root, `${k.id}.zip`), ...readdirSync(dir).map((f) => path.join(dir, f))]);
+    console.log(`public/demo-kits/${k.id}.zip`);
+    if (k.taxLater) {
+      const paid = { ...k, tax: k.taxLater };
+      render(tmp, "tax_receipt", "scan", taxReceipt(paid), { height: fit.tax_receipt });
+      copyFileSync(path.join(tmp, "tax_receipt.png"), path.join(root, `${k.id}-tax-receipt-paid.png`));
+      console.log(`public/demo-kits/${k.id}-tax-receipt-paid.png`);
+    }
+  }
+  rmSync(BUILD, { recursive: true, force: true });
+}
+
 function main() {
   if (!existsSync(CHROME)) throw new Error(`Chrome not found at ${CHROME}; set CHROME_PATH`);
   if (process.argv.includes("--extras-only")) return renderExtras();
+  if (process.argv.includes("--kits")) return renderKits();
   rmSync(OUT, { recursive: true, force: true });
   rmSync(BUILD, { recursive: true, force: true });
   mkdirSync(BUILD, { recursive: true });
@@ -289,6 +333,7 @@ function main() {
   }
   rmSync(BUILD, { recursive: true, force: true });
   renderExtras();
+  renderKits();
 }
 
 main();

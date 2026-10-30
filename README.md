@@ -7,7 +7,7 @@ case; the officer makes the final call.
 
 > All people, land and documents are fictional and marked "மாதிரி / SAMPLE". No real citizen data.
 
-**Live demo:** https://seva-mesai.vercel.app — sign in as `tahsildar`, password `Demo@1234`.
+**Live demo:** https://seva-mesai.vercel.app — sign in as `tahsildar` (officer) or `citizen`, password `Demo@1234` for both.
 Tamil by default; **English** is in the top bar.
 
 ## The problem
@@ -42,6 +42,24 @@ The officer can **add a document** (upload, or a demo sample), **read a document
 remarks (required to return or reject; the AI's draft reply can be used with one click and edited) and
 is logged with whether it followed the AI. The queue has three lists — **Pending**, **Reopened**,
 **Completed** — and a decided case can be **reopened** with a reason.
+
+## Live demo: a citizen applies, the tahsildar decides
+
+The citizen side has **no AI at all**: fill the form, upload files, submit, see the decision. Reading,
+checks and the AI review run in the background, so the case is ready when the tahsildar opens it.
+
+1. Sign in as `citizen` → **New patta transfer application**. Download **Kit B** (a .zip on the page),
+   tap **Fill details · B**, continue, upload the five files, **Submit to the Tahsildar**.
+2. Sign in as `tahsildar`. PT-2026-0209 is on the desk with every document read and the review done:
+   **property tax dues ₹2,760** → AI suggests return. **Return**, using the AI-drafted reply as remarks.
+3. Back as `citizen`: the application shows *Returned* with the remarks. Download **Kit B — new receipt
+   after paying**, replace the tax receipt, **Resubmit**.
+4. As `tahsildar`: it is under **Reopened**, re-checked — dues ₹0, the old receipt marked *replaced* —
+   AI suggests approve. **Approve**; the citizen sees *Approved*.
+
+**Kit A** is a complete file whose ID card is a badly blurred phone photo. Sarvam reads it with low
+confidence (in testing it misread the ID number 5307 as 5387), so the officer is told to check it by eye
+and sees the image beside what was read — the officer decides, not the model.
 
 ## The demo cases — one per problem type
 

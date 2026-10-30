@@ -11,7 +11,7 @@
 export type DocKind = "application_form" | "sale_deed" | "patta" | "ec" | "tax_receipt" | "id_proof" | "petition";
 
 /** How the citizen's copy of a document looks (exercises different reading conditions). */
-export type Look = "pdf" | "scan" | "phone_photo" | "photocopy" | "stamp_paper" | "handwritten";
+export type Look = "pdf" | "scan" | "phone_photo" | "photocopy" | "stamp_paper" | "handwritten" | "blurry";
 
 export interface EcEntry {
   date: string; // YYYY-MM-DD
@@ -219,6 +219,51 @@ export const GRIEVANCE_CASES: GrievanceCase[] = [
   },
 ];
 
+/**
+ * Demo kits for the live citizen flow: document sets a presenter downloads and uploads as the citizen
+ * (account "citizen", செல்வி). They are not seeded as applications — only their department records are.
+ * Kit A is clean but its ID card is a very blurry photo. Kit B has an old tax receipt with dues; `taxLater` is the receipt after paying, which
+ * the citizen uploads when the tahsildar returns the file.
+ */
+export interface DemoKit extends PattaCase {
+  id: "kit-a" | "kit-b";
+  taxLater?: PattaCase["tax"];
+}
+
+const CITIZEN_BUYER = { name: "செல்வி", parent: "கணேசன்" };
+const CITIZEN_ID = { name: "செல்வி", number: "XXXX XXXX 5307", dob: "1990-06-14" };
+const KIT_DOCS: PattaCase["docs"] = { sale_deed: "scan", patta: "pdf", ec: "pdf", tax_receipt: "scan", id_proof: "phone_photo" };
+
+export const DEMO_KITS: DemoKit[] = [
+  {
+    id: "kit-a", ref: "KIT-A", problem: { ta: "குறை இல்லை", en: "Clean file" },
+    applicant: { ta: "செல்வி க", en: "Selvi G" }, village: { ta: "பொன்னேரி", en: "Ponneri" }, sro: SRO_PONNERI,
+    submittedOn: "2026-10-30", surveyNo: "58/2",
+    deed: { no: "4630/2026", date: "2026-10-06", amount: 1080000, extentCents: 36 },
+    seller: { name: "பாலகிருஷ்ணன்", parent: "நடராஜன்" }, buyer: CITIZEN_BUYER,
+    patta: { no: "1544", owner: "பாலகிருஷ்ணன்", ownerParent: "நடராஜன்" },
+    tax: { receiptNo: "PNR/2026/09875", assessmentNo: "PNR-58-2", paidUpTo: "2026-27", dues: 0, paidAmount: 890 },
+    ec: [{ date: "2026-10-06", nature: "sale", docNo: "4630/2026", parties: "பாலகிருஷ்ணன் → செல்வி", detail: "கிரையம்" }],
+    // A badly out-of-focus phone photo: Sarvam may not read it, and the officer checks it by eye.
+    idProof: CITIZEN_ID, docs: { ...KIT_DOCS, id_proof: "blurry" },
+  },
+  {
+    id: "kit-b", ref: "KIT-B", problem: { ta: "வரி நிலுவை", en: "Tax dues" },
+    applicant: { ta: "செல்வி க", en: "Selvi G" }, village: { ta: "பொன்னேரி", en: "Ponneri" }, sro: SRO_PONNERI,
+    submittedOn: "2026-10-30", surveyNo: "203/1B",
+    deed: { no: "4712/2026", date: "2026-10-10", amount: 1560000, extentCents: 52 },
+    seller: { name: "ஜெயராமன்", parent: "சின்னையா" }, buyer: CITIZEN_BUYER,
+    patta: { no: "1961", owner: "ஜெயராமன்", ownerParent: "சின்னையா" },
+    tax: { receiptNo: "PNR/2024/06617", assessmentNo: "PNR-203-1B", paidUpTo: "2024-25", dues: 2760, paidAmount: 1380 },
+    taxLater: { receiptNo: "PNR/2026/10457", assessmentNo: "PNR-203-1B", paidUpTo: "2026-27", dues: 0, paidAmount: 2760 },
+    ec: [{ date: "2026-10-10", nature: "sale", docNo: "4712/2026", parties: "ஜெயராமன் → செல்வி", detail: "கிரையம்" }],
+    idProof: CITIZEN_ID, docs: KIT_DOCS,
+  },
+];
+
+/** Villages in the taluk (English key, Tamil name) — the online form's choices. */
+export const VILLAGES = { Ponneri: "பொன்னேரி", Minjur: "மீஞ்சூர்", Gummidipoondi: "கும்மிடிப்பூண்டி" } as const;
+
 /** Statutory-style service time limits (days), used to compute every deadline. */
 export const SLA_DAYS = { patta: 30, grievance: { water: 3, electricity: 2, sanitation: 7, road: 15, patta: 30, ration: 7, other: 15 } } as const;
 
@@ -241,7 +286,7 @@ export const applicationValues = (c: PattaCase) => ({
 });
 
 /** File extension the citizen's copy has, by how it looks. PDFs also get a .png preview for thumbnails. */
-export const lookExt = (look: Look) => (look === "pdf" ? "pdf" : look === "phone_photo" || look === "photocopy" ? "jpg" : "png");
+export const lookExt = (look: Look) => (look === "pdf" ? "pdf" : look === "phone_photo" || look === "photocopy" || look === "blurry" ? "jpg" : "png");
 /** Public URL of a seeded document (files live in public/case-docs/<ref>/). */
 export const docUrl = (ref: string, kind: DocKind, look: Look) => `/case-docs/${ref}/${kind}.${lookExt(look)}`;
 export const previewUrl = (ref: string, kind: DocKind, look: Look) =>

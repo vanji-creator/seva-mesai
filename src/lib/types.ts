@@ -22,6 +22,8 @@ export interface PattaPayload {
   extentCents: number;
   saleDeedNo: string;
   taxReceiptNo: string;
+  /** "online" when the citizen filled the form on the portal: the typed form is the application itself. */
+  channel?: "online";
 }
 
 export interface GrievancePayload {

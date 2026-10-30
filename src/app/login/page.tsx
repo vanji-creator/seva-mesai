@@ -1,11 +1,12 @@
 import { redirect } from "next/navigation";
-import { currentOfficer } from "@/lib/auth";
+import { homeFor } from "@/lib/auth";
 import { getT } from "@/lib/i18n";
 import { LoginForm } from "./LoginForm";
 import { LangToggle } from "@/components/LangToggle";
 
 export default async function LoginPage() {
-  if (await currentOfficer()) redirect("/");
+  const home = await homeFor();
+  if (home) redirect(home);
   const { t, locale } = await getT();
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center bg-side px-4">

@@ -22,6 +22,17 @@ export const officers = pgTable("officers", {
   officeTa: text("office_ta").notNull(),
 });
 
+/** Citizens who apply online (demo: one account). */
+export const citizens = pgTable("citizens", {
+  id: serial("id").primaryKey(),
+  username: text("username").notNull().unique(),
+  passwordHash: text("password_hash").notNull(),
+  name: text("name").notNull(),
+  nameTa: text("name_ta").notNull(),
+  village: text("village").notNull(),
+  villageTa: text("village_ta").notNull(),
+});
+
 export const applications = pgTable("applications", {
   id: serial("id").primaryKey(),
   refNo: text("ref_no").notNull().unique(),
@@ -32,11 +43,14 @@ export const applications = pgTable("applications", {
   villageTa: text("village_ta").notNull(),
   submittedAt: timestamp("submitted_at", { withTimezone: true }).notNull(),
   slaDueAt: timestamp("sla_due_at", { withTimezone: true }).notNull(),
+  /** "draft" = a citizen is still filling it in; never shown to officers. */
   status: text("status")
-    .$type<"pending" | "approved" | "rejected" | "returned">()
+    .$type<"draft" | "pending" | "approved" | "rejected" | "returned">()
     .notNull()
     .default("pending"),
   payload: jsonb("payload").$type<Record<string, unknown>>().notNull(),
+  /** Set when a citizen applied online; seeded counter applications have none. */
+  citizenId: integer("citizen_id").references(() => citizens.id),
   /** Intake pre-check counts (deterministic verifier) – drive queue priority. */
   blockers: integer("blockers").notNull().default(0),
   warnings: integer("warnings").notNull().default(0),
@@ -64,6 +78,8 @@ export const documents = pgTable("documents", {
   previewUrl: text("preview_url"),
   data: bytea("data"),
   source: text("source").$type<"citizen" | "officer">().notNull().default("citizen"),
+  /** The upload slot a citizen used (what they said the file is); null for seeded and officer files. */
+  slot: text("slot"),
   uploadedAt: timestamp("uploaded_at", { withTimezone: true }).notNull().defaultNow(),
   /** What Sarvam read from it (Classify + Extract, or OCR + translation for petitions). */
   reading: jsonb("reading").$type<DocReading>(),
@@ -90,11 +106,10 @@ export const decisions = pgTable("decisions", {
   applicationId: integer("application_id")
     .notNull()
     .references(() => applications.id, { onDelete: "cascade" }),
-  officerId: integer("officer_id")
-    .notNull()
-    .references(() => officers.id),
-  /** A decision, or "reopened" when a decided case is sent back to the desk. */
-  action: text("action").$type<"approved" | "rejected" | "returned" | "reopened">().notNull(),
+  /** Null for "resubmitted", which the citizen does. */
+  officerId: integer("officer_id").references(() => officers.id),
+  /** A decision; "reopened" when an officer sends a decided case back to the desk; "resubmitted" when the citizen does. */
+  action: text("action").$type<"approved" | "rejected" | "returned" | "reopened" | "resubmitted">().notNull(),
   reason: text("reason"),
   aiSuggestion: text("ai_suggestion").$type<Suggestion>(),
   followedAi: boolean("followed_ai"),

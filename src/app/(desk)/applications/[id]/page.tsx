@@ -14,15 +14,15 @@ import { docsByKind, evaluateApp, loadDocs, type DocRow } from "@/lib/case/load"
 import { samplesFor } from "@/lib/docs/samples";
 import { formatDate, formatDateTime, getT, type MessageKey, type T } from "@/lib/i18n";
 import { priority } from "@/lib/priority";
-import { REQUIRED } from "@/lib/verify/caseCheck";
-import type { GrievancePayload, Locale } from "@/lib/types";
+import { LOW_CONFIDENCE, requiredDocs } from "@/lib/verify/caseCheck";
+import type { GrievancePayload, Locale, PattaPayload } from "@/lib/types";
 
 // Reading a new document (Classify + Extract) and re-reviewing can take ~20–40 s; server actions share this limit.
 export const maxDuration = 60;
 
 const KNOWN = new Set(["application_form", "sale_deed", "patta", "ec", "tax_receipt", "id_proof", "petition", "ration_card"]);
 
-function docView(d: DocRow, t: T, locale: Locale): DocView {
+function docView(d: DocRow, t: T, locale: Locale, replaced: boolean): DocView {
   const r = d.reading;
   const type = r?.docType ?? null;
   const v = (r?.values ?? {}) as Record<string, unknown>;
@@ -47,7 +47,8 @@ function docView(d: DocRow, t: T, locale: Locale): DocView {
     preview: d.previewUrl ?? (d.mime.startsWith("image/") ? href : null),
     isPdf: d.mime === "application/pdf",
     byOfficer: d.source === "officer",
-    state: d.kind === "other" ? "unrelated" : r && r.engine !== "pending" ? "read" : "notRead",
+    state: d.kind === "other" ? "unrelated" : !r || r.engine === "pending" ? "notRead" : r.reviewRequired || r.engine === "unreadable" || (r.minConfidence !== null && r.minConfidence < LOW_CONFIDENCE) ? "unclear" : "read",
+    replaced,
     docTypeLabel: type ? t((KNOWN.has(type) ? `doc.${type}` : "doc.other") as MessageKey) : null,
     confidence: r?.classifyConfidence ?? null,
     fields,
@@ -63,25 +64,26 @@ export default async function CasePage({ params }: { params: Promise<{ id: strin
   const { t, locale } = await getT();
 
   const [app] = await db.select().from(applications).where(eq(applications.id, id));
-  if (!app) notFound();
+  if (!app || app.status === "draft") notFound();
   const rows = await loadDocs(id);
   const ev = await evaluateApp(app, rows);
   const [review] = await db.select().from(aiAnalyses).where(and(eq(aiAnalyses.applicationId, id), eq(aiAnalyses.locale, locale))).orderBy(desc(aiAnalyses.id)).limit(1);
   const history = await db
     .select({ d: decisions, o: officers })
     .from(decisions)
-    .innerJoin(officers, eq(decisions.officerId, officers.id))
+    .leftJoin(officers, eq(decisions.officerId, officers.id))
     .where(eq(decisions.applicationId, id))
     .orderBy(desc(decisions.id));
 
   const pending = app.status === "pending";
-  const reopened = pending && history.some(({ d }) => d.action === "reopened");
+  // Back on the desk after a decision: reopened by an officer, or resubmitted by the citizen (latest wins).
+  const backOnDesk = pending ? history.find(({ d }) => d.action === "reopened" || d.action === "resubmitted")?.d.action : undefined;
   const isPatta = app.type === "patta";
   const p = priority(app);
   const sla = isPatta ? SLA_DAYS.patta : Math.round((app.slaDueAt.getTime() - app.submittedAt.getTime()) / 86_400_000);
   const dueText = p.daysLeft < 0 ? t("due.overdue", { n: -p.daysLeft }) : p.daysLeft === 0 ? t("due.today") : t("due.leftLong", { n: p.daysLeft });
   const { byKind } = docsByKind(rows);
-  const missing = isPatta ? REQUIRED.filter((k) => !byKind[k]).map((k) => t(`doc.${k}` as MessageKey)) : [];
+  const missing = isPatta ? requiredDocs(app.payload as unknown as PattaPayload).filter((k) => !byKind[k]).map((k) => t(`doc.${k}` as MessageKey)) : [];
   const samples = samplesFor(app.refNo)
     .filter((s) => !(s.id.startsWith("later:") && byKind[s.id.slice(6) as DocKind]))
     .map((s) => ({ id: s.id, label: locale === "ta" ? s.labelTa : s.label }));
@@ -97,7 +99,7 @@ export default async function CasePage({ params }: { params: Promise<{ id: strin
           <Link href="/" className="mb-4 inline-block text-[15px] text-accent lg:hidden">‹ {t("case.back")}</Link>
           <div className="text-[13px] text-muted">
             {t(`type.${app.type}`)}
-            {reopened && <span className="ml-2 rounded-full bg-accent-soft px-2 py-0.5 text-[11px] font-medium text-accent">{t("status.reopened")}</span>}
+            {backOnDesk && <span className="ml-2 rounded-full bg-accent-soft px-2 py-0.5 text-[11px] font-medium text-accent">{t(`status.${backOnDesk}`)}</span>}
           </div>
           <h1 className="mt-1 text-[32px] font-semibold tracking-tight">
             <span className="tabular-nums">{app.refNo}</span>{" "}
@@ -161,14 +163,17 @@ export default async function CasePage({ params }: { params: Promise<{ id: strin
 
         <Documents
           applicationId={id}
-          docs={rows.map((d) => docView(d, t, locale))}
+          docs={rows
+            // rows are newest first: an older file of a kind already seen has been replaced; those go last.
+            .map((d, i) => docView(d, t, locale, d.kind !== "other" && rows.slice(0, i).some((x) => x.kind === d.kind)))
+            .sort((a, b) => Number(a.replaced) - Number(b.replaced))}
           missing={missing}
           samples={samples}
           canEdit={pending}
           labels={{
             title: t("docs.title"), add: t("docs.add"), reading: t("docs.reading"), read: t("docs.read"), notRead: t("docs.notRead"),
             reread: t("docs.reread"), open: t("docs.open"), whatRead: t("docs.whatRead"), confidence: t("docs.confidence"),
-            officer: t("docs.officer"), citizen: t("docs.citizen"), unrelated: t("docs.unrelated"), missing: t("docs.missing"),
+            officer: t("docs.officer"), citizen: t("docs.citizen"), unrelated: t("docs.unrelated"), unclear: t("docs.unclear"), replaced: t("docs.replaced"), missing: t("docs.missing"),
             hint: t("docs.hint"), samples: t("docs.samples"), choose: t("docs.choose"), error: t("docs.error"), size: t("docs.size"),
             type: t("docs.type"), close: t("docs.close"), entries: t("docs.entries"), typeLabel: t("docs.type.label"), translation: t("grv.translation"),
           }}
@@ -181,7 +186,7 @@ export default async function CasePage({ params }: { params: Promise<{ id: strin
               {history.map(({ d, o }) => (
                 <li key={d.id} className="px-4 py-3 text-[15px]">
                   <span className="font-medium">{t(`status.${d.action}`)}</span>
-                  <span className="text-muted"> · {locale === "ta" ? o.nameTa : o.name} · {formatDateTime(d.createdAt, locale)}</span>
+                  <span className="text-muted"> · {o ? (locale === "ta" ? o.nameTa : o.name) : (locale === "ta" ? app.applicantNameTa : app.applicantName)} · {formatDateTime(d.createdAt, locale)}</span>
                   {d.reason && <p className="mt-1 text-muted">{d.reason}</p>}
                   {d.followedAi !== null && <p className="mt-1 text-[13px] text-faint">{d.followedAi ? t("act.followed") : t("act.differed")}</p>}
                 </li>

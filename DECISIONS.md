@@ -181,8 +181,33 @@ suggestion, because a draft written for "return" would be wrong under "approve".
 Decision buttons are tinted green / amber / red at rest, deepen on hover and press, and turn solid once
 chosen, so every click visibly registers.
 
+## Citizen side (live demo flow)
+**A real round trip instead of only pre-seeded cases:** a citizen applies online, the tahsildar returns
+it, the citizen fixes it and resubmits, the tahsildar approves.
+
+- **No AI on the citizen side.** The citizen fills a form, uploads, submits and sees the decision with
+  the officer's remarks. Showing AI findings to citizens before submission is possible (it would cut
+  returns) but changes who is accountable for the check; kept out deliberately.
+- **Reading happens after the response** (`after()` in Next.js): each upload is stored, then Sarvam
+  reads it in the background, so the citizen never waits on Doc AI latency. Submitting triggers the
+  checks and the AI review the same way, after waiting briefly for files still being read. A late read
+  re-checks the case. Each upload is its own request, so one slow document can't time out the others.
+- **Upload slots say what a file is meant to be.** Classify still runs: a file Classify can't place (a
+  blurry photo) counts as the slot's document and is flagged "check by eye"; a confidently different
+  document (ration card) is kept but marked as not belonging. A blurry ID is not a wrong document.
+- **An online application is the application form**, so it is not asked for as a document.
+- **The tax receipt number is read from the receipt**, not typed, and the panchayat record is looked up
+  by it — so a fresh receipt after paying is verified against the panchayat's own record of that payment.
+- **Resubmission** is a history event done by the citizen (`decisions.action = "resubmitted"`, no
+  officer), and the case returns to the officer's **Reopened** list. Older copies of a replaced
+  document stay in the file, marked *replaced*.
+- **Demo kits** (`public/demo-kits/`, `npm run render:cases -- --kits`) are ordinary files the presenter
+  downloads and uploads; "Fill details" only types the land details from the kit's deed.
+
 ## Auth
-One seeded account (`tahsildar`, supervisor: desk and audit). bcrypt, signed httpOnly JWT cookie (jose).
+Two seeded accounts: `tahsildar` (supervisor: desk and audit) and `citizen` (their own applications
+only). One sign-in form; the role in the signed cookie decides where you land, and every page and file
+route checks it. bcrypt, signed httpOnly JWT cookie (jose).
 Demo-grade by design.
 
 ## Not done (time budget)

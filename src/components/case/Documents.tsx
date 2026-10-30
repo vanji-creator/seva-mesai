@@ -11,7 +11,10 @@ export interface DocView {
   preview: string | null;
   isPdf: boolean;
   byOfficer: boolean;
-  state: "read" | "notRead" | "unrelated";
+  /** unclear = Sarvam could not read it confidently (e.g. a blurry photo): the officer checks it by eye. */
+  state: "read" | "notRead" | "unrelated" | "unclear";
+  /** A newer file of the same kind was added (e.g. a fresh receipt); kept for the record. */
+  replaced: boolean;
   docTypeLabel: string | null;
   confidence: number | null;
   fields: { label: string; value: string }[];
@@ -22,7 +25,7 @@ export interface DocView {
 
 type L = Record<
   "title" | "add" | "reading" | "read" | "notRead" | "reread" | "open" | "whatRead" | "confidence" | "officer" | "citizen" |
-  "unrelated" | "missing" | "hint" | "samples" | "choose" | "error" | "size" | "type" | "close" | "entries" | "typeLabel" | "translation",
+  "unrelated" | "unclear" | "replaced" | "missing" | "hint" | "samples" | "choose" | "error" | "size" | "type" | "close" | "entries" | "typeLabel" | "translation",
   string
 >;
 
@@ -102,15 +105,15 @@ export function Documents({
 
       <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
         {docs.map((d) => (
-          <li key={d.id}>
+          <li key={d.id} className={clsx(d.replaced && "opacity-50")}>
             <button onClick={() => setOpen(d)} className="group block w-full text-left">
-              <div className={clsx("aspect-[3/4] overflow-hidden rounded-xl border bg-side transition group-hover:shadow-md", d.state === "unrelated" ? "border-red/40" : "border-line")}>
+              <div className={clsx("aspect-[3/4] overflow-hidden rounded-xl border bg-side transition group-hover:shadow-md", d.state === "unrelated" ? "border-red/40" : d.state === "unclear" && !d.replaced ? "border-amber/60" : "border-line")}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 {d.preview ? <img src={d.preview} alt="" className="h-full w-full object-cover object-top" /> : <div className="grid h-full place-items-center text-sm text-faint">PDF</div>}
               </div>
               <div className="mt-1.5 truncate text-[14px] font-medium">{d.label}</div>
-              <div className={clsx("text-[12px]", d.state === "unrelated" ? "text-red" : d.state === "notRead" ? "text-amber" : "text-faint")}>
-                {d.state === "unrelated" ? labels.unrelated : d.state === "notRead" ? labels.notRead : `${labels.read}${d.confidence !== null ? ` · ${Math.round(d.confidence * 100)}%` : ""}`}
+              <div className={clsx("text-[12px]", d.replaced ? "text-faint" : d.state === "unrelated" ? "text-red" : d.state === "notRead" || d.state === "unclear" ? "text-amber" : "text-faint")}>
+                {d.replaced ? labels.replaced : d.state === "unrelated" ? labels.unrelated : d.state === "notRead" ? labels.notRead : d.state === "unclear" ? labels.unclear : `${labels.read}${d.confidence !== null ? ` · ${Math.round(d.confidence * 100)}%` : ""}`}
                 {d.byOfficer && ` · ${labels.officer}`}
               </div>
             </button>
@@ -159,6 +162,8 @@ function Viewer({ doc, onClose, labels, canEdit }: { doc: DocView; onClose: () =
           <div className="flex-1 px-5 pb-5">
             <div className="text-[12px] font-semibold uppercase tracking-wider text-faint">{labels.whatRead}</div>
             {doc.state === "notRead" && <p className="mt-2 text-amber">{labels.notRead}</p>}
+            {doc.state === "unclear" && <p className="mt-2 text-amber">{labels.unclear}</p>}
+            {doc.replaced && <p className="mt-2 text-muted">{labels.replaced}</p>}
             {doc.docTypeLabel && (
               <div className={clsx("mt-2 flex justify-between border-b border-line py-2 text-[14px]", doc.state === "unrelated" && "text-red")}>
                 <span className="text-muted">{labels.typeLabel}</span>

@@ -10,8 +10,8 @@ import { db } from "@/db/client";
 import { aiAnalyses, applications, decisions, documents } from "@/db/schema";
 import type { DocKind } from "@/db/cases";
 import { login, logout, requireOfficer } from "@/lib/auth";
-import { aiReview } from "@/lib/ai/analyze";
-import { evaluateApp, loadDocs } from "@/lib/case/load";
+import { recheck } from "@/lib/case/intake";
+import { loadDocs } from "@/lib/case/load";
 import { readDocument } from "@/lib/docs/read";
 import { loadSample } from "@/lib/docs/samples";
 import { REQUIRED } from "@/lib/verify/caseCheck";
@@ -19,9 +19,9 @@ import type { DocFile } from "@/lib/sarvam/client";
 import type { GrievancePayload, PattaPayload, Suggestion } from "@/lib/types";
 
 export async function loginAction(_: unknown, form: FormData) {
-  const ok = await login(String(form.get("username") ?? ""), String(form.get("password") ?? ""));
-  if (!ok) return { error: true };
-  redirect("/");
+  const role = await login(String(form.get("username") ?? ""), String(form.get("password") ?? ""));
+  if (!role) return { error: true };
+  redirect(role === "citizen" ? "/my" : "/");
 }
 
 export async function logoutAction() {
@@ -32,21 +32,6 @@ export async function logoutAction() {
 export async function setLocaleAction(locale: "ta" | "en") {
   (await cookies()).set("locale", locale, { path: "/", maxAge: 365 * 86400 });
   revalidatePath("/", "layout");
-}
-
-/**
- * Re-run the deterministic checks and the AI review (both languages) from what is stored.
- * Runs at intake already; the officer only needs it after new documents or to refresh.
- */
-async function recheck(applicationId: number) {
-  const [app] = await db.select().from(applications).where(eq(applications.id, applicationId));
-  if (!app) return;
-  const ev = await evaluateApp(app);
-  await db.update(applications).set({ blockers: ev.blockers, warnings: ev.warnings }).where(eq(applications.id, applicationId));
-  const reviews = await Promise.all((["ta", "en"] as const).map(async (locale) => ({ locale, a: await aiReview(ev, locale) })));
-  for (const { locale, a } of reviews) {
-    await db.insert(aiAnalyses).values({ applicationId, locale, summary: a.summary, findings: a.findings, suggestion: a.suggestion, reasons: a.reasons, draftReply: a.draftReply, source: a.source, model: a.model });
-  }
 }
 
 export async function recheckAction(applicationId: number) {
