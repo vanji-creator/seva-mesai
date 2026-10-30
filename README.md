@@ -163,8 +163,8 @@ grievance classification; the AI guardrail; the eval scorer.
 
 ## Known limitations
 
-- Department records are simulated tables behind one seam (`fetchRegistry`); auth is a single demo
-  account with a signed cookie.
+- Department records are simulated tables behind one seam (`fetchRegistry`); auth is two demo
+  accounts (officer, citizen) with a signed cookie.
 - Sarvam Doc AI latency varies a lot (5 s to several minutes per job was observed); intake waits up to
   10 minutes per job, a live upload up to ~50 s before reporting it could not read.
 - Grievance categories are keyword rules plus the LLM; no trained classifier.
