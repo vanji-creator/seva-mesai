@@ -29,8 +29,8 @@ export const applications = pgTable("applications", {
   applicantNameTa: text("applicant_name_ta").notNull(),
   village: text("village").notNull(),
   villageTa: text("village_ta").notNull(),
-  submittedAt: timestamp("submitted_at").notNull(),
-  slaDueAt: timestamp("sla_due_at").notNull(),
+  submittedAt: timestamp("submitted_at", { withTimezone: true }).notNull(),
+  slaDueAt: timestamp("sla_due_at", { withTimezone: true }).notNull(),
   status: text("status")
     .$type<"pending" | "approved" | "rejected" | "returned">()
     .notNull()
@@ -67,7 +67,7 @@ export const aiAnalyses = pgTable("ai_analyses", {
   draftReply: text("draft_reply"),
   source: text("source").$type<"llm" | "rules">().notNull(),
   model: text("model"),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 export const decisions = pgTable("decisions", {
@@ -82,7 +82,7 @@ export const decisions = pgTable("decisions", {
   reason: text("reason"),
   aiSuggestion: text("ai_suggestion").$type<Suggestion>(),
   followedAi: boolean("followed_ai"),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 // Mock "other department" registries. In production these are API calls.
@@ -92,7 +92,7 @@ export const regSaleDeeds = pgTable("reg_sale_deeds", {
   buyer: text("buyer").notNull(),
   surveyNo: text("survey_no").notNull(),
   extentCents: integer("extent_cents").notNull(),
-  registeredOn: timestamp("registered_on").notNull(),
+  registeredOn: timestamp("registered_on", { withTimezone: true }).notNull(),
 });
 
 export const regLandRecords = pgTable("reg_land_records", {

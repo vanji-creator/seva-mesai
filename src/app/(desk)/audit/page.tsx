@@ -2,7 +2,7 @@ import { desc, eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import { applications, decisions, officers } from "@/db/schema";
 import { requireOfficer } from "@/lib/auth";
-import { getT } from "@/lib/i18n";
+import { formatDateTime, getT } from "@/lib/i18n";
 
 export default async function AuditPage() {
   const me = await requireOfficer();
@@ -33,7 +33,7 @@ export default async function AuditPage() {
           <tbody>
             {rows.map(({ d, o, a }) => (
               <tr key={d.id} className="border-t border-line">
-                <td className="px-4 py-2 whitespace-nowrap">{d.createdAt.toLocaleString(locale === "ta" ? "ta-IN" : "en-IN")}</td>
+                <td className="px-4 py-2 whitespace-nowrap">{formatDateTime(d.createdAt, locale)}</td>
                 <td className="px-4 py-2 font-mono text-sm">{a.refNo}</td>
                 <td className="px-4 py-2">{locale === "ta" ? o.nameTa : o.name}</td>
                 <td className="px-4 py-2">{t(`status.${d.action}`)}</td>

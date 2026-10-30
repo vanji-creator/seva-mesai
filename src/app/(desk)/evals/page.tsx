@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import clsx from "clsx";
-import { getT, type MessageKey } from "@/lib/i18n";
+import { formatDateTime, getT, type MessageKey } from "@/lib/i18n";
 
 interface Summary {
   variant: string;
@@ -165,7 +165,7 @@ export default async function EvalsPage() {
         </div>
       </section>
 
-      <p className="text-xs text-muted">{new Date(r.generatedAt).toLocaleString(locale === "ta" ? "ta-IN" : "en-IN")}</p>
+      <p className="text-xs text-muted">{formatDateTime(r.generatedAt, locale)}</p>
     </div>
   );
 }

@@ -6,6 +6,10 @@ where the officer always makes the final call.
 
 > All data is fictional. No real citizen data is used.
 
+**Live demo:** https://seva-mesai.vercel.app
+— sign in as `ri.ponneri` (Revenue Inspector) or `tahsildar` (supervisor, also sees Audit), password `Demo@1234`.
+Tamil by default; the **English** button is top right.
+
 ## The problem
 
 Officers verify land and civil applications across **disconnected department systems**

@@ -25,3 +25,8 @@ export async function getT() {
   const locale = await getLocale();
   return { locale, t: makeT(locale) };
 }
+
+/** Officers are in Tamil Nadu: always show IST, whatever region the server runs in. */
+export function formatDateTime(d: Date | string, locale: Locale): string {
+  return new Date(d).toLocaleString(locale === "ta" ? "ta-IN" : "en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" });
+}

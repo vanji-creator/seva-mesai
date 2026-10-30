@@ -10,7 +10,7 @@ import { DeedUpload } from "@/components/DeedUpload";
 import { samplesFor } from "@/lib/docs/samples";
 import { PriorityChip } from "@/components/PriorityChip";
 import { fetchEvidence } from "@/lib/registry/client";
-import { getT, type MessageKey } from "@/lib/i18n";
+import { formatDateTime, getT, type MessageKey } from "@/lib/i18n";
 import { priority } from "@/lib/priority";
 import { romanKey, similarity } from "@/lib/verify/fuzzy";
 import { isTamil } from "@/lib/docs/deed";
@@ -140,7 +140,7 @@ export default async function ApplicationPage({ params }: { params: Promise<{ id
               <ul className="flex flex-col gap-2">
                 {history.map(({ d, o }) => (
                   <li key={d.id} className="rounded-lg border border-line bg-card p-3">
-                    <span className="font-semibold">{t(`status.${d.action}`)}</span> · {locale === "ta" ? o.nameTa : o.name} · {d.createdAt.toLocaleString(locale === "ta" ? "ta-IN" : "en-IN")}
+                    <span className="font-semibold">{t(`status.${d.action}`)}</span> · {locale === "ta" ? o.nameTa : o.name} · {formatDateTime(d.createdAt, locale)}
                     {d.reason && <p className="text-muted">{d.reason}</p>}
                     {d.followedAi !== null && <p className="text-sm text-muted">{d.followedAi ? t("act.followed") : t("act.differed")}</p>}
                   </li>
