@@ -1,0 +1,36 @@
+{
+  "PT-2026-0104": {
+    "docType": "sale_deed",
+    "classifyConfidence": 1,
+    "reviewRequired": false,
+    "values": {
+      "deedNo": "SD/0104/2026",
+      "seller": "கோவிந்தன்",
+      "buyer": "மீனா",
+      "surveyNo": "201/7",
+      "extentCents": 62,
+      "registrationDate": "2026-09-12",
+      "saleAmount": 1860000
+    },
+    "minConfidence": 1,
+    "fileName": "PT-2026-0104_phone_photo.jpg",
+    "readAt": "2026-10-30T06:37:04.963Z"
+  },
+  "PT-2026-0103": {
+    "docType": "sale_deed",
+    "classifyConfidence": 1,
+    "reviewRequired": false,
+    "values": {
+      "deedNo": "SD/0103/2026",
+      "seller": "அண்ணாமலை",
+      "buyer": "கார்த்திக்கேயன்",
+      "surveyNo": "45/1",
+      "extentCents": 120,
+      "registrationDate": "2026-08-21",
+      "saleAmount": 2400000
+    },
+    "minConfidence": 0.987,
+    "fileName": "PT-2026-0103_handwritten_form.png",
+    "readAt": "2026-10-30T06:37:04.964Z"
+  }
+}

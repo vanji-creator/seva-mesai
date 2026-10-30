@@ -1,0 +1,5291 @@
+{
+ "generatedAt": "2026-10-30T07:10:58.537Z",
+ "cases": [
+  {
+   "id": "PT-2026-0101",
+   "note": "Clean file – everything matches"
+  },
+  {
+   "id": "PT-2026-0103",
+   "note": "Buyer name spelled differently on application vs deed"
+  },
+  {
+   "id": "PT-2026-0104",
+   "note": "Application claims 80 cents, deed says 62"
+  },
+  {
+   "id": "PT-2026-0107",
+   "note": "Seller is not the current patta holder"
+  }
+ ],
+ "variants": [
+  {
+   "id": "typed_values",
+   "label": "Correct values entered directly (ceiling)",
+   "labelTa": "சரியான மதிப்புகள் நேரடியாக",
+   "file": null
+  },
+  {
+   "id": "pdf_typed",
+   "label": "Typed PDF (selectable text)",
+   "labelTa": "தட்டச்சு PDF",
+   "file": "pdf"
+  },
+  {
+   "id": "scan_clean",
+   "label": "Clean scan (image)",
+   "labelTa": "தெளிவான ஸ்கேன்",
+   "file": "png"
+  },
+  {
+   "id": "phone_photo",
+   "label": "Phone photo – skew, shadow, blur",
+   "labelTa": "கைப்பேசி புகைப்படம்",
+   "file": "jpg"
+  },
+  {
+   "id": "handwritten_form",
+   "label": "Printed form, handwritten fill-ins",
+   "labelTa": "கையால் நிரப்பிய படிவம்",
+   "file": "png"
+  },
+  {
+   "id": "photocopy",
+   "label": "Poor photocopy – grey, noisy, low-res",
+   "labelTa": "மங்கிய நகல்",
+   "file": "jpg"
+  },
+  {
+   "id": "english_names",
+   "label": "Names in English letters",
+   "labelTa": "ஆங்கில எழுத்தில் பெயர்கள்",
+   "file": "png"
+  },
+  {
+   "id": "stamp_paper",
+   "label": "Stamp paper with seal over text",
+   "labelTa": "முத்திரைத்தாள் + முத்திரை",
+   "file": "png"
+  }
+ ],
+ "summary": [
+  {
+   "variant": "typed_values",
+   "pipeline": "none",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 0,
+   "costInr": 0,
+   "errors": 0
+  },
+  {
+   "variant": "pdf_typed",
+   "pipeline": "extract",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5846,
+   "costInr": 1,
+   "errors": 0
+  },
+  {
+   "variant": "pdf_typed",
+   "pipeline": "extract_translit",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5846,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "pdf_typed",
+   "pipeline": "extract_phonetic",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5846,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "pdf_typed",
+   "pipeline": "parse_llm",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 4129,
+   "costInr": 0.52,
+   "errors": 0
+  },
+  {
+   "variant": "pdf_typed",
+   "pipeline": "parse_regex",
+   "n": 4,
+   "fieldAcc": 0.9285714285714286,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 0.5,
+    "saleAmount": 1
+   },
+   "latencyMs": 3099,
+   "costInr": 0.5,
+   "errors": 0
+  },
+  {
+   "variant": "scan_clean",
+   "pipeline": "extract",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5811,
+   "costInr": 1,
+   "errors": 0
+  },
+  {
+   "variant": "scan_clean",
+   "pipeline": "extract_translit",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5811,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "scan_clean",
+   "pipeline": "extract_phonetic",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5811,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "scan_clean",
+   "pipeline": "parse_llm",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 3835,
+   "costInr": 0.52,
+   "errors": 0
+  },
+  {
+   "variant": "scan_clean",
+   "pipeline": "parse_regex",
+   "n": 4,
+   "fieldAcc": 0.9285714285714286,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 0.5,
+    "saleAmount": 1
+   },
+   "latencyMs": 3078,
+   "costInr": 0.5,
+   "errors": 0
+  },
+  {
+   "variant": "phone_photo",
+   "pipeline": "extract",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5767,
+   "costInr": 1,
+   "errors": 0
+  },
+  {
+   "variant": "phone_photo",
+   "pipeline": "extract_translit",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5767,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "phone_photo",
+   "pipeline": "extract_phonetic",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5767,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "phone_photo",
+   "pipeline": "parse_llm",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 3912,
+   "costInr": 0.52,
+   "errors": 0
+  },
+  {
+   "variant": "phone_photo",
+   "pipeline": "parse_regex",
+   "n": 4,
+   "fieldAcc": 0.9285714285714286,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 0.5,
+    "saleAmount": 1
+   },
+   "latencyMs": 3063,
+   "costInr": 0.5,
+   "errors": 0
+  },
+  {
+   "variant": "handwritten_form",
+   "pipeline": "extract",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 6434,
+   "costInr": 1,
+   "errors": 0
+  },
+  {
+   "variant": "handwritten_form",
+   "pipeline": "extract_translit",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 6434,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "handwritten_form",
+   "pipeline": "extract_phonetic",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 6434,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "handwritten_form",
+   "pipeline": "parse_llm",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 3794,
+   "costInr": 0.52,
+   "errors": 0
+  },
+  {
+   "variant": "handwritten_form",
+   "pipeline": "parse_regex",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 3050,
+   "costInr": 0.5,
+   "errors": 0
+  },
+  {
+   "variant": "photocopy",
+   "pipeline": "extract",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5952,
+   "costInr": 1,
+   "errors": 0
+  },
+  {
+   "variant": "photocopy",
+   "pipeline": "extract_translit",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5952,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "photocopy",
+   "pipeline": "extract_phonetic",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5952,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "photocopy",
+   "pipeline": "parse_llm",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 4029,
+   "costInr": 0.52,
+   "errors": 0
+  },
+  {
+   "variant": "photocopy",
+   "pipeline": "parse_regex",
+   "n": 4,
+   "fieldAcc": 0.9285714285714286,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 0.5,
+    "saleAmount": 1
+   },
+   "latencyMs": 3206,
+   "costInr": 0.5,
+   "errors": 0
+  },
+  {
+   "variant": "english_names",
+   "pipeline": "extract",
+   "n": 4,
+   "fieldAcc": 0.7142857142857143,
+   "decisionAcc": 0,
+   "perField": {
+    "deedNo": 1,
+    "seller": 0,
+    "buyer": 0,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5830,
+   "costInr": 1,
+   "errors": 0
+  },
+  {
+   "variant": "english_names",
+   "pipeline": "extract_translit",
+   "n": 4,
+   "fieldAcc": 0.9642857142857143,
+   "decisionAcc": 0.25,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 0.75,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5830,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "english_names",
+   "pipeline": "extract_phonetic",
+   "n": 4,
+   "fieldAcc": 0.9642857142857143,
+   "decisionAcc": 0.5,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 0.75,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5830,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "english_names",
+   "pipeline": "parse_llm",
+   "n": 4,
+   "fieldAcc": 0.7142857142857143,
+   "decisionAcc": 0,
+   "perField": {
+    "deedNo": 1,
+    "seller": 0,
+    "buyer": 0,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 3902,
+   "costInr": 0.52,
+   "errors": 0
+  },
+  {
+   "variant": "english_names",
+   "pipeline": "parse_regex",
+   "n": 4,
+   "fieldAcc": 0.6428571428571428,
+   "decisionAcc": 0,
+   "perField": {
+    "deedNo": 1,
+    "seller": 0,
+    "buyer": 0,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 0.5,
+    "saleAmount": 1
+   },
+   "latencyMs": 3161,
+   "costInr": 0.5,
+   "errors": 0
+  },
+  {
+   "variant": "stamp_paper",
+   "pipeline": "extract",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5714,
+   "costInr": 1,
+   "errors": 0
+  },
+  {
+   "variant": "stamp_paper",
+   "pipeline": "extract_translit",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5714,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "stamp_paper",
+   "pipeline": "extract_phonetic",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 5714,
+   "costInr": 1.04,
+   "errors": 0
+  },
+  {
+   "variant": "stamp_paper",
+   "pipeline": "parse_llm",
+   "n": 4,
+   "fieldAcc": 1,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 1,
+    "saleAmount": 1
+   },
+   "latencyMs": 3883,
+   "costInr": 0.52,
+   "errors": 0
+  },
+  {
+   "variant": "stamp_paper",
+   "pipeline": "parse_regex",
+   "n": 4,
+   "fieldAcc": 0.9285714285714286,
+   "decisionAcc": 1,
+   "perField": {
+    "deedNo": 1,
+    "seller": 1,
+    "buyer": 1,
+    "surveyNo": 1,
+    "extentCents": 1,
+    "registrationDate": 0.5,
+    "saleAmount": 1
+   },
+   "latencyMs": 3107,
+   "costInr": 0.5,
+   "errors": 0
+  }
+ ],
+ "classify": [
+  {
+   "file": "PT-2026-0101/pdf_typed",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 3344
+  },
+  {
+   "file": "PT-2026-0101/scan_clean",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 2942
+  },
+  {
+   "file": "PT-2026-0101/phone_photo",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5524
+  },
+  {
+   "file": "PT-2026-0101/handwritten_form",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 2987
+  },
+  {
+   "file": "PT-2026-0101/photocopy",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5514
+  },
+  {
+   "file": "PT-2026-0101/english_names",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5615
+  },
+  {
+   "file": "PT-2026-0101/stamp_paper",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5642
+  },
+  {
+   "file": "PT-2026-0103/pdf_typed",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 2860
+  },
+  {
+   "file": "PT-2026-0103/scan_clean",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5570
+  },
+  {
+   "file": "PT-2026-0103/phone_photo",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5522
+  },
+  {
+   "file": "PT-2026-0103/handwritten_form",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 2884
+  },
+  {
+   "file": "PT-2026-0103/photocopy",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5528
+  },
+  {
+   "file": "PT-2026-0103/english_names",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5600
+  },
+  {
+   "file": "PT-2026-0103/stamp_paper",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5564
+  },
+  {
+   "file": "PT-2026-0104/pdf_typed",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 2857
+  },
+  {
+   "file": "PT-2026-0104/scan_clean",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 2892
+  },
+  {
+   "file": "PT-2026-0104/phone_photo",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5512
+  },
+  {
+   "file": "PT-2026-0104/handwritten_form",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 3344
+  },
+  {
+   "file": "PT-2026-0104/photocopy",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5496
+  },
+  {
+   "file": "PT-2026-0104/english_names",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5839
+  },
+  {
+   "file": "PT-2026-0104/stamp_paper",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5581
+  },
+  {
+   "file": "PT-2026-0107/pdf_typed",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 2889
+  },
+  {
+   "file": "PT-2026-0107/scan_clean",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5573
+  },
+  {
+   "file": "PT-2026-0107/phone_photo",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5498
+  },
+  {
+   "file": "PT-2026-0107/handwritten_form",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 3510
+  },
+  {
+   "file": "PT-2026-0107/photocopy",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5476
+  },
+  {
+   "file": "PT-2026-0107/english_names",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 3150
+  },
+  {
+   "file": "PT-2026-0107/stamp_paper",
+   "expected": "sale_deed",
+   "got": "sale_deed",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 5587
+  },
+  {
+   "file": "wrong_ration_card",
+   "expected": "ration_card",
+   "got": "ration_card",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 3110
+  },
+  {
+   "file": "wrong_tax_receipt",
+   "expected": "tax_receipt",
+   "got": "tax_receipt",
+   "confidence": 1,
+   "review": false,
+   "correct": true,
+   "latencyMs": 3190
+  }
+ ],
+ "rows": [
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "typed_values",
+   "pipeline": "none",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 0,
+   "costInr": 0,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "pdf_typed",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5898,
+   "costInr": 1,
+   "confidence": 0.9338857142857143,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "pdf_typed",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5898,
+   "costInr": 1.028,
+   "confidence": 0.9338857142857143,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "pdf_typed",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5898,
+   "costInr": 1.028,
+   "confidence": 0.9338857142857143,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "pdf_typed",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 3945,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "pdf_typed",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 3081,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "registrationDate": "03-09-2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": "50",
+    "saleAmount": "9,50,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "scan_clean",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5882,
+   "costInr": 1,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "scan_clean",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5882,
+   "costInr": 1.028,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "scan_clean",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5882,
+   "costInr": 1.028,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "scan_clean",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 3614,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "scan_clean",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 3044,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "registrationDate": "03-09-2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": "50",
+    "saleAmount": "9,50,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "phone_photo",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5763,
+   "costInr": 1,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "phone_photo",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5763,
+   "costInr": 1.028,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "phone_photo",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5763,
+   "costInr": 1.028,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "phone_photo",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 3965,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "phone_photo",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 3089,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "registrationDate": "03-09-2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": "50",
+    "saleAmount": "9,50,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "handwritten_form",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5798,
+   "costInr": 1,
+   "confidence": 0.8760857142857142,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "handwritten_form",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5798,
+   "costInr": 1.028,
+   "confidence": 0.8760857142857142,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "handwritten_form",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5798,
+   "costInr": 1.028,
+   "confidence": 0.8760857142857142,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "handwritten_form",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 3654,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "handwritten_form",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 3039,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "registrationDate": "03-09-2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": "50",
+    "saleAmount": "9,50,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "photocopy",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5738,
+   "costInr": 1,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "photocopy",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5738,
+   "costInr": 1.028,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "photocopy",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5738,
+   "costInr": 1.028,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "photocopy",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 4018,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "photocopy",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 3050,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "registrationDate": "03-09-2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": "50",
+    "saleAmount": "9,50,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "english_names",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": false,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.7142857142857143,
+   "decisionCorrect": false,
+   "expected": "approve —",
+   "got": "return BUYER_NAME_MISMATCH,SELLER_NAME_MISMATCH",
+   "latencyMs": 5888,
+   "costInr": 1,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "Murugan",
+    "buyer": "Selvam",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "english_names",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.8571428571428571,
+   "decisionCorrect": false,
+   "expected": "approve —",
+   "got": "return BUYER_NAME_MISMATCH",
+   "latencyMs": 5888,
+   "costInr": 1.028,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "Murugan",
+    "buyer": "Selvam",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "english_names",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.8571428571428571,
+   "decisionCorrect": false,
+   "expected": "approve —",
+   "got": "return BUYER_NAME_MISMATCH",
+   "latencyMs": 5888,
+   "costInr": 1.028,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "Murugan",
+    "buyer": "Selvam",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "english_names",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": false,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.7142857142857143,
+   "decisionCorrect": false,
+   "expected": "approve —",
+   "got": "return BUYER_NAME_MISMATCH,SELLER_NAME_MISMATCH",
+   "latencyMs": 4199,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "Murugan",
+    "buyer": "Selvam",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "english_names",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": false,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.7142857142857143,
+   "decisionCorrect": false,
+   "expected": "approve —",
+   "got": "return BUYER_NAME_MISMATCH,SELLER_NAME_MISMATCH",
+   "latencyMs": 3347,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "registrationDate": "03-09-2026",
+    "seller": "Murugan",
+    "buyer": "Selvam",
+    "surveyNo": "123/4",
+    "extentCents": "50",
+    "saleAmount": "9,50,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "stamp_paper",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5849,
+   "costInr": 1,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "stamp_paper",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5849,
+   "costInr": 1.028,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "stamp_paper",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 5849,
+   "costInr": 1.028,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "stamp_paper",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 3839,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": 50,
+    "registrationDate": "2026-09-03",
+    "saleAmount": 950000
+   }
+  },
+  {
+   "caseId": "PT-2026-0101",
+   "variant": "stamp_paper",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "approve —",
+   "got": "approve —",
+   "latencyMs": 3115,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0101/2026",
+    "registrationDate": "03-09-2026",
+    "seller": "முருகன்",
+    "buyer": "செல்வம்",
+    "surveyNo": "123/4",
+    "extentCents": "50",
+    "saleAmount": "9,50,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "typed_values",
+   "pipeline": "none",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 0,
+   "costInr": 0,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "pdf_typed",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5845,
+   "costInr": 1,
+   "confidence": 0.9213857142857143,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "pdf_typed",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5845,
+   "costInr": 1.072,
+   "confidence": 0.9213857142857143,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "pdf_typed",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5845,
+   "costInr": 1.072,
+   "confidence": 0.9213857142857143,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "pdf_typed",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 4190,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "pdf_typed",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": false,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.8571428571428571,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 3103,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "registrationDate": null,
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": "120",
+    "saleAmount": "24,00,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "scan_clean",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5779,
+   "costInr": 1,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "scan_clean",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5779,
+   "costInr": 1.072,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "scan_clean",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5779,
+   "costInr": 1.072,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "scan_clean",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 4213,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "scan_clean",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": false,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.8571428571428571,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 3190,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "registrationDate": null,
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": "120",
+    "saleAmount": "24,00,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "phone_photo",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5793,
+   "costInr": 1,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "phone_photo",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5793,
+   "costInr": 1.072,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "phone_photo",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5793,
+   "costInr": 1.072,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "phone_photo",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 3934,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "phone_photo",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": false,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.8571428571428571,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 3037,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "registrationDate": null,
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": "120",
+    "saleAmount": "24,00,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "handwritten_form",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 8345,
+   "costInr": 1,
+   "confidence": 0.8742571428571428,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "handwritten_form",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 8345,
+   "costInr": 1.072,
+   "confidence": 0.8742571428571428,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "handwritten_form",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 8345,
+   "costInr": 1.072,
+   "confidence": 0.8742571428571428,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "handwritten_form",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 3781,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "handwritten_form",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 3034,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "registrationDate": "21-08-2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": "120",
+    "saleAmount": "24,00,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "photocopy",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5747,
+   "costInr": 1,
+   "confidence": 0.9999714285714286,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "photocopy",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5747,
+   "costInr": 1.072,
+   "confidence": 0.9999714285714286,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "photocopy",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5747,
+   "costInr": 1.072,
+   "confidence": 0.9999714285714286,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "photocopy",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 3746,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "photocopy",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": false,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.8571428571428571,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 3139,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "registrationDate": null,
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": "120",
+    "saleAmount": "24,00,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "english_names",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": false,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.7142857142857143,
+   "decisionCorrect": false,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_MISMATCH,SELLER_NAME_MISMATCH",
+   "latencyMs": 5780,
+   "costInr": 1,
+   "confidence": 0.9998714285714286,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "Annamalai",
+    "buyer": "Karthikkeyan",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "english_names",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": false,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "approve —",
+   "latencyMs": 5780,
+   "costInr": 1.072,
+   "confidence": 0.9998714285714286,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "Annamalai",
+    "buyer": "Karthikkeyan",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "english_names",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": false,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "approve —",
+   "latencyMs": 5780,
+   "costInr": 1.072,
+   "confidence": 0.9998714285714286,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "Annamalai",
+    "buyer": "Karthikkeyan",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "english_names",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": false,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.7142857142857143,
+   "decisionCorrect": false,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_MISMATCH,SELLER_NAME_MISMATCH",
+   "latencyMs": 3696,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "Annamalai",
+    "buyer": "Karthikkeyan",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "english_names",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": false,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": false,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.5714285714285714,
+   "decisionCorrect": false,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_MISMATCH,SELLER_NAME_MISMATCH",
+   "latencyMs": 3086,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "registrationDate": null,
+    "seller": "Annamalai",
+    "buyer": "Karthikkeyan",
+    "surveyNo": "45/1",
+    "extentCents": "120",
+    "saleAmount": "24,00,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "stamp_paper",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5832,
+   "costInr": 1,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "stamp_paper",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5832,
+   "costInr": 1.072,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "stamp_paper",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 5832,
+   "costInr": 1.072,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "stamp_paper",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 3858,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": 120,
+    "registrationDate": "2026-08-21",
+    "saleAmount": 2400000
+   }
+  },
+  {
+   "caseId": "PT-2026-0103",
+   "variant": "stamp_paper",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": false,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.8571428571428571,
+   "decisionCorrect": true,
+   "expected": "return BUYER_NAME_SPELLING",
+   "got": "return BUYER_NAME_SPELLING",
+   "latencyMs": 3091,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0103/2026",
+    "registrationDate": null,
+    "seller": "அண்ணாமலை",
+    "buyer": "கார்த்திக்கேயன்",
+    "surveyNo": "45/1",
+    "extentCents": "120",
+    "saleAmount": "24,00,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "typed_values",
+   "pipeline": "none",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 0,
+   "costInr": 0,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "pdf_typed",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5828,
+   "costInr": 1,
+   "confidence": 0.9338857142857143,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "pdf_typed",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5828,
+   "costInr": 1.026,
+   "confidence": 0.9338857142857143,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "pdf_typed",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5828,
+   "costInr": 1.026,
+   "confidence": 0.9338857142857143,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "pdf_typed",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 4469,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "pdf_typed",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 3096,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "registrationDate": "12-09-2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": "62",
+    "saleAmount": "18,60,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "scan_clean",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5808,
+   "costInr": 1,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "scan_clean",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5808,
+   "costInr": 1.026,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "scan_clean",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5808,
+   "costInr": 1.026,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "scan_clean",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 3755,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "scan_clean",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 3034,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "registrationDate": "12-09-2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": "62",
+    "saleAmount": "18,60,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "phone_photo",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5753,
+   "costInr": 1,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "phone_photo",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5753,
+   "costInr": 1.026,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "phone_photo",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5753,
+   "costInr": 1.026,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "phone_photo",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 3996,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "phone_photo",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 3100,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "registrationDate": "12-09-2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": "62",
+    "saleAmount": "18,60,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "handwritten_form",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5831,
+   "costInr": 1,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "handwritten_form",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5831,
+   "costInr": 1.026,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "handwritten_form",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5831,
+   "costInr": 1.026,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "handwritten_form",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 3968,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "handwritten_form",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 3057,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "registrationDate": "12-09-2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": "62",
+    "saleAmount": "18,60,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "photocopy",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5559,
+   "costInr": 1,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "photocopy",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5559,
+   "costInr": 1.026,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "photocopy",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5559,
+   "costInr": 1.026,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "photocopy",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 4391,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "photocopy",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 3615,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "registrationDate": "12-09-2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": "62",
+    "saleAmount": "18,60,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "english_names",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": false,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.7142857142857143,
+   "decisionCorrect": false,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return BUYER_NAME_MISMATCH,EXTENT_MISMATCH,SELLER_NAME_MISMATCH",
+   "latencyMs": 5851,
+   "costInr": 1,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "Govindan",
+    "buyer": "Meena",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "english_names",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": false,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH,SELLER_NAME_SPELLING",
+   "latencyMs": 5851,
+   "costInr": 1.026,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "Govindan",
+    "buyer": "Meena",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "english_names",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5851,
+   "costInr": 1.026,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "Govindan",
+    "buyer": "Meena",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "english_names",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": false,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.7142857142857143,
+   "decisionCorrect": false,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return BUYER_NAME_MISMATCH,EXTENT_MISMATCH,SELLER_NAME_MISMATCH",
+   "latencyMs": 3887,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "Govindan",
+    "buyer": "Meena",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "english_names",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": false,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.7142857142857143,
+   "decisionCorrect": false,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return BUYER_NAME_MISMATCH,EXTENT_MISMATCH,SELLER_NAME_MISMATCH",
+   "latencyMs": 3141,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "registrationDate": "12-09-2026",
+    "seller": "Govindan",
+    "buyer": "Meena",
+    "surveyNo": "201/7",
+    "extentCents": "62",
+    "saleAmount": "18,60,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "stamp_paper",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5569,
+   "costInr": 1,
+   "confidence": 0.8759,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "stamp_paper",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5569,
+   "costInr": 1.026,
+   "confidence": 0.8759,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "stamp_paper",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 5569,
+   "costInr": 1.026,
+   "confidence": 0.8759,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "stamp_paper",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 3890,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   }
+  },
+  {
+   "caseId": "PT-2026-0104",
+   "variant": "stamp_paper",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "return EXTENT_MISMATCH",
+   "got": "return EXTENT_MISMATCH",
+   "latencyMs": 3132,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0104/2026",
+    "registrationDate": "12-09-2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": "62",
+    "saleAmount": "18,60,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "typed_values",
+   "pipeline": "none",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 0,
+   "costInr": 0,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "pdf_typed",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5813,
+   "costInr": 1,
+   "confidence": 0.9461714285714286,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "pdf_typed",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5813,
+   "costInr": 1.036,
+   "confidence": 0.9461714285714286,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "pdf_typed",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5813,
+   "costInr": 1.036,
+   "confidence": 0.9461714285714286,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "pdf_typed",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 3913,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "pdf_typed",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": false,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.8571428571428571,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 3117,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "registrationDate": null,
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": "60",
+    "saleAmount": "15,00,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "scan_clean",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5774,
+   "costInr": 1,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "scan_clean",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5774,
+   "costInr": 1.036,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "scan_clean",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5774,
+   "costInr": 1.036,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "scan_clean",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 3758,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "scan_clean",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": false,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.8571428571428571,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 3044,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "registrationDate": null,
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": "60",
+    "saleAmount": "15,00,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "phone_photo",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5758,
+   "costInr": 1,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "phone_photo",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5758,
+   "costInr": 1.036,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "phone_photo",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5758,
+   "costInr": 1.036,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "phone_photo",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 3751,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "phone_photo",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": false,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.8571428571428571,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 3026,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "registrationDate": null,
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": "60",
+    "saleAmount": "15,00,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "handwritten_form",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5763,
+   "costInr": 1,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "handwritten_form",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5763,
+   "costInr": 1.036,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "handwritten_form",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5763,
+   "costInr": 1.036,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "handwritten_form",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 3772,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "handwritten_form",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 3069,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "registrationDate": "02-08-2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": "60",
+    "saleAmount": "15,00,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "photocopy",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 6762,
+   "costInr": 1,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "photocopy",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 6762,
+   "costInr": 1.036,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "photocopy",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 6762,
+   "costInr": 1.036,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "photocopy",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 3961,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "photocopy",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": false,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.8571428571428571,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 3018,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "registrationDate": null,
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": "60",
+    "saleAmount": "15,00,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "english_names",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": false,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.7142857142857143,
+   "decisionCorrect": false,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject BUYER_NAME_MISMATCH,SELLER_NAME_MISMATCH,SELLER_NOT_OWNER",
+   "latencyMs": 5800,
+   "costInr": 1,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "Velu",
+    "buyer": "Rajesh",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "english_names",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5800,
+   "costInr": 1.036,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "Velu",
+    "buyer": "Rajesh",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "english_names",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5800,
+   "costInr": 1.036,
+   "confidence": 1,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "Velu",
+    "buyer": "Rajesh",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "english_names",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": false,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.7142857142857143,
+   "decisionCorrect": false,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject BUYER_NAME_MISMATCH,SELLER_NAME_MISMATCH,SELLER_NOT_OWNER",
+   "latencyMs": 3825,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "Velu",
+    "buyer": "Rajesh",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "english_names",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": false,
+    "buyer": false,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": false,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.5714285714285714,
+   "decisionCorrect": false,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject BUYER_NAME_MISMATCH,SELLER_NAME_MISMATCH,SELLER_NOT_OWNER",
+   "latencyMs": 3070,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "registrationDate": null,
+    "seller": "Velu",
+    "buyer": "Rajesh",
+    "surveyNo": "66/3",
+    "extentCents": "60",
+    "saleAmount": "15,00,000"
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "stamp_paper",
+   "pipeline": "extract",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5605,
+   "costInr": 1,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "stamp_paper",
+   "pipeline": "extract_translit",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5605,
+   "costInr": 1.036,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "stamp_paper",
+   "pipeline": "extract_phonetic",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 5605,
+   "costInr": 1.036,
+   "confidence": 0.8761142857142856,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "stamp_paper",
+   "pipeline": "parse_llm",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": true,
+    "saleAmount": true
+   },
+   "fieldAcc": 1,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 3944,
+   "costInr": 0.52,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-02",
+    "saleAmount": 1500000
+   }
+  },
+  {
+   "caseId": "PT-2026-0107",
+   "variant": "stamp_paper",
+   "pipeline": "parse_regex",
+   "fields": {
+    "deedNo": true,
+    "seller": true,
+    "buyer": true,
+    "surveyNo": true,
+    "extentCents": true,
+    "registrationDate": false,
+    "saleAmount": true
+   },
+   "fieldAcc": 0.8571428571428571,
+   "decisionCorrect": true,
+   "expected": "reject SELLER_NOT_OWNER",
+   "got": "reject SELLER_NOT_OWNER",
+   "latencyMs": 3089,
+   "costInr": 0.5,
+   "extracted": {
+    "deedNo": "SD/0107/2026",
+    "registrationDate": null,
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": "60",
+    "saleAmount": "15,00,000"
+   }
+  }
+ ]
+}
