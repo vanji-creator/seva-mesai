@@ -326,7 +326,6 @@ wrong on the way, and the ideas I tried and dropped. One item per point.
   address contains an `&`, which the shell treats as a command separator.
 
 ### Ideas I tried or planned, then dropped
-- **Anthropic's Claude API as the model** — ruled out on cost; Sarvam chosen instead.
 - **Four different documents in the eval** — changed to one document in many forms, because what varies
   in real life is how the *same* document arrives; typed correct values are the ceiling.
 - **Parse → LLM as the live reading pipeline** — matched accuracy at half the price, kept in the eval
