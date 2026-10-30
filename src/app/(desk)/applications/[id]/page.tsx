@@ -2,40 +2,71 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { and, desc, eq } from "drizzle-orm";
 import { db } from "@/db/client";
-import { aiAnalyses, applications, decisions, documents, officers } from "@/db/schema";
-import { AiPanel, type AiView } from "@/components/AiPanel";
-import { Compare, type CompareRow } from "@/components/Compare";
+import { aiAnalyses, applications, decisions, officers } from "@/db/schema";
+import { SLA_DAYS, aresToCents, type DocKind } from "@/db/cases";
 import { DecisionBar } from "@/components/DecisionBar";
-import { DeedUpload } from "@/components/DeedUpload";
+import { Documents, type DocView } from "@/components/case/Documents";
+import { FactTable } from "@/components/case/FactTable";
+import { Findings } from "@/components/case/Findings";
+import { ReviewCard } from "@/components/case/ReviewCard";
+import { CATEGORY, EC_NATURE, byFieldOrder, fieldLabel } from "@/lib/case/labels";
+import { docsByKind, evaluateApp, loadDocs, type DocRow } from "@/lib/case/load";
 import { samplesFor } from "@/lib/docs/samples";
-import { PriorityChip } from "@/components/PriorityChip";
-import { fetchEvidence } from "@/lib/registry/client";
-import { formatDateTime, getT, type MessageKey } from "@/lib/i18n";
+import { formatDate, formatDateTime, getT, type MessageKey, type T } from "@/lib/i18n";
 import { priority } from "@/lib/priority";
-import { romanKey, similarity } from "@/lib/verify/fuzzy";
-import { isTamil } from "@/lib/docs/deed";
-import type { GrievancePayload, PattaPayload } from "@/lib/types";
+import { REQUIRED } from "@/lib/verify/caseCheck";
+import type { GrievancePayload, Locale } from "@/lib/types";
 
-const DOC_TYPE_KEY: Record<string, MessageKey> = { sale_deed: "doc.sale_deed", tax_receipt: "doc.tax_receipt", ration_card: "doc.ration_card" };
-
-// Reading a deed (Classify + Extract + AI) takes ~15–25 s; the server actions on this page share its limit.
+// Reading a new document (Classify + Extract) and re-reviewing can take ~20–40 s; server actions share this limit.
 export const maxDuration = 60;
 
-export default async function ApplicationPage({ params }: { params: Promise<{ id: string }> }) {
+const KNOWN = new Set(["application_form", "sale_deed", "patta", "ec", "tax_receipt", "id_proof", "petition", "ration_card"]);
+
+function docView(d: DocRow, t: T, locale: Locale): DocView {
+  const r = d.reading;
+  const type = r?.docType ?? null;
+  const v = (r?.values ?? {}) as Record<string, unknown>;
+  const fields = Object.entries(v)
+    .filter(([k, x]) => k !== "entries" && x !== null && x !== "")
+    .sort(([a], [b]) => byFieldOrder(a, b))
+    .map(([k, x]) => ({
+      label: fieldLabel(k, locale),
+      value: k === "extentAres" ? `${x} (≈ ${aresToCents(Number(x))} ${locale === "ta" ? "சென்ட்" : "cents"})` : typeof x === "number" ? x.toLocaleString("en-IN") : String(x),
+    }));
+  const entries = Array.isArray(v.entries)
+    ? (v.entries as Record<string, string | null>[]).map((e) => ({
+        date: e.date ?? "", nature: EC_NATURE[e.nature ?? "other"]?.[locale] ?? e.nature ?? "", docNo: e.docNo ?? "", parties: e.parties ?? "", detail: e.detail ?? "",
+      }))
+    : [];
+  const href = d.url ?? `/files/${d.id}`;
+  return {
+    id: d.id,
+    label: d.kind === "other" ? t((type && KNOWN.has(type) ? `doc.${type}` : "doc.other") as MessageKey) : t(`doc.${d.kind}` as MessageKey),
+    fileName: d.fileName,
+    href,
+    preview: d.previewUrl ?? (d.mime.startsWith("image/") ? href : null),
+    isPdf: d.mime === "application/pdf",
+    byOfficer: d.source === "officer",
+    state: d.kind === "other" ? "unrelated" : r && r.engine !== "pending" ? "read" : "notRead",
+    docTypeLabel: type ? t((KNOWN.has(type) ? `doc.${type}` : "doc.other") as MessageKey) : null,
+    confidence: r?.classifyConfidence ?? null,
+    fields,
+    entries,
+    text: r?.text ?? null,
+    textEn: r?.textEn ?? null,
+  };
+}
+
+export default async function CasePage({ params }: { params: Promise<{ id: string }> }) {
   const id = Number((await params).id);
   if (!Number.isInteger(id)) notFound();
   const { t, locale } = await getT();
 
   const [app] = await db.select().from(applications).where(eq(applications.id, id));
   if (!app) notFound();
-  const docs = await db.select().from(documents).where(eq(documents.applicationId, id));
-  // Analyses are written in one language; show the one for the current language (the panel runs one if missing).
-  const [latest] = await db
-    .select()
-    .from(aiAnalyses)
-    .where(and(eq(aiAnalyses.applicationId, id), eq(aiAnalyses.locale, locale)))
-    .orderBy(desc(aiAnalyses.id))
-    .limit(1);
+  const rows = await loadDocs(id);
+  const ev = await evaluateApp(app, rows);
+  const [review] = await db.select().from(aiAnalyses).where(and(eq(aiAnalyses.applicationId, id), eq(aiAnalyses.locale, locale))).orderBy(desc(aiAnalyses.id)).limit(1);
   const history = await db
     .select({ d: decisions, o: officers })
     .from(decisions)
@@ -43,127 +74,126 @@ export default async function ApplicationPage({ params }: { params: Promise<{ id
     .where(eq(decisions.applicationId, id))
     .orderBy(desc(decisions.id));
 
-  const p = priority(app);
-  const isPatta = app.type === "patta";
-  let rows: CompareRow[] = [];
-  const reading = docs.find((d) => d.kind === "sale_deed")?.reading ?? null;
-  const dv = reading?.values ?? null;
-  if (isPatta) {
-    const pl = app.payload as unknown as PattaPayload;
-    const ev = await fetchEvidence(pl);
-    const roman = reading?.roman ?? {};
-    // Same rule as verifyDeedDocument: Roman-letter deed names are compared via sound-alike keys,
-    // everything else as written (the registry column is Tamil vs Tamil).
-    const diff = (a: string, b?: string | null) =>
-      !!b && (roman[a] && !isTamil(b) ? similarity(romanKey(roman[a]), romanKey(b)) : similarity(a, b)) < 0.9;
-    rows = [
-      { label: t("field.deed"), applied: pl.saleDeedNo, registry: ev.deed ? pl.saleDeedNo : null, bad: !ev.deed, doc: dv?.deedNo, docBad: !!dv?.deedNo && dv.deedNo !== pl.saleDeedNo },
-      { label: t("field.seller"), applied: pl.seller, registry: ev.deed?.seller ?? null, bad: diff(pl.seller, ev.deed?.seller), doc: dv?.seller, docBad: diff(pl.seller, dv?.seller) },
-      { label: t("field.buyer"), applied: pl.buyer, registry: ev.deed?.buyer ?? null, bad: diff(pl.buyer, ev.deed?.buyer), doc: dv?.buyer, docBad: diff(pl.buyer, dv?.buyer) },
-      { label: t("field.survey"), applied: pl.surveyNo, registry: ev.deed?.surveyNo ?? null, bad: !!ev.deed && ev.deed.surveyNo !== pl.surveyNo, doc: dv?.surveyNo, docBad: !!dv?.surveyNo && dv.surveyNo !== pl.surveyNo },
-      { label: t("field.extent"), applied: pl.extentCents, registry: ev.deed?.extentCents ?? null, bad: !!ev.deed && Math.abs(ev.deed.extentCents - pl.extentCents) / ev.deed.extentCents > 0.02, doc: dv?.extentCents, docBad: dv?.extentCents != null && dv.extentCents !== pl.extentCents },
-      { label: t("field.owner"), applied: pl.seller, registry: ev.land?.currentOwner ?? null, bad: !ev.land || diff(pl.seller, ev.land.currentOwner) },
-      { label: t("field.tax"), applied: 0, registry: ev.tax ? ev.tax.duesAmount : null, bad: !!ev.tax && ev.tax.duesAmount > 0 },
-    ];
-  }
-  const samples = isPatta ? samplesFor(app.refNo).map((s) => ({ id: s.id, label: locale === "ta" ? s.labelTa : s.label })) : [];
-  const uploadLabels = {
-    title: t("detail.uploadDeed"), hint: t("detail.uploadHint"), upload: t("detail.upload"), reading: t("detail.reading"),
-    useSample: t("detail.useSample"), useSampleBtn: t("detail.useSampleBtn"), error: t("detail.uploadError"),
-    size: t("detail.fileTooBig"), type: t("detail.badType"),
-  };
-  const g = !isPatta ? (app.payload as unknown as GrievancePayload) : null;
-
-  const decisionLabels = {
-    approve: t("act.approve"), reject: t("act.reject"), return: t("act.return"), reason: t("act.reason"),
-    required: t("act.reason.required"), confirm: t("act.confirm"), cancel: t("act.cancel"),
-  };
-  const view: AiView | null = latest
-    ? { summary: latest.summary, findings: latest.findings, suggestion: latest.suggestion, reasons: latest.reasons, draftReply: latest.draftReply, source: latest.source }
-    : null;
   const pending = app.status === "pending";
+  const isPatta = app.type === "patta";
+  const p = priority(app);
+  const sla = isPatta ? SLA_DAYS.patta : Math.round((app.slaDueAt.getTime() - app.submittedAt.getTime()) / 86_400_000);
+  const dueText = p.daysLeft < 0 ? t("due.overdue", { n: -p.daysLeft }) : p.daysLeft === 0 ? t("due.today") : t("due.leftLong", { n: p.daysLeft });
+  const { byKind } = docsByKind(rows);
+  const missing = isPatta ? REQUIRED.filter((k) => !byKind[k]).map((k) => t(`doc.${k}` as MessageKey)) : [];
+  const samples = samplesFor(app.refNo)
+    .filter((s) => !(s.id.startsWith("later:") && byKind[s.id.slice(6) as DocKind]))
+    .map((s) => ({ id: s.id, label: locale === "ta" ? s.labelTa : s.label }));
+  const g = !isPatta ? (app.payload as unknown as GrievancePayload) : null;
+  // Only show complaint text that was actually read from the petition (never a stand-in).
+  const petitionRead = rows.some((d) => d.kind === "petition" && d.reading?.text);
+  const sugLabel = (s: string) => t((s === "approve" && !isPatta ? "sug.approve.grievance" : `sug.${s}`) as MessageKey);
 
   return (
-    <div className="flex flex-col gap-6">
-      <Link href="/" className="text-brand hover:underline">{t("detail.back")}</Link>
+    <div className="flex min-h-full flex-col">
+      <div className="mx-auto w-full max-w-[980px] flex-1 space-y-10 px-6 py-8 lg:px-10">
+        <header>
+          <Link href="/" className="mb-4 inline-block text-[15px] text-accent lg:hidden">‹ {t("case.back")}</Link>
+          <div className="text-[13px] text-muted">{app.refNo} · {t(`type.${app.type}`)}</div>
+          <h1 className="mt-1 text-[32px] font-semibold tracking-tight">{locale === "ta" ? app.applicantNameTa : app.applicantName}</h1>
+          <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[15px] text-muted">
+            <span>{locale === "ta" ? app.villageTa : app.village}</span>
+            <span>{t("case.submitted")} {formatDate(app.submittedAt, locale)}</span>
+            {pending ? (
+              <span className={p.daysLeft < 0 ? "font-medium text-red" : p.daysLeft <= 3 ? "text-amber" : ""}>
+                {t("case.due")} {formatDate(app.slaDueAt, locale)} · {dueText}
+              </span>
+            ) : (
+              <span className="font-medium text-fg">{t(`status.${app.status}`)}</span>
+            )}
+            <span className="text-faint">{t("case.sla", { n: sla })}</span>
+          </div>
+        </header>
 
-      <header className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-bold">{locale === "ta" ? app.applicantNameTa : app.applicantName}</h1>
-        <span className="font-mono text-muted">{app.refNo}</span>
-        <span className="rounded-full bg-bg px-3 py-0.5 text-sm">{t(`type.${app.type}`)}</span>
-        {pending ? <PriorityChip band={p.band} label={t(`desk.${p.band}`)} /> : <span className="rounded-full bg-bg px-3 py-0.5 text-sm font-semibold">{t(`status.${app.status}`)}</span>}
-      </header>
+        <ReviewCard
+          applicationId={id}
+          review={review ? {
+            summary: review.summary, suggestion: review.suggestion, suggestionLabel: sugLabel(review.suggestion), reasons: review.reasons,
+            draftReply: review.draftReply, source: review.source, when: formatDateTime(review.createdAt, locale), model: review.model,
+          } : null}
+          labels={{
+            title: t("review.title"), note: t("review.note"), recheck: t("review.recheck"), rechecking: t("review.rechecking"), ran: t("review.ran"),
+            offline: t("review.offline"), notRun: t("review.notRun"), run: t("review.run"), reasons: t("review.reasons"), draft: t("review.draft"),
+          }}
+        />
 
-      <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-        {/* min-w-0: let the column shrink so wide tables scroll inside their box on phones */}
-        <div className="flex min-w-0 flex-col gap-6">
-          {isPatta ? (
-            <>
-              <section>
-                <h2 className="mb-2 text-lg font-bold">{t("detail.evidence")}</h2>
-                <Compare rows={rows} applied={t("detail.applied")} registry={t("detail.registry")} doc={dv ? t("detail.onDocument") : undefined} />
-                {reading && (
-                  <p className="mt-2 text-sm text-muted">
-                    {t("detail.docRead")}: {reading.fileName} · {t("detail.docType")}:{" "}
-                    {reading.docType ? (DOC_TYPE_KEY[reading.docType] ? t(DOC_TYPE_KEY[reading.docType]) : reading.docType) : "—"}
-                    {reading.classifyConfidence !== null && ` (${Math.round(reading.classifyConfidence * 100)}%)`}
-                    {(reading.reviewRequired || (reading.minConfidence ?? 1) < 0.8) && <span className="ml-2 font-semibold text-attention">⚠ {t("detail.lowConf")}</span>}
-                  </p>
-                )}
-              </section>
-              {pending && <DeedUpload applicationId={id} samples={samples} labels={uploadLabels} />}
-              <section>
-                <h2 className="mb-2 text-lg font-bold">{t("detail.documents")}</h2>
-                <ul className="grid gap-2 sm:grid-cols-2">
-                  {docs.map((d) => (
-                    <li key={d.id} className={`flex justify-between rounded-lg border px-4 py-2 ${d.present ? "border-line bg-card" : "border-red-200 bg-red-50 text-urgent"}`}>
-                      <span>{t(`doc.${d.kind}` as MessageKey)}</span>
-                      <span className="font-semibold">{d.present ? `✓ ${t("detail.present")}` : `✕ ${t("detail.missing")}`}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            </>
-          ) : (
-            g && (
-              <section className="rounded-2xl border border-line bg-card p-5">
-                <h2 className="mb-2 text-lg font-bold">{t("detail.complaint")}</h2>
-                <p className="text-lg">{locale === "ta" ? g.text : g.textEn}</p>
-                <p className="mt-3 text-muted">{t("detail.location")}: {g.location || "—"}</p>
-              </section>
-            )
-          )}
+        <Findings findings={ev.findings} locale={locale} title={t("checks.title")} passedLabel={t("checks.passed")} />
 
-          {history.length > 0 && (
-            <section>
-              <h2 className="mb-2 text-lg font-bold">{t("detail.history")}</h2>
-              <ul className="flex flex-col gap-2">
-                {history.map(({ d, o }) => (
-                  <li key={d.id} className="rounded-lg border border-line bg-card p-3">
-                    <span className="font-semibold">{t(`status.${d.action}`)}</span> · {locale === "ta" ? o.nameTa : o.name} · {formatDateTime(d.createdAt, locale)}
-                    {d.reason && <p className="text-muted">{d.reason}</p>}
-                    {d.followedAi !== null && <p className="text-sm text-muted">{d.followedAi ? t("act.followed") : t("act.differed")}</p>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-        </div>
+        {ev.kind === "patta" && <FactTable rows={ev.rows} locale={locale} title={t("facts.title")} note={t("facts.note")} />}
 
-        <AiPanel applicationId={id} analysis={view} locale={locale} canRun={pending} labels={aiLabels(t)} />
+        {g && ev.kind === "grievance" && (
+          <section className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <div className="mb-2 text-[13px] text-muted">{t("grv.text")}</div>
+              <p className="whitespace-pre-line rounded-2xl bg-side p-4 text-[15.5px] leading-relaxed">{petitionRead ? g.text : <span className="text-amber">{t("docs.notRead")}</span>}</p>
+            </div>
+            <div>
+              <div className="mb-2 text-[13px] text-muted">{t("grv.translation")}</div>
+              <p className="whitespace-pre-line rounded-2xl bg-side p-4 text-[15.5px] leading-relaxed">{petitionRead && g.textEn ? g.textEn : "—"}</p>
+            </div>
+            <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-[15px] sm:col-span-2 sm:grid-cols-4">
+              {[
+                [t("grv.category"), CATEGORY[ev.cls.category]?.[locale] ?? ev.cls.category],
+                [t("grv.department"), ev.cls.department[locale]],
+                [t("grv.urgency"), t(`grv.u${ev.cls.urgency}` as MessageKey)],
+                [t("grv.location"), g.location || t("grv.noLocation")],
+              ].map(([k, val]) => (
+                <div key={k}>
+                  <dt className="text-[13px] text-muted">{k}</dt>
+                  <dd className="font-medium">{val}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
+
+        <Documents
+          applicationId={id}
+          docs={rows.map((d) => docView(d, t, locale))}
+          missing={missing}
+          samples={samples}
+          canEdit={pending}
+          labels={{
+            title: t("docs.title"), add: t("docs.add"), reading: t("docs.reading"), read: t("docs.read"), notRead: t("docs.notRead"),
+            reread: t("docs.reread"), open: t("docs.open"), whatRead: t("docs.whatRead"), confidence: t("docs.confidence"),
+            officer: t("docs.officer"), citizen: t("docs.citizen"), unrelated: t("docs.unrelated"), missing: t("docs.missing"),
+            hint: t("docs.hint"), samples: t("docs.samples"), choose: t("docs.choose"), error: t("docs.error"), size: t("docs.size"),
+            type: t("docs.type"), close: t("docs.close"), entries: t("docs.entries"), typeLabel: t("docs.type.label"), translation: t("grv.translation"),
+          }}
+        />
+
+        {history.length > 0 && (
+          <section>
+            <h2 className="mb-3 text-[17px] font-semibold">{t("history.title")}</h2>
+            <ul className="divide-y divide-line rounded-2xl border border-line">
+              {history.map(({ d, o }) => (
+                <li key={d.id} className="px-4 py-3 text-[15px]">
+                  <span className="font-medium">{t(`status.${d.action}`)}</span>
+                  <span className="text-muted"> · {locale === "ta" ? o.nameTa : o.name} · {formatDateTime(d.createdAt, locale)}</span>
+                  {d.reason && <p className="mt-1 text-muted">{d.reason}</p>}
+                  {d.followedAi !== null && <p className="mt-1 text-[13px] text-faint">{d.followedAi ? t("act.followed") : t("act.differed")}</p>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
 
-      {pending && <DecisionBar applicationId={id} labels={decisionLabels} approveLabel={isPatta ? t("act.approve") : t("act.approve.grievance")} />}
+      {pending && (
+        <DecisionBar
+          applicationId={id}
+          suggested={review?.suggestion ?? null}
+          labels={{
+            yours: t("act.yours"), approve: isPatta ? t("act.approve") : t("act.approve.grievance"), return: t("act.return"), reject: t("act.reject"),
+            reason: t("act.reason"), required: t("act.required"), confirm: t("act.confirm"), cancel: t("act.cancel"), suggested: t("act.suggested"),
+          }}
+        />
+      )}
     </div>
   );
-}
-
-function aiLabels(t: (k: MessageKey) => string) {
-  return {
-    title: t("ai.title"), note: t("ai.note"), run: t("ai.run"), rerun: t("ai.rerun"), summary: t("ai.summary"),
-    findings: t("ai.findings"), suggestion: t("ai.suggestion"), draft: t("ai.draft"), offline: t("ai.offline"),
-    "ai.source.llm": t("ai.source.llm"), "ai.source.rules": t("ai.source.rules"),
-    "sev.blocker": t("sev.blocker"), "sev.warning": t("sev.warning"), "sev.ok": t("sev.ok"),
-    "sug.approve": t("sug.approve"), "sug.reject": t("sug.reject"), "sug.return": t("sug.return"),
-  };
 }

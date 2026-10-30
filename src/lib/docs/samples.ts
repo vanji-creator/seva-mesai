@@ -1,32 +1,31 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { VARIANTS } from "../../../eval/cases";
 
-const DOCS = path.join(process.cwd(), "eval/docs");
+const ROOT = path.join(process.cwd(), "public/case-docs");
 const MIME: Record<string, string> = { pdf: "application/pdf", png: "image/png", jpg: "image/jpeg" };
 
-/** Wrong uploads anyone can try, to see the Classify gate stop them before extraction. */
-const WRONG = [
-  { id: "wrong_ration_card", label: "Wrong document: ration card", labelTa: "தவறான ஆவணம்: குடும்ப அட்டை" },
-  { id: "wrong_tax_receipt", label: "Wrong document: tax receipt", labelTa: "தவறான ஆவணம்: வரி ரசீது" },
-];
+/**
+ * Demo files an officer can "receive" without having their own: the document a citizen brought
+ * later for a case (public/case-docs/<ref>/_later/), and a wrong document anyone might hand in.
+ */
+interface Sample { id: string; label: string; labelTa: string; file: string }
 
-/** Fictional eval documents for this application (lets reviewers try the reader without their own files). */
-export function samplesFor(refNo: string) {
-  const own = VARIANTS.filter((v) => v.file && existsSync(path.join(DOCS, refNo, `${v.id}.${v.file}`))).map((v) => ({
-    id: v.id,
-    label: v.label,
-    labelTa: v.labelTa,
-  }));
-  return [...own, ...WRONG.filter((w) => existsSync(path.join(DOCS, "_wrong", `${w.id}.png`)))];
+const WRONG: Sample = { id: "ration_card", label: "Wrong document: ration card", labelTa: "தவறான ஆவணம்: குடும்ப அட்டை", file: "_samples/ration_card.png" };
+const LATER: Record<string, { label: string; labelTa: string }> = {
+  ec: { label: "Encumbrance certificate (brought later)", labelTa: "வில்லங்கச் சான்றிதழ் (பின்னர் கொண்டுவந்தது)" },
+};
+
+export function samplesFor(refNo: string): Omit<Sample, "file">[] {
+  const later = Object.entries(LATER)
+    .map(([kind, l]) => ({ id: `later:${kind}`, ...l, file: `${refNo}/_later/${kind}.pdf` }))
+    .filter((s) => existsSync(path.join(ROOT, s.file)));
+  return [...later, WRONG].filter((s) => existsSync(path.join(ROOT, s.file))).map(({ id, label, labelTa }) => ({ id, label, labelTa }));
 }
 
 export function loadSample(refNo: string, sampleId: string) {
   if (!/^[A-Z]{2}-\d{4}-\d{4}$/.test(refNo)) return null;
-  const wrong = WRONG.find((w) => w.id === sampleId);
-  const v = VARIANTS.find((x) => x.id === sampleId && x.file);
-  const file = wrong ? path.join(DOCS, "_wrong", `${wrong.id}.png`) : v ? path.join(DOCS, refNo, `${v.id}.${v.file}`) : null;
-  if (!file || !existsSync(file)) return null;
-  const ext = path.extname(file).slice(1);
-  return { name: `${refNo}_${sampleId}.${ext}`, mime: MIME[ext], data: new Uint8Array(readFileSync(file)) };
+  const rel = sampleId === WRONG.id ? WRONG.file : sampleId.startsWith("later:") && LATER[sampleId.slice(6)] ? `${refNo}/_later/${sampleId.slice(6)}.pdf` : null;
+  if (!rel || !existsSync(path.join(ROOT, rel))) return null;
+  const ext = path.extname(rel).slice(1);
+  return { name: path.basename(rel), mime: MIME[ext], data: new Uint8Array(readFileSync(path.join(ROOT, rel))) };
 }

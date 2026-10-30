@@ -1,19 +1,22 @@
 "use server";
 
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { and, desc, eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import { aiAnalyses, applications, decisions, documents } from "@/db/schema";
+import type { DocKind } from "@/db/cases";
 import { login, logout, requireOfficer } from "@/lib/auth";
-import { getLocale } from "@/lib/i18n";
-import { analyze, pattaChecks } from "@/lib/ai/analyze";
-import { readDeed, type DeedReading } from "@/lib/docs/deed";
+import { aiReview } from "@/lib/ai/analyze";
+import { evaluateApp, loadDocs } from "@/lib/case/load";
+import { readDocument } from "@/lib/docs/read";
 import { loadSample } from "@/lib/docs/samples";
-import { fetchEvidence } from "@/lib/registry/client";
+import { REQUIRED } from "@/lib/verify/caseCheck";
 import type { DocFile } from "@/lib/sarvam/client";
-import type { PattaPayload, Suggestion } from "@/lib/types";
+import type { GrievancePayload, PattaPayload, Suggestion } from "@/lib/types";
 
 export async function loginAction(_: unknown, form: FormData) {
   const ok = await login(String(form.get("username") ?? ""), String(form.get("password") ?? ""));
@@ -31,48 +34,45 @@ export async function setLocaleAction(locale: "ta" | "en") {
   revalidatePath("/", "layout");
 }
 
-export async function runAnalysisAction(applicationId: number) {
-  await requireOfficer();
-  const [app] = await db.select().from(applications).where(eq(applications.id, applicationId));
-  if (app?.type === "patta") {
-    // Keep the queue's issue counts in step with the checks the officer is looking at.
-    const checks = await pattaChecks(app);
-    await db.update(applications).set({ blockers: checks.blockers, warnings: checks.warnings }).where(eq(applications.id, applicationId));
-  }
-  await saveAnalysis(applicationId);
-  revalidatePath("/");
-  revalidatePath(`/applications/${applicationId}`);
-}
-
-async function saveAnalysis(applicationId: number) {
-  const locale = await getLocale();
+/**
+ * Re-run the deterministic checks and the AI review (both languages) from what is stored.
+ * Runs at intake already; the officer only needs it after new documents or to refresh.
+ */
+async function recheck(applicationId: number) {
   const [app] = await db.select().from(applications).where(eq(applications.id, applicationId));
   if (!app) return;
-  const a = await analyze(app, locale);
-  await db.insert(aiAnalyses).values({
-    applicationId,
-    locale,
-    summary: a.summary,
-    findings: a.findings,
-    suggestion: a.suggestion,
-    reasons: a.reasons,
-    draftReply: a.draftReply,
-    source: a.source,
-    model: a.model,
-  });
+  const ev = await evaluateApp(app);
+  await db.update(applications).set({ blockers: ev.blockers, warnings: ev.warnings }).where(eq(applications.id, applicationId));
+  const reviews = await Promise.all((["ta", "en"] as const).map(async (locale) => ({ locale, a: await aiReview(ev, locale) })));
+  for (const { locale, a } of reviews) {
+    await db.insert(aiAnalyses).values({ applicationId, locale, summary: a.summary, findings: a.findings, suggestion: a.suggestion, reasons: a.reasons, draftReply: a.draftReply, source: a.source, model: a.model });
+  }
+}
+
+export async function recheckAction(applicationId: number) {
+  await requireOfficer();
+  await recheck(applicationId);
+  revalidatePath("/", "layout");
 }
 
 const MAX_UPLOAD = 4 * 1024 * 1024; // Vercel function request bodies are capped at ~4.5 MB
 const ALLOWED = new Set(["application/pdf", "image/png", "image/jpeg"]);
 
+/** Names the reader may need to romanise for comparison (only used if a document is in English letters). */
+function namesFor(app: typeof applications.$inferSelect): string[] {
+  if (app.type !== "patta") return [];
+  const p = app.payload as unknown as PattaPayload;
+  return [p.seller, p.buyer];
+}
+
 /**
- * Officer uploads (or picks a sample of) the sale deed. Classify -> Extract via Sarvam,
- * store only the reading (not the file), refresh the intake counts and the AI analysis.
+ * Officer adds a document (upload, or one of the demo samples). Sarvam classifies it — wrong documents
+ * are kept but marked as not belonging — reads it, then the case is re-checked and re-reviewed.
  */
-export async function readDeedAction(applicationId: number, form: FormData) {
+export async function uploadDocAction(applicationId: number, form: FormData) {
   await requireOfficer();
   const [app] = await db.select().from(applications).where(eq(applications.id, applicationId));
-  if (!app || app.type !== "patta" || app.status !== "pending") return { error: "closed" as const };
+  if (!app || app.status !== "pending") return { error: "closed" as const };
 
   let file: DocFile | null = null;
   const sample = form.get("sample");
@@ -86,26 +86,45 @@ export async function readDeedAction(applicationId: number, form: FormData) {
   }
   if (!file) return { error: "type" as const };
 
-  const payload = app.payload as unknown as PattaPayload;
-  const evidence = await fetchEvidence(payload);
-  let reading: DeedReading;
+  let reading;
   try {
-    reading = await readDeed(file, [payload.seller, payload.buyer, evidence.deed?.seller ?? "", evidence.deed?.buyer ?? ""]);
+    reading = await readDocument(file, namesFor(app));
   } catch (e) {
-    console.error("deed reading failed", e);
+    console.error("document reading failed", e);
     return { error: "read" as const };
   }
+  const t = reading.docType;
+  const belongs = app.type === "patta" ? REQUIRED.includes(t as DocKind) : t === "petition";
+  await db.insert(documents).values({
+    applicationId, kind: belongs ? (t as string) : "other", fileName: file.name, mime: file.mime,
+    data: Buffer.from(file.data), source: "officer", reading,
+  });
+  await recheck(applicationId);
+  revalidatePath("/", "layout");
+  return { ok: true as const, kind: belongs ? t : "other" };
+}
 
-  await db
-    .update(documents)
-    // A wrong document doesn't count as the deed being attached; a real deed does.
-    .set(reading.docType === "sale_deed" ? { reading, present: true } : { reading })
-    .where(and(eq(documents.applicationId, applicationId), eq(documents.kind, "sale_deed")));
-  const checks = await pattaChecks(app);
-  await db.update(applications).set({ blockers: checks.blockers, warnings: checks.warnings }).where(eq(applications.id, applicationId));
-  await saveAnalysis(applicationId);
-  revalidatePath("/");
-  revalidatePath(`/applications/${applicationId}`);
+/** Read one stored document again (e.g. after a reading problem), then re-check. */
+export async function rereadDocAction(docId: number) {
+  await requireOfficer();
+  const [d] = await db.select().from(documents).where(eq(documents.id, docId));
+  if (!d) return { error: "missing" as const };
+  const [app] = await db.select().from(applications).where(eq(applications.id, d.applicationId));
+  const data = d.data ?? (d.url ? await readFile(path.join(process.cwd(), "public", d.url)) : null);
+  if (!data || !app) return { error: "missing" as const };
+  try {
+    const reading = await readDocument({ name: d.fileName, mime: d.mime, data: new Uint8Array(data) }, namesFor(app));
+    await db.update(documents).set({ reading }).where(eq(documents.id, docId));
+    if (app.type === "grievance" && reading.text) {
+      const p = app.payload as unknown as GrievancePayload;
+      await db.update(applications).set({ payload: { ...p, text: reading.text, textEn: reading.textEn ?? p.textEn } as unknown as Record<string, unknown> }).where(eq(applications.id, app.id));
+    }
+  } catch (e) {
+    console.error("document re-read failed", e);
+    return { error: "read" as const };
+  }
+  await recheck(d.applicationId);
+  revalidatePath("/", "layout");
   return { ok: true as const };
 }
 
@@ -117,12 +136,7 @@ export async function decideAction(applicationId: number, action: "approved" | "
   // Server-side rule, not just UI: rejecting or returning needs a written reason.
   if (action !== "approved" && text.length < 3) return { error: "reason" as const };
 
-  const [latest] = await db
-    .select()
-    .from(aiAnalyses)
-    .where(eq(aiAnalyses.applicationId, applicationId))
-    .orderBy(desc(aiAnalyses.id))
-    .limit(1);
+  const [latest] = await db.select().from(aiAnalyses).where(eq(aiAnalyses.applicationId, applicationId)).orderBy(desc(aiAnalyses.id)).limit(1);
   const ai: Suggestion | null = latest?.suggestion ?? null;
 
   const updated = await db
@@ -133,14 +147,14 @@ export async function decideAction(applicationId: number, action: "approved" | "
   if (!updated.length) return { error: "closed" as const };
 
   await db.insert(decisions).values({
-    applicationId,
-    officerId: officer.id,
-    action,
-    reason: text || null,
-    aiSuggestion: ai,
+    applicationId, officerId: officer.id, action, reason: text || null, aiSuggestion: ai,
     followedAi: ai ? ai === TO_SUGGESTION[action] : null,
   });
-  revalidatePath("/");
-  revalidatePath(`/applications/${applicationId}`);
+  revalidatePath("/", "layout");
   return { ok: true as const };
+}
+
+export async function docsFor(applicationId: number) {
+  await requireOfficer();
+  return loadDocs(applicationId);
 }

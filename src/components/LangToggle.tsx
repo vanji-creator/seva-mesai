@@ -6,7 +6,7 @@ export function LangToggle({ locale, label }: { locale: Locale; label: string })
   return (
     <button
       onClick={() => setLocaleAction(locale === "ta" ? "en" : "ta")}
-      className="rounded-full border border-line bg-card px-4 py-1.5 text-sm font-medium hover:bg-bg"
+      className="rounded-full px-3 py-1 text-[13px] font-medium text-accent hover:bg-accent-soft"
     >
       {label}
     </button>

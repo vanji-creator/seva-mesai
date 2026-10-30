@@ -1,153 +1,152 @@
 # சேவை மேசை · Seva Mesai
 
-A **Tamil-first desk for revenue officers** (Revenue Inspector / Tahsildar) to process
-**patta name-transfer applications** and **citizen grievances** with AI assistance —
-where the officer always makes the final call.
+A **Tamil-first desk for a Tahsildar's office** to process **patta name-transfer applications** and
+**citizen grievances**. Every document the citizen attached is really there to open; Sarvam AI has
+already read it and cross-checked it against the government records before the officer opens the
+case; the officer makes the final call.
 
-> All data is fictional. No real citizen data is used.
+> All people, land and documents are fictional and marked "மாதிரி / SAMPLE". No real citizen data.
 
-**Live demo:** https://seva-mesai.vercel.app
-— sign in as `ri.ponneri` (Revenue Inspector) or `tahsildar` (supervisor, also sees Audit), password `Demo@1234`.
-Tamil by default; the **English** button is top right.
+**Live demo:** https://seva-mesai.vercel.app — sign in as `tahsildar`, password `Demo@1234`.
+Tamil by default; **English** is in the top bar.
 
 ## The problem
 
-Officers verify land and civil applications across **disconnected department systems**
-(Registration, Revenue, Tax). A Revenue Inspector reviewing a patta transfer must ask the
-citizen for paper copies of the sale deed, tax receipt and encumbrance certificate, then
-compare names, survey numbers and extents by eye. Files stall; older officers fatigue on
-dense, English-heavy, dropdown-heavy portals; citizens make repeat trips.
+Officers verify applications across **disconnected department systems** — Registration (deeds, EC),
+Revenue (patta), the panchayat (property tax). For one patta transfer an officer reads five or six
+paper documents, compares names, survey numbers and extents by eye, and asks the citizen for copies of
+records the government already holds. Files stall; officers fatigue on dense, English-heavy portals;
+citizens make repeat trips.
 
-**Who it affects:** officers (slow, error-prone cross-checking, no sense of what is urgent)
-and citizens (delays, returned files with unclear reasons).
+**Who it affects:** officers (slow, error-prone cross-checking, no view of what is urgent) and
+citizens (delays, returned files with unclear reasons).
 
-## What the app does
+## What an officer sees
 
-| Officer need | How it is met |
-|---|---|
-| See what needs attention first | Priority queue ranked by SLA breach, age, issues found and grievance urgency; urgent / attention / normal bands |
-| Stop chasing paper | Evidence is fetched automatically from (mock) Registration, Revenue and Tax records and shown side by side with the application; mismatches highlighted |
-| Read the citizen's deed for them | Upload the sale deed (PDF / photo / scan): Sarvam **Classify** rejects wrong documents, **Extract** reads the fields, and a **three-way check** compares *application ↔ uploaded deed ↔ registered deed* |
-| AI assistance on each file | Summary, missing documents, inconsistencies, a suggested decision with reasons (and a draft citizen reply for grievances) |
-| Decide | Approve / Return / Reject. Reject and Return require a written reason. Every decision is logged with whether it followed the AI |
-| Local language | Tamil by default, English toggle; large type, plain words, few clicks |
+**One login, one screen.** Queue on the left (most urgent first), the open case on the right.
 
-Two services share one desk: **Patta name transfer** and **Grievances** (category and
-department routing, urgency, duplicate detection, repeat-complaint flag).
+For each case, already done before it is opened:
 
-## Demo
+1. **Every document read.** Application form, sale deed, patta / chitta, encumbrance certificate (EC),
+   tax receipt and ID card — each a real file you can open full size, with exactly what was read from it
+   beside it (Sarvam **Classify** → **Extract**). Petitions are OCR'd and translated to English.
+2. **One comparison table.** Each fact (deed no., seller, buyer, survey no., extent, patta holder, tax,
+   encumbrance) across the application, every document, and the government record. Disagreements are
+   the only thing coloured.
+3. **Plain-language checks**, problems first.
+4. **An AI review** (Sarvam `sarvam-105b`): summary, suggested decision with reasons, and a draft reply
+   to the citizen — in Tamil and English.
 
-Login (fictional accounts): `ri.ponneri` (officer) or `tahsildar` (supervisor, also sees **Audit**),
-password `Demo@1234`.
+The officer can **add a document** (upload, or a demo sample), **read a document again**, or
+**re-check** — each re-runs the reading, checks and review. **Approve / Return / Reject** needs a
+written reason for return or reject, and is logged with whether it followed the AI.
 
-Seeded cases to try: a clean file, a missing document, a spelling difference, extent mismatch,
-tax dues, mortgage in the encumbrance record, seller who is not the patta holder, pending
-litigation, a deed that does not exist, an urgent water grievance, duplicate sanitation
-complaints and a vague complaint.
+## The demo cases — one per problem type
 
-**Document reading:** PT-2026-0104 (phone photo of the deed) and PT-2026-0103 (handwritten form)
-come pre-read — see the third "On the deed" column. On PT-2026-0101 and PT-2026-0107, pick a sample
-document (typed PDF, phone photo, handwriting, photocopy, stamp paper…) and press *Read this* to run
-the live pipeline (needs a Sarvam key with credit). **Evals** in the top bar shows how each pipeline
-performs on each kind of document.
+| Case | Problem | What the documents show | AI suggests |
+|---|---|---|---|
+| PT-2026-0201 | None | Everything matches | Approve |
+| PT-2026-0202 | Extent typed wrong | Application 80 cents; deed, patta (0 - 25.09 ha-ares) and record 62 | Return |
+| PT-2026-0203 | Name mismatch | Application "ராஜேஸ்வரி"; deed and ID card "ராஜலட்சுமி" | Return |
+| PT-2026-0204 | Tax dues | Receipt paid only to 2024-25, ₹3,450 due | Return |
+| PT-2026-0205 | Mortgage | EC shows an Indian Bank mortgage (2024) never released | Return |
+| PT-2026-0206 | Seller is not the owner | Patta is in பழனிசாமி's name, seller is வேலு | Reject |
+| PT-2026-0207 | Missing document | No EC attached — add the "EC (brought later)" sample to clear it | Return |
+| PT-2026-0208 | Doctored deed copy | Deed copy says 120 cents; registered deed and patta say 80 | Return |
+| GR-2026-0301 | Urgent water | Handwritten petition: no water 3 days, children with fever, repeat | Accept & forward |
+| GR-2026-0302 | Duplicate | Same street, same problem as GR-0301 | Accept, handle together |
+| GR-2026-0303 | Unclear | "I need help" — no problem or place given | Return |
+
+**Deadlines** are the submission date plus the service's time limit (patta 30 days; grievances 2–15
+days by category), so they move with real time. **Priority** is recalculated on every page load from
+the deadline, age, issues found and grievance urgency.
 
 ## Run locally
 
 ```bash
 npm install
-cp .env.example .env.local      # optional: add LLM_API_KEY (Sarvam) for the LLM layer
-npm run seed                    # creates schema + fictional data (embedded Postgres, no setup)
-npm run dev                     # http://localhost:3000
-npm test                        # unit tests
+cp .env.example .env.local   # add LLM_API_KEY (Sarvam) for live reading / re-checks
+npm run seed                 # schema + demo data (embedded Postgres, no setup); no API calls
+npm run dev                  # http://localhost:3000  ·  tahsildar / Demo@1234
+npm test
 ```
 
-Without `LLM_API_KEY` everything works using the rule-based layer and shows an
-"AI offline" banner. With `DATABASE_URL` set (e.g. Neon) the same commands target that database.
-
-Re-running the document eval (optional; results are committed in `eval/results.json`):
+The seed loads documents that were already read and reviewed at "intake"
+(`src/db/fixtures/*.json`). To redo intake from scratch:
 
 ```bash
-npm run eval:render   # renders fictional deeds into 7 document forms (needs Google Chrome + macOS sips)
-npm run eval          # runs every form through every pipeline; API results cached in eval/cache
+npm run render:cases   # draw every case document (Chrome + macOS sips)
+npm run intake         # Sarvam reads every document, then the AI reviews every case (cached)
+npm run seed
 ```
 
-## Document pipeline and eval
-
-One document (the sale deed), many ways it reaches the office. Four fictional deeds with known
-answers were rendered as: **correct values typed directly (ceiling)**, typed PDF, clean scan, phone
-photo (skew, shadow, blur), printed form with handwritten fill-ins, poor photocopy, names in English
-letters, and stamp paper with seals over the text. Each was run through five pipelines and scored on
-**field accuracy** (7 fields) and **decision accuracy** — would the officer see the same suggestion
-and the same issues as with the correct values. Full table: [eval/RESULTS.md](eval/RESULTS.md).
-
-| Document form | Sarvam Extract | Extract + transliteration | + sound-alike names | Parse → sarvam-105b | Parse → regex (no AI) |
-|---|---|---|---|---|---|
-| Correct values (ceiling) | 100% | — | — | — | — |
-| Typed PDF / clean scan / phone photo / handwriting / photocopy / stamp paper | **100%** | 100% | 100% | **100%** | 100% (fields 93%) |
-| Names in English letters | 0% | 25% | **50%** | 0% | 0% |
-| Time · cost per page | 5.8 s · ₹1 | | | 3.9 s · ₹0.52 | 3.1 s · ₹0.50 |
-
-**Classify** got 30 / 30: all 28 deeds, plus the fake ration card and tax receipt rejected as wrong documents.
-
-What we learned, and what changed because of it:
-- On Tamil-script documents both Sarvam pipelines were perfect, even on degraded images; the regex
-  baseline lost fields (amount) but not decisions, because the checks only use five fields.
-- **Names in English letters are the real risk.** Tamil writes k/g, t/d, p/b with one letter, so
-  "கோவிந்தன்" transliterates to "Kovindan" while the deed says "Govindan". Comparing *sound-alike keys*
-  (`romanKey`) doubled accuracy; the rest are a transliteration error ("செல்வம்" → "Sevalam") and a case
-  where romanising erased a genuine spelling difference. So in the app a cross-script name difference is
-  **never a blocker**: it becomes a "confirm by eye" warning showing both spellings.
-- Extract's per-field confidence is not reliable for reformatted fields (correct dates scored 0.13), so
-  only the fields the checks use count toward the "low confidence" warning.
-- **Chosen pipeline: Classify → Extract.** Parse → LLM was as accurate, cheaper and faster here; Extract
-  was kept for per-field source locations (auditability) and one call instead of two. With more volume,
-  Parse → LLM is the obvious cost optimisation and the eval harness is ready to re-check it.
-
-Caveats: 4 deeds per cell, synthetic degradations (real phone photos are messier), one document type.
+Without a key the app still runs on the stored readings and rule-based checks; live actions show an
+"AI unavailable" note.
 
 ## Architecture
 
 ```
-Browser ── Next.js App Router (server components + server actions)
-              ├─ lib/verify    deterministic cross-checks (patta, grievance)  ← facts
-              ├─ lib/registry  RegistryClient: mock tables today, department APIs tomorrow
-              ├─ lib/ai        OpenAI-compatible LLM (Sarvam default), JSON output zod-validated ← narration + recommendation
-              ├─ lib/sarvam    Sarvam client: Doc AI jobs (classify / extract / parse), translate, transliterate
-              ├─ lib/docs      readDeed(): Classify → Extract → stored reading (file itself not kept)
-              ├─ lib/priority  transparent additive score for the queue
-              └─ db            Drizzle ORM → Postgres (Neon in prod, PGlite locally)
-eval/                          cases (ground truth) · render (Chrome) · pipelines · score · cached runner
+Browser ── Next.js App Router (server components + server actions), split-view shell
+  src/db/cases.ts          the dataset: one case per problem type (single source for docs, records, seed)
+  scripts/render-cases.ts  draws every document (PDF, scan, phone photo, photocopy, stamp paper, handwriting)
+  lib/sarvam/client.ts     Doc AI jobs (classify / extract / parse), translate, transliterate
+  lib/docs/read.ts         readDocument(): Classify → per-type Extract schema, or OCR + translate
+  lib/verify/caseCheck.ts  fact-by-source comparison → findings  (pure, unit-tested)
+  lib/case/*               load from DB · evaluate (pure) · queue · labels
+  lib/ai/analyze.ts        aiReview(): narrate findings + suggest, zod-validated, guardrailed
+  db                       Drizzle → Postgres (Neon in prod, PGlite locally)
+  eval/                    extraction eval: one deed × 8 input forms × 5 pipelines
 ```
 
-**Key technical decisions** (details and trade-offs in [DECISIONS.md](DECISIONS.md)):
+**Key decisions** (details and trade-offs in [DECISIONS.md](DECISIONS.md)):
 
-1. **Deterministic verifier + LLM, not LLM alone.** Mismatches and missing documents are found
-   by code (testable, reproducible). The LLM only writes the summary, reasons and a
-   recommendation from those findings.
-2. **The model can be stricter than the rules, never more lenient.** If checks found problems,
-   an "approve" from the model is overridden (and its narrative replaced by the rule-based one) (`reconcile` in `lib/ai/schema.ts`, unit-tested).
-3. **Human in the loop enforced in code.** AI never changes a status. Only an authenticated
-   officer's action does, and reasons for reject/return are validated server-side.
-4. **Provider-neutral, India-friendly LLM.** One plain `fetch` to an OpenAI-compatible endpoint. Default is Sarvam AI (`sarvam-105b`, built for Indic languages, low cost with signup credits); set `LLM_BASE_URL`/`LLM_MODEL` to swap in Groq, OpenRouter, Gemini etc. No vendor SDK.
-5. **Graceful degradation.** API key missing or call failing → rule-based analysis, clearly labelled.
-6. **Silo boundary is explicit** (`RegistryClient`) so real department APIs can replace the mock tables.
-7. **Zero-setup local run** via embedded Postgres; production uses Neon (Vercel has no persistent disk).
-8. **Tamil first**, cookie-based locale, Noto Sans Tamil, 18px base type, status shown by text+icon, never colour alone.
+1. **Code finds facts, the AI explains them.** Mismatches come from a deterministic comparison of
+   what was read; the LLM only writes the summary, reasons and draft reply.
+2. **The government record is the reference.** If the application differs, the citizen typed it
+   wrong (return). If a citizen's *document* differs, the copy doesn't match the original (PT-0208).
+3. **Work happens at intake, not on click.** Reading and review run when documents arrive; opening a
+   case reads stored results. "Re-check" is there when the officer wants it.
+4. **Classify gates everything.** A wrong file (ration card) is kept but marked as not belonging,
+   before any paid extraction — and an extra wrong paper never sends a complete file back.
+5. **The model can be stricter than the rules, never more lenient** (`reconcile`, unit-tested), and
+   never changes a status — only the officer does.
+6. **Cross-script names never block.** Measured: matching Tamil names against English letters is
+   unreliable, so it asks for a look instead.
+7. **Store what was read, keep files small.** Officer uploads are stored in the database row
+   (fictional, ≤ 4 MB); seeded files are static.
+
+## Document reading eval
+
+Before choosing the pipeline, one document (the sale deed) was rendered in 8 forms — **correct values
+typed directly (ceiling)**, typed PDF, clean scan, phone photo, handwritten fill-ins, poor photocopy,
+names in English letters, stamp paper with seals — and run through 5 pipelines, scored on **field
+accuracy** and **decision accuracy** (would the officer be told the same thing as with the correct
+values). Full table: [eval/RESULTS.md](eval/RESULTS.md); in the app: **Evals**.
+
+| Document form | Sarvam Extract | + transliteration | + sound-alike names | Parse → sarvam-105b | Parse → regex |
+|---|---|---|---|---|---|
+| Correct values (ceiling) | 100% | — | — | — | — |
+| PDF / scan / phone photo / handwriting / photocopy / stamp paper | **100%** | 100% | 100% | **100%** | 100% (fields 93%) |
+| Names in English letters | 0% | 25% | **50%** | 0% | 0% |
+| Time · cost per page | 5.8 s · ₹1 | | | 3.9 s · ₹0.52 | 3.1 s · ₹0.50 |
+
+Classify: 30 / 30 (28 deeds + ration card + tax receipt). What changed because of it: sound-alike name
+keys, cross-script names as warnings only, confidence counted only on fields the checks use, Extract
+chosen over Parse → LLM for per-field provenance (Parse → LLM is the cost optimisation at scale).
+Caveats: 4 deeds per cell, synthetic degradation, one document type.
 
 ## Tests
 
-`npm test` (35 tests) covers the verifier (clean, missing docs, spelling drift, extent, ownership, tax,
-mortgage, litigation, missing deed), the three-way deed-document check, sound-alike name keys, the
-priority score, grievance classification, the AI guardrail and the eval scorer itself.
+`npm test` (43 tests): every demo case produces exactly its intended findings from perfect readings;
+the fact table; unread / unrelated / missing documents; name matching across scripts; priority;
+grievance classification; the AI guardrail; the eval scorer.
 
-## Known limitations (honest list)
+## Known limitations
 
-- Mock registries and demo-grade auth (seeded users, signed cookie). Real use needs SSO, RBAC, rate limiting.
-- Name matching is edit-distance on Tamil script (sound-alike keys across scripts); real systems need Aadhaar-linked identity.
-- Grievance category rules are keyword-based; the LLM refines, but there is no trained classifier.
-- Only the sale deed is read; other documents (EC, tax receipt) are still present/absent. The uploaded
-  file is not stored, only what was read from it. Uploads are capped at 4 MB (Vercel request limit).
-- Timing and SLA values are illustrative, not official.
-- LLM output is live-tested on the seeded cases with `sarvam-105b`, not evaluated at scale. Draft replies can
-  still drift (e.g. "has been forwarded" in past tense), which is why they are drafts for the officer to edit.
-- The Tamil wording has not been reviewed by a native editor.
+- Department records are simulated tables behind one seam (`fetchRegistry`); auth is a single demo
+  account with a signed cookie.
+- Sarvam Doc AI latency varies a lot (5 s to several minutes per job was observed); intake waits up to
+  10 minutes per job, a live upload up to ~50 s before reporting it could not read.
+- Grievance categories are keyword rules plus the LLM; no trained classifier.
+- Translation renders "வட்டாட்சியர்" as "Circle Officer" (should be Tahsildar).
+- The Tamil copy has not been reviewed by a native editor.

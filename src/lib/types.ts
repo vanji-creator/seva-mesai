@@ -11,6 +11,8 @@ export interface Finding {
   en: string;
   /** Where the evidence came from, e.g. "பதிவுத்துறை" */
   source?: string;
+  /** Documents / records that show this (document kinds, "application" or "registry"), for linking in the UI. */
+  refs?: string[];
 }
 
 export interface PattaPayload {

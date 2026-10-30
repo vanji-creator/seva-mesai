@@ -29,7 +29,7 @@ const FIELD_LABEL: Record<(typeof FIELDS)[number], MessageKey> = {
 };
 
 const pct = (x: number) => `${Math.round(x * 100)}%`;
-const tone = (x: number) => (x >= 0.99 ? "bg-emerald-50 text-ok border-emerald-200" : x >= 0.5 ? "bg-amber-50 text-attention border-amber-200" : "bg-red-50 text-urgent border-red-200");
+const tone = (x: number) => (x >= 0.99 ? "bg-green-soft text-green border-green/20" : x >= 0.5 ? "bg-amber-soft text-amber border-amber/20" : "bg-red-soft text-red border-red/20");
 
 async function load(): Promise<Results | null> {
   try {
@@ -42,20 +42,20 @@ async function load(): Promise<Results | null> {
 export default async function EvalsPage() {
   const { t, locale } = await getT();
   const r = await load();
-  if (!r) return <p className="rounded-xl border border-line bg-card p-8">{t("evals.none")}</p>;
+  if (!r) return <p className="rounded-2xl border border-line bg-white p-8">{t("evals.none")}</p>;
   const cell = (variant: string, pipeline: string) => r.summary.find((s) => s.variant === variant && s.pipeline === pipeline);
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="mx-auto w-full max-w-[1100px] space-y-10 px-6 py-8 lg:px-10">
       <header className="flex flex-col gap-2">
-        <h1 className="text-2xl font-bold">{t("evals.title")}</h1>
+        <h1 className="text-[32px] font-semibold tracking-tight">{t("evals.title")}</h1>
         <p className="max-w-3xl text-muted">{t("evals.intro")}</p>
         <p className="text-sm text-muted">{t("evals.decision")}: {t("evals.decisionHelp")}. {t("evals.sample")}</p>
       </header>
 
-      <section className="overflow-x-auto rounded-xl border border-line bg-card">
+      <section className="overflow-x-auto rounded-2xl border border-line bg-white">
         <table className="w-full min-w-[820px] text-left">
-          <thead className="bg-bg text-sm text-muted">
+          <thead className="bg-side text-sm text-muted">
             <tr>
               <th className="px-4 py-3">{t("evals.variant")}</th>
               {PIPELINES.map((p) => <th key={p} className="px-3 py-3">{t(`pipe.${p}`)}</th>)}
@@ -93,7 +93,7 @@ export default async function EvalsPage() {
                       return (
                         <td key={p} className="px-3 py-3">
                           <div className={clsx("rounded-lg border px-3 py-1.5", tone(s.decisionAcc))}>
-                            <div className="text-lg font-bold">{pct(s.decisionAcc)}</div>
+                            <div className="text-[17px] font-semibold">{pct(s.decisionAcc)}</div>
                             <div className="text-xs">{t("evals.field")} {pct(s.fieldAcc)}</div>
                           </div>
                           <div className="mt-1 text-xs text-muted">
@@ -111,10 +111,10 @@ export default async function EvalsPage() {
       </section>
 
       <section>
-        <h2 className="mb-2 text-lg font-bold">{t("evals.perField")}</h2>
-        <div className="overflow-x-auto rounded-xl border border-line bg-card">
+        <h2 className="mb-2 text-[17px] font-semibold">{t("evals.perField")}</h2>
+        <div className="overflow-x-auto rounded-2xl border border-line bg-white">
           <table className="w-full min-w-[720px] text-left text-sm">
-            <thead className="bg-bg text-muted">
+            <thead className="bg-side text-muted">
               <tr>
                 <th className="px-4 py-2">{t("evals.variant")}</th>
                 {FIELDS.map((f) => <th key={f} className="px-3 py-2">{t(FIELD_LABEL[f])}</th>)}
@@ -140,10 +140,10 @@ export default async function EvalsPage() {
       </section>
 
       <section>
-        <h2 className="mb-2 text-lg font-bold">{t("evals.classify")}</h2>
-        <div className="overflow-x-auto rounded-xl border border-line bg-card">
+        <h2 className="mb-2 text-[17px] font-semibold">{t("evals.classify")}</h2>
+        <div className="overflow-x-auto rounded-2xl border border-line bg-white">
           <table className="w-full text-left text-sm">
-            <thead className="bg-bg text-muted">
+            <thead className="bg-side text-muted">
               <tr>
                 <th className="px-4 py-2">{t("evals.variant")}</th>
                 <th className="px-3 py-2">{t("evals.expected")}</th>
@@ -156,7 +156,7 @@ export default async function EvalsPage() {
                 <tr key={c.file} className="border-t border-line">
                   <td className="px-4 py-2 font-mono text-xs">{c.file}</td>
                   <td className="px-3 py-2">{c.expected}</td>
-                  <td className={clsx("px-3 py-2 font-semibold", c.correct ? "text-ok" : "text-urgent")}>{c.correct ? "✓ " : "✕ "}{c.got ?? "—"}</td>
+                  <td className={clsx("px-3 py-2 font-semibold", c.correct ? "text-green" : "text-red")}>{c.correct ? "✓ " : "✕ "}{c.got ?? "—"}</td>
                   <td className="px-3 py-2">{c.confidence ?? "—"}</td>
                 </tr>
               ))}

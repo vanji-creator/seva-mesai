@@ -4,18 +4,15 @@ import { loginAction } from "@/app/actions";
 
 export function LoginForm({ labels }: { labels: Record<"title" | "user" | "pass" | "submit" | "error", string> }) {
   const [state, action, pending] = useActionState(loginAction, null);
-  const input = "w-full rounded-lg border border-line bg-white px-4 py-3 text-lg";
+  const input = "w-full bg-transparent px-4 py-3 text-[16px] outline-none placeholder:text-faint";
   return (
-    <form action={action} className="flex flex-col gap-4 rounded-2xl border border-line bg-card p-6 shadow-sm">
-      <h2 className="text-xl font-semibold">{labels.title}</h2>
-      <label className="flex flex-col gap-1">{labels.user}
-        <input name="username" autoComplete="username" required className={input} />
-      </label>
-      <label className="flex flex-col gap-1">{labels.pass}
-        <input name="password" type="password" autoComplete="current-password" required className={input} />
-      </label>
-      {state?.error && <p role="alert" className="text-urgent">{labels.error}</p>}
-      <button disabled={pending} className="rounded-lg bg-brand px-4 py-3 text-lg font-semibold text-white disabled:opacity-60">{labels.submit}</button>
+    <form action={action} className="space-y-4">
+      <div className="divide-y divide-line overflow-hidden rounded-2xl border border-line-strong bg-white">
+        <input name="username" autoComplete="username" required placeholder={labels.user} aria-label={labels.user} className={input} />
+        <input name="password" type="password" autoComplete="current-password" required placeholder={labels.pass} aria-label={labels.pass} className={input} />
+      </div>
+      {state?.error && <p role="alert" className="text-center text-[14px] text-red">{labels.error}</p>}
+      <button disabled={pending} className="w-full rounded-2xl bg-accent py-3 text-[16px] font-medium text-white disabled:opacity-60">{labels.submit}</button>
     </form>
   );
 }

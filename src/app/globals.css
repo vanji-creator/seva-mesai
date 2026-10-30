@@ -1,31 +1,47 @@
 @import "tailwindcss";
 
+/* Quiet, Apple-like system: white surfaces, one accent, status colours only where they mean something. */
 :root {
-  --bg: #f6f7fb;
-  --fg: #14213d;
-  --card: #ffffff;
-  --muted: #5b6478;
-  --line: #dde1ec;
-  --brand: #1d3b8b;
-  --urgent: #b42318;
-  --attention: #b54708;
-  --ok: #067647;
+  --bg: #ffffff;
+  --side: #f5f5f7;
+  --fg: #1d1d1f;
+  --muted: #6e6e73;
+  --faint: #86868b;
+  --line: #e5e5ea;
+  --line-strong: #d2d2d7;
+  --accent: #0071e3;
+  --accent-soft: #e8f1fc;
+  --red: #d70015;
+  --red-soft: #fff1f0;
+  --amber: #b25000;
+  --amber-soft: #fff6e5;
+  --green: #1d8a3a;
+  --green-soft: #ecf8ef;
 }
 
 @theme inline {
   --color-bg: var(--bg);
+  --color-side: var(--side);
   --color-fg: var(--fg);
-  --color-card: var(--card);
   --color-muted: var(--muted);
+  --color-faint: var(--faint);
   --color-line: var(--line);
-  --color-brand: var(--brand);
-  --color-urgent: var(--urgent);
-  --color-attention: var(--attention);
-  --color-ok: var(--ok);
-  --font-sans: var(--font-tamil), system-ui, sans-serif;
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-red: var(--red);
+  --color-red-soft: var(--red-soft);
+  --color-amber: var(--amber);
+  --color-amber-soft: var(--amber-soft);
+  --color-green: var(--green);
+  --color-green-soft: var(--green-soft);
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font-tamil), "Helvetica Neue", system-ui, sans-serif;
 }
 
-/* Large base type: older officers, Tamil glyphs need the extra size. */
-html { font-size: 18px; }
-body { background: var(--bg); color: var(--fg); line-height: 1.6; }
-:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { background: var(--bg); color: var(--fg); line-height: 1.55; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+::selection { background: var(--accent-soft); }
+
+/* Thin, unobtrusive scrollbars in the two panes. */
+.pane { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }

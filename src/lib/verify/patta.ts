@@ -12,6 +12,8 @@ const DOC_LABEL: Record<string, { ta: string; en: string }> = {
 
 /** Codes where the law, not paperwork, blocks the transfer -> suggest reject. */
 const REJECT_CODES = new Set(["DEED_NOT_FOUND", "SELLER_NOT_OWNER", "ENCUMBRANCE_LITIGATION"]);
+// Shown to the officer but never a reason to send the file back: an extra, unrelated paper can just be set aside.
+const NOTE_CODES = new Set(["DOC_UNRELATED"]);
 
 const SAME = 0.9; // >= : same name, ignore
 const SPELLING = 0.65; // >= : probably same person, spelling differs
@@ -165,7 +167,7 @@ export function summarise(findings: Finding[]): VerifyResult {
   const reasonCodes = [...blockers, ...warnings].map((x) => x.code);
   const suggestion = blockers.some((b) => REJECT_CODES.has(b.code))
     ? "reject"
-    : blockers.length || warnings.length
+    : blockers.length || warnings.some((w) => !NOTE_CODES.has(w.code))
       ? "return"
       : "approve";
 

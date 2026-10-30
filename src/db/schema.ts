@@ -1,5 +1,6 @@
 import {
   boolean,
+  customType,
   integer,
   jsonb,
   pgTable,
@@ -7,7 +8,7 @@ import {
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
-import type { DeedReading } from "@/lib/docs/deed";
+import type { DocReading } from "@/lib/docs/read";
 import type { Finding, Suggestion } from "@/lib/types";
 
 export const officers = pgTable("officers", {
@@ -43,15 +44,29 @@ export const applications = pgTable("applications", {
   urgency: integer("urgency").notNull().default(1),
 });
 
+const bytea = customType<{ data: Buffer; driverData: Buffer }>({ dataType: () => "bytea" });
+
+/**
+ * Every file attached to a case. Seeded (citizen) files are static under /case-docs; files an officer
+ * uploads are kept in the row itself (small, fictional demo data; avoids a separate blob store).
+ */
 export const documents = pgTable("documents", {
   id: serial("id").primaryKey(),
   applicationId: integer("application_id")
     .notNull()
     .references(() => applications.id, { onDelete: "cascade" }),
+  /** What the document is (from Classify): application_form, sale_deed, patta, ec, tax_receipt, id_proof, petition, other. */
   kind: text("kind").notNull(),
-  present: boolean("present").notNull(),
-  /** Result of reading the uploaded file (Sarvam Classify + Extract). The file itself is not stored. */
-  reading: jsonb("reading").$type<DeedReading>(),
+  fileName: text("file_name").notNull(),
+  mime: text("mime").notNull(),
+  /** Static file URL (seeded) — or null when the bytes are stored in `data`. */
+  url: text("url"),
+  previewUrl: text("preview_url"),
+  data: bytea("data"),
+  source: text("source").$type<"citizen" | "officer">().notNull().default("citizen"),
+  uploadedAt: timestamp("uploaded_at", { withTimezone: true }).notNull().defaultNow(),
+  /** What Sarvam read from it (Classify + Extract, or OCR + translation for petitions). */
+  reading: jsonb("reading").$type<DocReading>(),
 });
 
 export const aiAnalyses = pgTable("ai_analyses", {
@@ -97,6 +112,7 @@ export const regSaleDeeds = pgTable("reg_sale_deeds", {
 
 export const regLandRecords = pgTable("reg_land_records", {
   surveyNo: text("survey_no").primaryKey(),
+  pattaNo: text("patta_no"),
   currentOwner: text("current_owner").notNull(),
   extentCents: integer("extent_cents").notNull(),
   landClass: text("land_class").notNull(),

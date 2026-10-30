@@ -1,0 +1,576 @@
+{
+ "PT-2026-0201": {
+  "ta": {
+   "summary": "முருகேசன் என்பவர் சரண்யா என்பவருக்கு சர்வே எண் 112/3 இல் உள்ள 48 சென்ட் நிலத்திற்கான பட்டா பெயர் மாற்றத்திற்கு விண்ணப்பித்துள்ளார். விண்ணப்பத்தில் உள்ள ஆவணங்கள் மற்றும் அரசாங்க பதிவுகள் அனைத்தும் சரியாக பொருந்துவதால், இதை அங்கீகரிக்கலாம்.",
+   "findings": [
+    {
+     "code": "ALL_CLEAR",
+     "severity": "ok",
+     "ta": "அனைத்து ஆவணங்களும் அரசுப் பதிவுகளும் விண்ணப்பத்துடன் பொருந்துகின்றன",
+     "en": "All documents and government records match the application"
+    }
+   ],
+   "suggestion": "approve",
+   "reasons": [
+    "அனைத்து ஆவணங்களும் அரசாங்க பதிவுகளும் சரியாக பொருந்துகின்றன (ALL_CLEAR)"
+   ],
+   "draftReply": "உங்கள் பட்டா பெயர் மாற்ற விண்ணப்பம் பரிசீலிக்கப்பட்டு, அடுத்தகட்ட நடவடிக்கைகளுக்காக சம்பந்தப்பட்ட துறைக்கு அனுப்பப்பட்டுள்ளது.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  },
+  "en": {
+   "summary": "The application is for transferring the patta name of 48 cents in survey number 112/3 from the seller Murugesan to the buyer Saranya. The officer must know that all documents and government records match the application.",
+   "findings": [
+    {
+     "code": "ALL_CLEAR",
+     "severity": "ok",
+     "ta": "அனைத்து ஆவணங்களும் அரசுப் பதிவுகளும் விண்ணப்பத்துடன் பொருந்துகின்றன",
+     "en": "All documents and government records match the application"
+    }
+   ],
+   "suggestion": "approve",
+   "reasons": [
+    "All documents and government records match the application (ALL_CLEAR)"
+   ],
+   "draftReply": "Thank you for submitting your application to transfer the patta name. Your documents have been verified, and your request is being forwarded to the appropriate department for further processing.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  }
+ },
+ "PT-2026-0202": {
+  "ta": {
+   "summary": "கோவிந்தன் என்பவர் மீனாவுக்கு சர்வே எண் 201/7-ல் உள்ள 80 சென்ட் நிலத்திற்கு பட்டா பெயர் மாற்ற விண்ணப்பித்துள்ளார். விண்ணப்பத்தில் உள்ள நிலத்தின் அளவுக்கும் பதிவு செய்யப்பட்ட ஆவணங்களுக்கும் இடையே முரண்பாடு உள்ளது.",
+   "findings": [
+    {
+     "code": "APP_EXTENT_MISMATCH",
+     "severity": "blocker",
+     "ta": "விண்ணப்பத்தில் பரப்பு 80 சென்ட்; ஆவணங்களிலும் அரசுப் பதிவிலும் 62 சென்ட்",
+     "en": "Application says extent 80 cents; documents and government record say 62 cents",
+     "refs": [
+      "application",
+      "sale_deed",
+      "patta",
+      "registry"
+     ]
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "விண்ணப்பத்தில் உள்ள நிலத்தின் அளவு 80 சென்ட் என்றும், ஆவணங்களில் 62 சென்ட் என்றும் முரண்படுகிறது (APP_EXTENT_MISMATCH)."
+   ],
+   "draftReply": "வணக்கம். உங்கள் பட்டா பெயர் மாற்ற விண்ணப்பம் பெறப்பட்டுள்ளது. விண்ணப்பத்தில் குறிப்பிடப்பட்டுள்ள நிலத்தின் அளவும், பதிவு செய்யப்பட்ட ஆவணங்களில் உள்ள அளவும் மாறுபட்டுள்ளது. எனவே, சரியான நிலத்தின் அளவைக் குறிப்பிட்டு மீண்டும் விண்ணப்பிக்குமாறு கேட்டுக்கொள்கிறோம்.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  },
+  "en": {
+   "summary": "The citizen applied to transfer a patta from கோவிந்தன் to மீனா for survey number 201/7. The officer must note that the stated land extent in the application does not match the extent in the sale deed and government records.",
+   "findings": [
+    {
+     "code": "APP_EXTENT_MISMATCH",
+     "severity": "blocker",
+     "ta": "விண்ணப்பத்தில் பரப்பு 80 சென்ட்; ஆவணங்களிலும் அரசுப் பதிவிலும் 62 சென்ட்",
+     "en": "Application says extent 80 cents; documents and government record say 62 cents",
+     "refs": [
+      "application",
+      "sale_deed",
+      "patta",
+      "registry"
+     ]
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "The application states the land extent as 80 cents, but the sale deed and government records show the extent is 62 cents (APP_EXTENT_MISMATCH)."
+   ],
+   "draftReply": "Your application for transferring the patta is being examined. However, there is a mismatch in the land extent mentioned in your application (80 cents) and the extent recorded in the sale deed and government records (62 cents). Please review the sale deed and submit a corrected application with the accurate extent.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  }
+ },
+ "PT-2026-0203": {
+  "ta": {
+   "summary": "அண்ணாமலை என்பவர் கும்மிடிப்பூண்டி கிராமம், சர்வே எண் 45/1 நிலத்திற்கான பட்டா பெயர் மாற்றத்திற்கு விண்ணப்பித்துள்ளார். விண்ணப்பத்தில் வாங்குபவர் ராஜேஸ்வரி என்றும், ஆவணங்கள் மற்றும் அரசு பதிவுகளில் வாங்குபவர் ராஜலட்சுமி என்றும் வேறுபட்டுள்ளது.",
+   "findings": [
+    {
+     "code": "APP_BUYER_MISMATCH",
+     "severity": "blocker",
+     "ta": "விண்ணப்பத்தில் வாங்குபவர் \"ராஜேஸ்வரி\"; ஆவணங்களிலும் அரசுப் பதிவிலும் \"ராஜலட்சுமி\"",
+     "en": "Application says buyer \"ராஜேஸ்வரி\"; documents and government record say \"ராஜலட்சுமி\"",
+     "refs": [
+      "application",
+      "sale_deed",
+      "id_proof",
+      "registry"
+     ]
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "விண்ணப்பத்தில் வாங்குபவர் பெயர் ராஜேஸ்வரி என்றும், ஆவணங்களில் ராஜலட்சுமி என்றும் முரண்பாடு உள்ளது (APP_BUYER_MISMATCH)."
+   ],
+   "draftReply": "உங்களது விண்ணப்பத்தில் வாங்குபவர் பெயர் ராஜேஸ்வரி என்று குறிப்பிடப்பட்டுள்ளது. ஆனால், விற்பனை பத்திரம் மற்றும் பிற ஆவணங்களில் வாங்குபவர் பெயர் ராஜலட்சுமி என்று உள்ளது. தயவுசெய்து சரியான வாங்குபவரின் பெயரை உறுதிப்படுத்தி மீண்டும் விண்ணப்பத்தை சமர்ப்பிக்கவும்.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  },
+  "en": {
+   "summary": "The application requests a patta name transfer for survey number 45/1 from seller அண்ணாமலை to buyer ராஜேஸ்வரி. However, the documents and government records show the buyer is actually ராஜலட்சுமி, which is a mismatch. The officer must verify the identity of the buyer before proceeding.",
+   "findings": [
+    {
+     "code": "APP_BUYER_MISMATCH",
+     "severity": "blocker",
+     "ta": "விண்ணப்பத்தில் வாங்குபவர் \"ராஜேஸ்வரி\"; ஆவணங்களிலும் அரசுப் பதிவிலும் \"ராஜலட்சுமி\"",
+     "en": "Application says buyer \"ராஜேஸ்வரி\"; documents and government record say \"ராஜலட்சுமி\"",
+     "refs": [
+      "application",
+      "sale_deed",
+      "id_proof",
+      "registry"
+     ]
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "The application form lists the buyer as ராஜேஸ்வரி, but the sale deed and government records list the buyer as ராஜலட்சுமி (APP_BUYER_MISMATCH)."
+   ],
+   "draftReply": "Thank you for your application. We have noticed a mismatch regarding the buyer's name. The application states the buyer is ராஜேஸ்வரி, but the supporting documents and records show the buyer as ராஜலட்சுமி. Please provide a clarification or corrected document to resolve this discrepancy.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  }
+ },
+ "PT-2026-0204": {
+  "ta": {
+   "summary": "தனபால் என்பவர் சுப்பிரமணி என்பவரிடமிருந்து 310/5 சர்வே எண்ணில் உள்ள 40 சென்ட் நிலத்தை வாங்க விண்ணப்பித்துள்ளார். நிலத்தின் மீதான வரி பாக்கி உள்ளதால், விண்ணப்பத்தை திருப்பி அனுப்ப வேண்டும்.",
+   "findings": [
+    {
+     "code": "TAX_DUES",
+     "severity": "blocker",
+     "ta": "சொத்து வரி நிலுவை ₹3,450; 2024-25 வரை மட்டுமே செலுத்தப்பட்டுள்ளது",
+     "en": "Property tax due ₹3,450; paid only up to 2024-25",
+     "source": "வரித்துறை",
+     "refs": [
+      "tax_receipt",
+      "registry"
+     ]
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "நில வரி பாக்கி ₹3,450 நிலுவையில் உள்ளது (TAX_DUES)"
+   ],
+   "draftReply": "வணக்கம். உங்கள் பட்டா பெயர் மாற்ற விண்ணப்பம் பெறப்பட்டுள்ளது. ஆனால், நிலத்தின் மீதான வரி பாக்கி ₹3,450 நிலுவையில் உள்ளது. நிலுவைத் தொகையை செலுத்திய பின், மீண்டும் விண்ணப்பத்தை சமர்ப்பிக்கவும். நன்றி.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  },
+  "en": {
+   "summary": "The application for patta name transfer from seller சுப்பிரமணி to buyer தனபால் for survey number 310/5 with an extent of 40 cents is under review. The officer must note that property tax dues remain outstanding before processing the transfer.",
+   "findings": [
+    {
+     "code": "TAX_DUES",
+     "severity": "blocker",
+     "ta": "சொத்து வரி நிலுவை ₹3,450; 2024-25 வரை மட்டுமே செலுத்தப்பட்டுள்ளது",
+     "en": "Property tax due ₹3,450; paid only up to 2024-25",
+     "source": "வரித்துறை",
+     "refs": [
+      "tax_receipt",
+      "registry"
+     ]
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "Property tax dues of ₹3,450 are pending (TAX_DUES)."
+   ],
+   "draftReply": "Dear applicant, your patta name transfer application is being examined. Please clear the pending property tax dues of ₹3,450 to proceed with the transfer.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  }
+ },
+ "PT-2026-0205": {
+  "ta": {
+   "summary": "பாத்திமா என்பவர் அப்துல் ரஹீம் என்பவரிடமிருந்து சர்வே எண் 17/9 இல் 25 சென்ட் நிலத்தை வாங்க விண்ணப்பித்துள்ளார். இந்த விண்ணப்பத்தில் ₹4,50,000 அடமானம் இன்னும் விடுவிக்கப்படவில்லை என்ற தடை உள்ளது.",
+   "findings": [
+    {
+     "code": "ENCUMBRANCE_MORTGAGE",
+     "severity": "blocker",
+     "ta": "அடமானம் விடுவிக்கப்படவில்லை — அடமானம் ₹4,50,000 (ஆவண எண் 1188/2024, 2024-03-11)",
+     "en": "Mortgage not released — ₹4,50,000, document 1188/2024, 2024-03-11",
+     "source": "பதிவுத்துறை",
+     "refs": [
+      "ec",
+      "registry"
+     ]
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "₹4,50,000 அடமானம் இன்னும் விடுவிக்கப்படவில்லை (ENCUMBRANCE_MORTGAGE)."
+   ],
+   "draftReply": "உங்கள் விண்ணப்பம் பரிசீலிக்கப்பட்டது. நிலத்தின் மீதான அடமானம் இன்னும் விடுவிக்கப்படாததால், உங்கள் ஆவணங்களுடன் அடமானத்தை விடுவித்ததற்கான சான்றிதழைச் சமர்ப்பிக்குமாறு கேட்டுக்கொள்கிறோம்.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  },
+  "en": {
+   "summary": "The applicant requests a patta name transfer for survey number 17/9 from Abdul Rahim to Pathima. The officer must note that a mortgage encumbrance is still active on the land.",
+   "findings": [
+    {
+     "code": "ENCUMBRANCE_MORTGAGE",
+     "severity": "blocker",
+     "ta": "அடமானம் விடுவிக்கப்படவில்லை — அடமானம் ₹4,50,000 (ஆவண எண் 1188/2024, 2024-03-11)",
+     "en": "Mortgage not released — ₹4,50,000, document 1188/2024, 2024-03-11",
+     "source": "பதிவுத்துறை",
+     "refs": [
+      "ec",
+      "registry"
+     ]
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "Mortgage not released — ₹4,50,000, document 1188/2024, 2024-03-11 (ENCUMBRANCE_MORTGAGE)"
+   ],
+   "draftReply": "Dear applicant, your request for the patta name transfer is being examined. Please provide the release deed or other documents to clear the active mortgage on this land.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  }
+ },
+ "PT-2026-0206": {
+  "ta": {
+   "summary": "வேலு என்பவர் ராஜேஷ் என்பவருக்கு சர்வே எண் 66/3-ல் உள்ள 60 சென்ட் நிலத்தை விற்பனை செய்வதற்கான பட்டா பெயர் மாற்ற விண்ணப்பம் பெறப்பட்டுள்ளது. தற்போதைய பட்டா உரிமையாளர் பழனிசாமி என்பவரே தவிர, விண்ணப்பதாரர் வேலு அல்ல என்ற தடைகள் உள்ளன.",
+   "findings": [
+    {
+     "code": "SELLER_NOT_OWNER",
+     "severity": "blocker",
+     "ta": "தற்போதைய பட்டாதாரர் \"பழனிசாமி\"; விற்பவர் \"வேலு\" அல்ல",
+     "en": "Current patta holder is \"பழனிசாமி\", not the seller \"வேலு\"",
+     "source": "வருவாய்த்துறை",
+     "refs": [
+      "patta",
+      "registry"
+     ]
+    },
+    {
+     "code": "DOC_RECORD_MISMATCH",
+     "severity": "blocker",
+     "ta": "பட்டா-இல் பட்டாதாரர் பழனிசாமி; அரசுப் பதிவில் பழனிசாமி — நகல் அசலுடன் பொருந்தவில்லை",
+     "en": "Patta shows patta holder பழனிசாமி, government record பழனிசாமி — the copy doesn't match the original",
+     "refs": [
+      "patta",
+      "registry"
+     ]
+    }
+   ],
+   "suggestion": "reject",
+   "reasons": [
+    "தற்போதைய பட்டா உரிமையாளர் பழனிசாமி, விண்ணப்பதாரர் வேலு அல்ல (SELLER_NOT_OWNER)",
+    "பட்டா நகலுக்கும் அரசு ஆவணங்களுக்கும் இடையே முரண்பாடு உள்ளது (DOC_RECORD_MISMATCH)"
+   ],
+   "draftReply": "உங்களது பட்டா பெயர் மாற்ற விண்ணப்பம் பரிசீலனைக்கு அனுப்பப்பட்டுள்ளது. தற்போதைய பட்டா உரிமையாளர் பழனிசாமி என்பதால், விற்பனை ஆவணத்தின் அடிப்படையில் பெயர் மாற்றத்தை ஏற்க இயலாது. இது குறித்து மேலும் விவரங்களுக்கு தொடர்பு கொள்ளவும்.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  },
+  "en": {
+   "summary": "An application is submitted to transfer the patta name from seller Velu to buyer Rajesh for survey number 66/3 with an extent of 60 cents. The officer must note that the current patta holder is Pazhanisami, not the seller, and the documents provided do not match the official records.",
+   "findings": [
+    {
+     "code": "SELLER_NOT_OWNER",
+     "severity": "blocker",
+     "ta": "தற்போதைய பட்டாதாரர் \"பழனிசாமி\"; விற்பவர் \"வேலு\" அல்ல",
+     "en": "Current patta holder is \"பழனிசாமி\", not the seller \"வேலு\"",
+     "source": "வருவாய்த்துறை",
+     "refs": [
+      "patta",
+      "registry"
+     ]
+    },
+    {
+     "code": "DOC_RECORD_MISMATCH",
+     "severity": "blocker",
+     "ta": "பட்டா-இல் பட்டாதாரர் பழனிசாமி; அரசுப் பதிவில் பழனிசாமி — நகல் அசலுடன் பொருந்தவில்லை",
+     "en": "Patta shows patta holder பழனிசாமி, government record பழனிசாமி — the copy doesn't match the original",
+     "refs": [
+      "patta",
+      "registry"
+     ]
+    }
+   ],
+   "suggestion": "reject",
+   "reasons": [
+    "The current patta holder is Pazhanisami, not the seller Velu (SELLER_NOT_OWNER)",
+    "The patta copy does not match the original government record (DOC_RECORD_MISMATCH)"
+   ],
+   "draftReply": "Your application for transferring the patta name has been reviewed. It appears there is a mismatch in the ownership records, as the current patta holder is recorded as Pazhanisami instead of the seller Velu. Please submit the correct documents or contact the relevant office for further clarification.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  }
+ },
+ "PT-2026-0207": {
+  "ta": {
+   "summary": "ராமசாமி என்பவர் தனது நிலத்தை லட்சுமிக்கு மாற்றுவதற்கான பட்டா பெயர் மாற்றம் கோருகிறார். விண்ணப்பத்தை பரிசீலிக்க நிலுவையில் உள்ள ஆவணங்கள் குறித்து அதிகாரி கவனிக்க வேண்டும்.",
+   "findings": [
+    {
+     "code": "DOC_MISSING_EC",
+     "severity": "blocker",
+     "ta": "வில்லங்கச் சான்றிதழ் இணைக்கப்படவில்லை",
+     "en": "Encumbrance certificate is not attached"
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "என்கிம்பர்ன்ஸ் சான்றிதழ் இணைக்கப்படவில்லை (DOC_MISSING_EC)"
+   ],
+   "draftReply": "உங்கள் விண்ணப்பத்தை பரிசீலித்தோம். நிலுவை ஆவணமான என்கிம்பர்ன்ஸ் சான்றிதழை சமர்ப்பித்தால், உங்கள் கோரிக்கையை மேலும் பரிசீலிக்க முடியும்.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  },
+  "en": {
+   "summary": "The applicant is requesting a patta name transfer for survey number 88/2A in Meenjoor. The application must be returned because the required encumbrance certificate is missing.",
+   "findings": [
+    {
+     "code": "DOC_MISSING_EC",
+     "severity": "blocker",
+     "ta": "வில்லங்கச் சான்றிதழ் இணைக்கப்படவில்லை",
+     "en": "Encumbrance certificate is not attached"
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "Encumbrance certificate is not attached (DOC_MISSING_EC)."
+   ],
+   "draftReply": "Dear applicant, your patta name transfer application is being examined. Please submit the required encumbrance certificate so that we can proceed with your request.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  }
+ },
+ "PT-2026-0208": {
+  "ta": {
+   "summary": "சின்னசாமி என்பவரிடமிருந்து கவிதாவுக்கு பட்டா பெயர் மாற்ற விண்ணப்பம் வந்துள்ளது. விண்ணப்பத்தில் நிலத்தின் அளவு 120 சென்ட் என குறிப்பிடப்பட்டுள்ளது, ஆனால் அரசாங்க பதிவேடுகளில் 80 சென்ட் மட்டுமே உள்ளது.",
+   "findings": [
+    {
+     "code": "APP_EXTENT_MISMATCH",
+     "severity": "blocker",
+     "ta": "விண்ணப்பத்தில் பரப்பு 120 சென்ட்; பட்டா-இலும் அரசுப் பதிவிலும் 80 சென்ட்",
+     "en": "Application says extent 120 cents; patta and government record say 80 cents",
+     "refs": [
+      "application",
+      "patta",
+      "registry"
+     ]
+    },
+    {
+     "code": "DOC_RECORD_MISMATCH",
+     "severity": "blocker",
+     "ta": "கிரையப் பத்திரம்-இல் பரப்பு 120 சென்ட்; அரசுப் பதிவில் 80 சென்ட் — நகல் அசலுடன் பொருந்தவில்லை",
+     "en": "Sale deed shows extent 120 cents, government record 80 cents — the copy doesn't match the original",
+     "refs": [
+      "sale_deed",
+      "registry"
+     ]
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "விண்ணப்பத்தில் 120 சென்ட் நிலம் உள்ளது (APP_EXTENT_MISMATCH)",
+    "ஆவணப் பதிவுக்கும் அரசாங்கப் பதிவேட்டிற்கும் இடையே அளவு வேறுபாடு உள்ளது (DOC_RECORD_MISMATCH)"
+   ],
+   "draftReply": "வணக்கம், உங்கள் பட்டா பெயர் மாற்ற விண்ணப்பம் சரிபார்க்கப்பட்டது. விண்ணப்பத்தில் குறிப்பிடப்பட்டுள்ள நிலத்தின் அளவிற்கும் அரசாங்க பதிவுகளில் உள்ள அளவிற்கும் இடையே வேறுபாடு உள்ளது. எனவே, சரியான அளவைக் குறிப்பிட்டு திருத்தப்பட்ட ஆவணங்களை சமர்ப்பிக்கவும்.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  },
+  "en": {
+   "summary": "The application requests a patta name transfer from சின்னசாமி to கவிதா for survey number 142/1. The officer must resolve a discrepancy in the land extent between the application, sale deed, and government records before proceeding.",
+   "findings": [
+    {
+     "code": "APP_EXTENT_MISMATCH",
+     "severity": "blocker",
+     "ta": "விண்ணப்பத்தில் பரப்பு 120 சென்ட்; பட்டா-இலும் அரசுப் பதிவிலும் 80 சென்ட்",
+     "en": "Application says extent 120 cents; patta and government record say 80 cents",
+     "refs": [
+      "application",
+      "patta",
+      "registry"
+     ]
+    },
+    {
+     "code": "DOC_RECORD_MISMATCH",
+     "severity": "blocker",
+     "ta": "கிரையப் பத்திரம்-இல் பரப்பு 120 சென்ட்; அரசுப் பதிவில் 80 சென்ட் — நகல் அசலுடன் பொருந்தவில்லை",
+     "en": "Sale deed shows extent 120 cents, government record 80 cents — the copy doesn't match the original",
+     "refs": [
+      "sale_deed",
+      "registry"
+     ]
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "The application states an extent of 120 cents, but the patta and government record show 80 cents (APP_EXTENT_MISMATCH).",
+    "The sale deed shows an extent of 120 cents, which does not match the government record of 80 cents (DOC_RECORD_MISMATCH)."
+   ],
+   "draftReply": "Thank you for your application. We noticed a mismatch in the land extent mentioned in your documents compared to our government records. Please provide a corrected document or an official clarification to proceed with your request.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  }
+ },
+ "GR-2026-0301": {
+  "ta": {
+   "summary": "சுந்தரி என்பவர் காந்தி தெரு, பொன்னேரியில் குடிநீர் விநியோகம் இல்லாதது குறித்து புகார் அளித்துள்ளார். இந்த பிரச்சனைக்கு ஏற்கனவே கடந்த மாதம் புகார் அளிக்கப்பட்டுள்ளது. அதிகாரி உடனடியாக நடவடிக்கை எடுக்க வேண்டியது அவசியம்.",
+   "findings": [
+    {
+     "code": "URGENT",
+     "severity": "warning",
+     "ta": "அவசரப் புகார் – உடனடி நடவடிக்கை தேவை",
+     "en": "Urgent grievance – immediate action needed"
+    },
+    {
+     "code": "REPEAT_COMPLAINT",
+     "severity": "warning",
+     "ta": "இதே இடத்தில் இது 2-வது புகார்",
+     "en": "This is complaint #2 for the same location"
+    }
+   ],
+   "suggestion": "approve",
+   "reasons": [
+    "குடிநீர் விநியோகம் இல்லாததால் இது அவசரமான பிரச்சனை (URGENT)",
+    "இதே இடத்திற்கு ஏற்கனவே கடந்த மாதம் புகார் அளிக்கப்பட்டுள்ளது (REPEAT_COMPLAINT)"
+   ],
+   "draftReply": "வணக்கம், காந்தி தெருவில் குடிநீர் விநியோகம் இல்லாதது குறித்த உங்கள் புகாரை பெற்றுள்ளோம். இது குறித்து உடனடியாக நடவடிக்கை எடுக்க சம்பந்தப்பட்ட துறைக்கு அனுப்பி வைத்துள்ளோம். நன்றி.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  },
+  "en": {
+   "summary": "Sundari A from Gandhi Street, Ponneri, has filed a grievance regarding the absence of drinking water for the past three days, noting that children have fallen ill and that a previous complaint was filed last month.",
+   "findings": [
+    {
+     "code": "URGENT",
+     "severity": "warning",
+     "ta": "அவசரப் புகார் – உடனடி நடவடிக்கை தேவை",
+     "en": "Urgent grievance – immediate action needed"
+    },
+    {
+     "code": "REPEAT_COMPLAINT",
+     "severity": "warning",
+     "ta": "இதே இடத்தில் இது 2-வது புகார்",
+     "en": "This is complaint #2 for the same location"
+    }
+   ],
+   "suggestion": "approve",
+   "reasons": [
+    "The grievance is urgent as children have developed a fever (URGENT)",
+    "This is a repeat complaint for the same location filed last month (REPEAT_COMPLAINT)"
+   ],
+   "draftReply": "Dear Madam, your complaint regarding the drinking water supply issue at Gandhi Street, Ponneri, has been noted. We are forwarding this to the Water Supply Board for immediate action and will update you shortly.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  }
+ },
+ "GR-2026-0302": {
+  "ta": {
+   "summary": "பொன்னேரி காந்தி தெருவில் மூன்று நாட்களாக குடிநீர் விநியோகம் தடைபட்டுள்ளதாக இளங்கோ தெ என்பவர் புகார் அளித்துள்ளார். இந்த புகாரை மற்ற நிலுவையில் உள்ள புகாட்டுடன் (POSSIBLE_DUPLICATE) சேர்த்து உடனடியாக சரிசெய்ய வேண்டும்.",
+   "findings": [
+    {
+     "code": "URGENT",
+     "severity": "warning",
+     "ta": "அவசரப் புகார் – உடனடி நடவடிக்கை தேவை",
+     "en": "Urgent grievance – immediate action needed"
+    },
+    {
+     "code": "POSSIBLE_DUPLICATE",
+     "severity": "warning",
+     "ta": "இதே இடம் / பிரச்சனைக்கு மற்றொரு புகார் நிலுவையில் உள்ளது (GR-2026-0301) — இணைத்துக் கையாளலாம்",
+     "en": "Another pending complaint about the same place and problem (GR-2026-0301) — handle together",
+     "refs": [
+      "GR-2026-0301"
+     ]
+    }
+   ],
+   "suggestion": "approve",
+   "reasons": [
+    "இந்த புகார் அவசரமானது மற்றும் உடனடி நடவடிக்கை தேவை (URGENT)",
+    "இதே பிரச்சனைக்கான மற்றொரு நிலுவை புகார் ஏற்கனவே உள்ளது, எனவே இதையும் சேர்த்து கையாள வேண்டும் (POSSIBLE_DUPLICATE)"
+   ],
+   "draftReply": "அன்புடையீர், காந்தி தெருவில் குடிநீர் விநியோகம் தடைபட்டுள்ள உங்கள் புகாரை நாங்கள் பெற்றுள்ளோம். இது உடனடியாக சரிசெய்யப்பட்டு, சம்பந்தப்பட்ட துறைக்கு அனுப்பி வைக்கப்பட்டுள்ளது.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  },
+  "en": {
+   "summary": "Ilango The from Ponneri has filed a grievance that water has not been supplied in Gandhi Street for three days. The officer must know that the grievance is urgent and a duplicate complaint exists.",
+   "findings": [
+    {
+     "code": "URGENT",
+     "severity": "warning",
+     "ta": "அவசரப் புகார் – உடனடி நடவடிக்கை தேவை",
+     "en": "Urgent grievance – immediate action needed"
+    },
+    {
+     "code": "POSSIBLE_DUPLICATE",
+     "severity": "warning",
+     "ta": "இதே இடம் / பிரச்சனைக்கு மற்றொரு புகார் நிலுவையில் உள்ளது (GR-2026-0301) — இணைத்துக் கையாளலாம்",
+     "en": "Another pending complaint about the same place and problem (GR-2026-0301) — handle together",
+     "refs": [
+      "GR-2026-0301"
+     ]
+    }
+   ],
+   "suggestion": "approve",
+   "reasons": [
+    "Urgent grievance – immediate action needed (URGENT)",
+    "Another pending complaint about the same place and problem (GR-2026-0301) — handle together (POSSIBLE_DUPLICATE)"
+   ],
+   "draftReply": "Dear Sir/Madam, your request regarding the water supply issue in Gandhi Street, Ponneri, is being examined and forwarded to the Water Supply Board for urgent action.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  }
+ },
+ "GR-2026-0303": {
+  "ta": {
+   "summary": "மோகன் ரா என்பவர் பொன்னேரி வட்டாட்சியர் அலுவலகத்தில் உதவி கேட்டு ஒரு கடிதம் அனுப்பியுள்ளார். ஆனால், அந்த கடிதத்தில் அவர் என்ன உதவி வேண்டும் என்ற விவரம் தெளிவாக இல்லை.",
+   "findings": [
+    {
+     "code": "CATEGORY_UNKNOWN",
+     "severity": "warning",
+     "ta": "புகாரின் வகையை உறுதி செய்ய முடியவில்லை",
+     "en": "Could not determine grievance category"
+    },
+    {
+     "code": "LOCATION_MISSING",
+     "severity": "warning",
+     "ta": "இடம் தெளிவாக இல்லை",
+     "en": "Location is unclear"
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "புகார் விவரம் தெளிவாக இல்லை (CATEGORY_UNKNOWN)",
+    "இடம் தெளிவாக இல்லை (LOCATION_MISSING)"
+   ],
+   "draftReply": "ஐயா, உங்கள் கடிதம் எங்களுக்கு கிடைத்தது. நீங்கள் எந்த உதவிக்காக விண்ணப்பிக்கிறீர்கள் என்பதை தயவுசெய்து தெளிவாகக் கூறினால், அதற்கான நடவடிக்கையை எடுக்க வசதியாக இருக்கும்.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  },
+  "en": {
+   "summary": "Mohan Rao from Kummidipoondi has submitted a general grievance asking for help and requesting action. The application lacks a clear grievance category and location details, so the officer must know exactly what the citizen needs.",
+   "findings": [
+    {
+     "code": "CATEGORY_UNKNOWN",
+     "severity": "warning",
+     "ta": "புகாரின் வகையை உறுதி செய்ய முடியவில்லை",
+     "en": "Could not determine grievance category"
+    },
+    {
+     "code": "LOCATION_MISSING",
+     "severity": "warning",
+     "ta": "இடம் தெளிவாக இல்லை",
+     "en": "Location is unclear"
+    }
+   ],
+   "suggestion": "return",
+   "reasons": [
+    "The grievance category is unknown (CATEGORY_UNKNOWN).",
+    "The location details are missing (LOCATION_MISSING)."
+   ],
+   "draftReply": "Dear Mohan Rao, thank you for reaching out to us. We are currently examining your request and would like to know what specific help or action you need. Please provide more details so we can assist you further.",
+   "source": "llm",
+   "model": "sarvam-105b"
+  }
+ }
+}

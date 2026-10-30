@@ -1,0 +1,835 @@
+{
+ "PT-2026-0201": {
+  "application_form": {
+   "docType": "application_form",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "applicationNo": "PT-2026-0201",
+    "seller": "முருகேசன்",
+    "buyer": "சரண்யா",
+    "surveyNo": "112/3",
+    "extentCents": 48,
+    "deedNo": "3812/2026",
+    "taxReceiptNo": "PNR/2026/08812"
+   },
+   "minConfidence": 0.9985,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:23:56.565Z"
+  },
+  "sale_deed": {
+   "docType": "sale_deed",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "deedNo": "3812/2026",
+    "seller": "முருகேசன்",
+    "buyer": "சரண்யா",
+    "surveyNo": "112/3",
+    "extentCents": 48,
+    "registrationDate": "2026-09-18",
+    "saleAmount": 1440000
+   },
+   "minConfidence": 0.9996,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:24:09.291Z"
+  },
+  "patta": {
+   "docType": "patta",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "pattaNo": "1427",
+    "owner": "முருகேசன்",
+    "surveyNo": "112/3",
+    "extentAres": 19.42,
+    "village": "பொன்னேரி"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:24:22.196Z"
+  },
+  "ec": {
+   "docType": "ec",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "surveyNo": "112/3",
+    "periodTo": "2026-10-25",
+    "entries": [
+     {
+      "date": "2026-09-18",
+      "nature": "sale",
+      "docNo": "3812/2026",
+      "parties": "முருகேசன் → சரண்யா",
+      "detail": "கிரையம்"
+     }
+    ]
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:24:35.179Z"
+  },
+  "tax_receipt": {
+   "docType": "tax_receipt",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "receiptNo": "PNR/2026/08812",
+    "surveyNo": "112/3",
+    "payer": "முருகேசன்",
+    "paidUpTo": "2026-27",
+    "paidAmount": 1180,
+    "dues": 0
+   },
+   "minConfidence": 0.9964,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:24:51.749Z"
+  },
+  "id_proof": {
+   "docType": "id_proof",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "name": "சரண்யா",
+    "idNumber": "XXXX XXXX 4821",
+    "dob": "1991-04-12"
+   },
+   "minConfidence": 0.9999,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:25:04.625Z"
+  }
+ },
+ "PT-2026-0202": {
+  "application_form": {
+   "docType": "application_form",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "applicationNo": "PT-2026-0202",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 80,
+    "deedNo": "4518/2026",
+    "taxReceiptNo": "PNR/2026/07734"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:25:15.469Z"
+  },
+  "sale_deed": {
+   "docType": "sale_deed",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "deedNo": "4518/2026",
+    "seller": "கோவிந்தன்",
+    "buyer": "மீனா",
+    "surveyNo": "201/7",
+    "extentCents": 62,
+    "registrationDate": "2026-09-12",
+    "saleAmount": 1860000
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:25:30.635Z"
+  },
+  "patta": {
+   "docType": "patta",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "pattaNo": "1689",
+    "owner": "கோவிந்தன்",
+    "surveyNo": "201/7",
+    "extentAres": 25.09,
+    "village": "பொன்னேரி"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:25:41.023Z"
+  },
+  "ec": {
+   "docType": "ec",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "surveyNo": "201/7",
+    "periodTo": "2026-10-12",
+    "entries": [
+     {
+      "date": "2026-09-12",
+      "nature": "sale",
+      "docNo": "4518/2026",
+      "parties": "கோவிந்தன் → மீனா",
+      "detail": "கிரையம்"
+     }
+    ]
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:25:54.018Z"
+  },
+  "tax_receipt": {
+   "docType": "tax_receipt",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "receiptNo": "PNR/2026/07734",
+    "surveyNo": "201/7",
+    "payer": "கோவிந்தன்",
+    "paidUpTo": "2026-27",
+    "paidAmount": 1520,
+    "dues": 0
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:26:09.679Z"
+  },
+  "id_proof": {
+   "docType": "id_proof",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "name": "மீனா",
+    "idNumber": "XXXX XXXX 7310",
+    "dob": "1988-11-02"
+   },
+   "minConfidence": 0.9999,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:39:13.741Z"
+  }
+ },
+ "PT-2026-0203": {
+  "application_form": {
+   "docType": "application_form",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "applicationNo": "PT-2026-0203",
+    "seller": "அண்ணாமலை",
+    "buyer": "ராஜேஸ்வரி",
+    "surveyNo": "45/1",
+    "extentCents": 75,
+    "deedNo": "2977/2026",
+    "taxReceiptNo": "GMP/2026/03321"
+   },
+   "minConfidence": 0.9699,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:37:28.117Z"
+  },
+  "ec": {
+   "docType": "ec",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "surveyNo": "45/1",
+    "periodTo": "2026-10-21",
+    "entries": [
+     {
+      "date": "2026-08-29",
+      "nature": "sale",
+      "docNo": "2977/2026",
+      "parties": "அண்ணாமலை → ராஜலட்சுமி",
+      "detail": "கிரையம்"
+     }
+    ]
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:38:33.141Z"
+  },
+  "sale_deed": {
+   "docType": "sale_deed",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "deedNo": "2977/2026",
+    "seller": "அண்ணாமலை",
+    "buyer": "ராஜலட்சுமி",
+    "surveyNo": "45/1",
+    "extentCents": 75,
+    "registrationDate": "2026-08-29",
+    "saleAmount": 2100000
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:39:26.760Z"
+  },
+  "patta": {
+   "docType": "patta",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "pattaNo": "0954",
+    "owner": "அண்ணாமலை",
+    "surveyNo": "45/1",
+    "extentAres": 30.35,
+    "village": "கும்மிடிப்பூண்டி"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:39:40.887Z"
+  },
+  "tax_receipt": {
+   "docType": "tax_receipt",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "receiptNo": "GMP/2026/03321",
+    "surveyNo": "45/1",
+    "payer": "அண்ணாமலை",
+    "paidUpTo": "2026-27",
+    "paidAmount": 1650,
+    "dues": 0
+   },
+   "minConfidence": 0.9983,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:39:52.797Z"
+  },
+  "id_proof": {
+   "docType": "id_proof",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "name": "ராஜலட்சுமி",
+    "idNumber": "XXXX XXXX 2264",
+    "dob": "1985-07-21"
+   },
+   "minConfidence": 0.9999,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:40:05.815Z"
+  }
+ },
+ "PT-2026-0204": {
+  "application_form": {
+   "docType": "application_form",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "applicationNo": "PT-2026-0204",
+    "seller": "சுப்பிரமணி",
+    "buyer": "தனபால்",
+    "surveyNo": "310/5",
+    "extentCents": 40,
+    "deedNo": "3305/2026",
+    "taxReceiptNo": "MJR/2024/11870"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:40:18.797Z"
+  },
+  "sale_deed": {
+   "docType": "sale_deed",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "deedNo": "3305/2026",
+    "seller": "சுப்பிரமணி",
+    "buyer": "தனபால்",
+    "surveyNo": "310/5",
+    "extentCents": 40,
+    "registrationDate": "2026-09-04",
+    "saleAmount": 1200000
+   },
+   "minConfidence": 0.9999,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:40:31.751Z"
+  },
+  "patta": {
+   "docType": "patta",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "pattaNo": "2210",
+    "owner": "சுப்பிரமணி",
+    "surveyNo": "310/5",
+    "extentAres": 16.19,
+    "village": "மீஞ்சூர்"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:40:44.762Z"
+  },
+  "ec": {
+   "docType": "ec",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "surveyNo": "310/5",
+    "periodTo": "2026-10-08",
+    "entries": [
+     {
+      "date": "2026-09-04",
+      "nature": "sale",
+      "docNo": "3305/2026",
+      "parties": "சுப்பிரமணி → தனபால்",
+      "detail": "கிரையம்"
+     }
+    ]
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:40:57.861Z"
+  },
+  "tax_receipt": {
+   "docType": "tax_receipt",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "receiptNo": "MJR/2024/11870",
+    "surveyNo": "310/5",
+    "payer": "சுப்பிரமணி",
+    "paidUpTo": "2024-25",
+    "paidAmount": 1150,
+    "dues": 3450
+   },
+   "minConfidence": 0.9998,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:41:10.947Z"
+  },
+  "id_proof": {
+   "docType": "id_proof",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "name": "தனபால்",
+    "idNumber": "XXXX XXXX 5590",
+    "dob": "1979-02-15"
+   },
+   "minConfidence": 0.9977,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:41:23.717Z"
+  }
+ },
+ "PT-2026-0205": {
+  "application_form": {
+   "docType": "application_form",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "applicationNo": "PT-2026-0205",
+    "seller": "அப்துல் ரஹீம்",
+    "buyer": "பாத்திமா",
+    "surveyNo": "17/9",
+    "extentCents": 25,
+    "deedNo": "4102/2026",
+    "taxReceiptNo": "MJR/2026/02219"
+   },
+   "minConfidence": 0.9999,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:41:36.799Z"
+  },
+  "sale_deed": {
+   "docType": "sale_deed",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "deedNo": "4102/2026",
+    "seller": "அப்துல் ரஹீம்",
+    "buyer": "பாத்திமா",
+    "surveyNo": "17/9",
+    "extentCents": 25,
+    "registrationDate": "2026-09-09",
+    "saleAmount": 980000
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:41:49.754Z"
+  },
+  "patta": {
+   "docType": "patta",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "pattaNo": "0377",
+    "owner": "அப்துல் ரஹீம்",
+    "surveyNo": "17/9",
+    "extentAres": 10.12,
+    "village": "மீஞ்சூர்"
+   },
+   "minConfidence": 0.9999,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:42:02.860Z"
+  },
+  "ec": {
+   "docType": "ec",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "surveyNo": "17/9",
+    "periodTo": "2026-10-16",
+    "entries": [
+     {
+      "date": "2024-03-11",
+      "nature": "mortgage",
+      "docNo": "1188/2024",
+      "parties": "அப்துல் ரஹீம் → இந்தியன் வங்கி, மீஞ்சூர்",
+      "detail": "அடமானம் ₹4,50,000"
+     },
+     {
+      "date": "2026-09-09",
+      "nature": "sale",
+      "docNo": "4102/2026",
+      "parties": "அப்துல் ரஹீம் → பாத்திமா",
+      "detail": "கிரையம்"
+     }
+    ]
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:42:16.892Z"
+  },
+  "tax_receipt": {
+   "docType": "tax_receipt",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "receiptNo": "MJR/2026/02219",
+    "surveyNo": "17/9",
+    "payer": "அப்துல் ரஹீம்",
+    "paidUpTo": "2026-27",
+    "paidAmount": 640,
+    "dues": 0
+   },
+   "minConfidence": 0.9998,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:42:28.759Z"
+  },
+  "id_proof": {
+   "docType": "id_proof",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "name": "பாத்திமா",
+    "idNumber": "XXXX XXXX 9043",
+    "dob": "1993-09-30"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:42:41.742Z"
+  }
+ },
+ "PT-2026-0206": {
+  "application_form": {
+   "docType": "application_form",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "applicationNo": "PT-2026-0206",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "deedNo": "2654/2026",
+    "taxReceiptNo": "GMP/2026/04410"
+   },
+   "minConfidence": 0.9999,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:42:54.805Z"
+  },
+  "sale_deed": {
+   "docType": "sale_deed",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "deedNo": "2654/2026",
+    "seller": "வேலு",
+    "buyer": "ராஜேஷ்",
+    "surveyNo": "66/3",
+    "extentCents": 60,
+    "registrationDate": "2026-08-14",
+    "saleAmount": 1650000
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:43:07.753Z"
+  },
+  "patta": {
+   "docType": "patta",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "pattaNo": "1102",
+    "owner": "பழனிசாமி",
+    "surveyNo": "66/3",
+    "extentAres": 24.28,
+    "village": "கும்மிடிப்பூண்டி"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:43:20.987Z"
+  },
+  "ec": {
+   "docType": "ec",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "surveyNo": "66/3",
+    "periodTo": "2026-10-03",
+    "entries": [
+     {
+      "date": "2026-08-14",
+      "nature": "sale",
+      "docNo": "2654/2026",
+      "parties": "வேலு → ராஜேஷ்",
+      "detail": "கிரையம்"
+     }
+    ]
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:43:33.985Z"
+  },
+  "tax_receipt": {
+   "docType": "tax_receipt",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "receiptNo": "GMP/2026/04410",
+    "surveyNo": "66/3",
+    "payer": "வேலு",
+    "paidUpTo": "2026-27",
+    "paidAmount": 1400,
+    "dues": 0
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:43:46.845Z"
+  },
+  "id_proof": {
+   "docType": "id_proof",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "name": "ராஜேஷ்",
+    "idNumber": "XXXX XXXX 3378",
+    "dob": "1990-01-08"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:43:59.781Z"
+  }
+ },
+ "PT-2026-0207": {
+  "application_form": {
+   "docType": "application_form",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "applicationNo": "PT-2026-0207",
+    "seller": "ராமசாமி",
+    "buyer": "லட்சுமி",
+    "surveyNo": "88/2A",
+    "extentCents": 44,
+    "deedNo": "3990/2026",
+    "taxReceiptNo": "MJR/2026/05561"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:44:12.821Z"
+  },
+  "sale_deed": {
+   "docType": "sale_deed",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "deedNo": "3990/2026",
+    "seller": "ராமசாமி",
+    "buyer": "லட்சுமி",
+    "surveyNo": "88/2A",
+    "extentCents": 44,
+    "registrationDate": "2026-09-07",
+    "saleAmount": 1320000
+   },
+   "minConfidence": 0.9999,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:44:25.848Z"
+  },
+  "patta": {
+   "docType": "patta",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "pattaNo": "2675",
+    "owner": "ராமசாமி",
+    "surveyNo": "88/2A",
+    "extentAres": 17.81,
+    "village": "மீஞ்சூர்"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:44:38.848Z"
+  },
+  "tax_receipt": {
+   "docType": "tax_receipt",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "receiptNo": "MJR/2026/05561",
+    "surveyNo": "88/2A",
+    "payer": "ராமசாமி",
+    "paidUpTo": "2026-27",
+    "paidAmount": 1090,
+    "dues": 0
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:44:51.793Z"
+  },
+  "id_proof": {
+   "docType": "id_proof",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "name": "லட்சுமி",
+    "idNumber": "XXXX XXXX 6152",
+    "dob": "1983-05-19"
+   },
+   "minConfidence": 0.9981,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:45:04.851Z"
+  }
+ },
+ "PT-2026-0208": {
+  "application_form": {
+   "docType": "application_form",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "applicationNo": "PT-2026-0208",
+    "seller": "சின்னசாமி",
+    "buyer": "கவிதா",
+    "surveyNo": "142/1",
+    "extentCents": 120,
+    "deedNo": "3527/2026",
+    "taxReceiptNo": "PNR/2026/09120"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:45:18.225Z"
+  },
+  "sale_deed": {
+   "docType": "sale_deed",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "deedNo": "3527/2026",
+    "seller": "சின்னசாமி",
+    "buyer": "கவிதா",
+    "surveyNo": "142/1",
+    "extentCents": 120,
+    "registrationDate": "2026-09-01",
+    "saleAmount": 2400000
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:45:30.880Z"
+  },
+  "patta": {
+   "docType": "patta",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "pattaNo": "1873",
+    "owner": "சின்னசாமி",
+    "surveyNo": "142/1",
+    "extentAres": 32.37,
+    "village": "பொன்னேரி"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:45:43.855Z"
+  },
+  "ec": {
+   "docType": "ec",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "surveyNo": "142/1",
+    "periodTo": "2026-09-29",
+    "entries": [
+     {
+      "date": "2026-09-01",
+      "nature": "sale",
+      "docNo": "3527/2026",
+      "parties": "சின்னசாமி → கவிதா",
+      "detail": "கிரையம்"
+     }
+    ]
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:45:56.849Z"
+  },
+  "tax_receipt": {
+   "docType": "tax_receipt",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "receiptNo": "PNR/2026/09120",
+    "surveyNo": "142/1",
+    "payer": "சின்னசாமி",
+    "paidUpTo": "2026-27",
+    "paidAmount": 1980,
+    "dues": 0
+   },
+   "minConfidence": 0.9999,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:46:09.909Z"
+  },
+  "id_proof": {
+   "docType": "id_proof",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": {
+    "name": "கவிதா",
+    "idNumber": "XXXX XXXX 1187",
+    "dob": "1987-12-03"
+   },
+   "minConfidence": 1,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T08:46:23.017Z"
+  }
+ },
+ "GR-2026-0301": {
+  "petition": {
+   "docType": "petition",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": null,
+   "minConfidence": null,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T09:51:43.559Z",
+   "text": "அனுப்புநர்: சுந்தரி அ, பொன்னேரி\nபெறுநர்: வட்டாட்சியர் அவர்கள், பொன்னேரி\nநாள்: 28-10-2026\nஐயா, எங்கள் காந்தி தெருவில் கடந்த மூன்று நாட்களாக குடிநீர்\nவரவில்லை. குழந்தைகளுக்கு காய்ச்சல் வந்துள்ளது. இதே பிரச்சனைக்கு\nகடந்த மாதமும் புகார் கொடுத்தோம். உடனடியாக நடவடிக்கை எடுக்க\nவேண்டுகிறோம்.\nஇடம்: காந்தி தெரு, பொன்னேரி\nஇப்படிக்கு\nசுந்தரி",
+   "textEn": "Sender: Sundari A, Ponneri\nRecipient: Circle Officer, Ponneri\nDate: 28-10-2026\nSir, in our Gandhi Street, for the past three days,\ndrinking water has not come. The children have caught a fever. For the same problem,\nWe filed a complaint last month as well. We request immediate action. Location: Gandhi Street, Ponneri.\nThank you.\nSundari"
+  }
+ },
+ "GR-2026-0302": {
+  "petition": {
+   "docType": "petition",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": null,
+   "minConfidence": null,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T09:51:56.590Z",
+   "text": "அனுப்புநர்: இளங்கோ தெ, பொன்னேரி\nபெறுநர்: வட்டாட்சியர் அவர்கள், பொன்னேரி\nநாள்: 29-10-2026\nகாந்தி தெருவில் மூன்று நாட்களாக குழாயில் தண்ணீர் வரவில்லை. தெரு மக்கள்\nஅனைவரும் சிரமப்படுகிறோம். குடிநீர் வழங்கலை சரிசெய்யுமாறு\nகேட்டுக்கொள்கிறோம்.\nஇடம்: காந்தி தெரு, பொன்னேரி\nஇப்படிக்கு,\nஇளங்கோ தெ",
+   "textEn": "Sender: Ilango The, Ponneri\nRecipient: Circle Officer, Ponneri\nDate: 29-10-2026\nFor three days, water has not been coming in the pipe in Gandhi Street. Street people.\nEveryone is struggling. We request that the water supply be fixed. Location: Gandhi Street, Ponneri.\nThus,\nIlango The"
+  }
+ },
+ "GR-2026-0303": {
+  "petition": {
+   "docType": "petition",
+   "classifyConfidence": 1,
+   "reviewRequired": false,
+   "values": null,
+   "minConfidence": null,
+   "engine": "sarvam-vision",
+   "readAt": "2026-10-30T09:52:09.531Z",
+   "text": "அனுப்புநர்: மோகன் ரா, கும்மிடிப்பூண்டி\nபெறுநர்: வட்டாட்சியர் அவர்கள், பொன்னேரி\nநாள்: 26-10-2026\nஐயா, எனக்கு உதவி வேண்டும். தயவுசெய்து நடவடிக்கை எடுக்கவும்.\nஇப்படிக்கு,\nமோகன் ரா",
+   "textEn": "Sender: Mohan Rao, Kummidipoondi.\nRecipient: Circle Officer, Ponneri.\nDate: 26-10-2026.\nSir, I need help. Please take action. Yours faithfully,\nMohan Rao"
+  }
+ }
+}

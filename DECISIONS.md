@@ -78,12 +78,11 @@ before the paid extraction. Extract over Parse → LLM even though the latter ma
 price and ~2 s faster: Extract returns per-field source locations, one call instead of two, and no
 prompt to maintain. It's a judgement call I'd revisit at volume, and the harness makes that a re-run.
 
-**Store the reading, not the file.** Only extracted values, document type and confidence are saved
-(`documents.reading`). Less personal data held, no blob storage needed on Vercel; the officer still has
-the original paper.
+**Store the reading with the document.** v1 kept only extracted values; v2 keeps the file too (see
+Version 2), because an officer must be able to open the paper the AI read.
 
-**Seeded readings come from real runs.** `eval/export-readings.ts` turns cached Sarvam results into
-`seed-readings.json`, so a fresh install shows the three-way check without spending credits.
+**Seeded readings come from real runs.** `scripts/precompute-readings.ts` caches every Sarvam result and
+writes `src/db/fixtures/readings.json`, so a fresh install shows real readings without spending credits.
 
 What the eval found and what changed:
 - **Script mismatch is the real failure mode.** Tamil writes k/g, t/d, p/b with one letter each, so
@@ -118,16 +117,60 @@ Own tiny dictionary + cookie locale instead of next-intl URL routing: two locale
 moving parts in a 6-hour build. Typed keys (`MessageKey`) catch missing strings at compile time.
 Cost: no pluralisation/ICU. Revisit if a third language is added.
 
+## Version 2: real documents, intake, one screen
+Feedback on v1: a case said "5 documents attached" but nothing could be opened; the AI only ran when a
+case was opened; the UI looked like a school project. What changed and why:
+
+- **One case per problem type, every document real.** `src/db/cases.ts` is the single source: it drives
+  the rendered documents, the simulated department records and the seed, so the three can never
+  disagree by accident. Problems come from where they do in real life — what the citizen typed (0202,
+  0203), what a document reveals (0204 tax, 0205 mortgage, 0206 owner), a missing document (0207), or a
+  doctored copy (0208).
+- **Fact-by-source comparison** (`caseCheck.ts`) replaced separate registry and deed checks. Each fact
+  is compared across the application, every document and the government record, with the record as
+  reference. One table for the officer instead of overlapping finding lists, and the distinction that
+  matters: *application differs* = typing error, *document differs* = suspicious copy.
+- **Work at intake, not on click.** Reading (`npm run precompute:read`) and review (`precompute:review`)
+  run once and are stored (fixtures → seed). Opening a case is instant and costs nothing; "Re-check",
+  "Read again" and "Add document" run the same code live.
+- **Petitions:** OCR (Parse) → strip the demo footer → Sarvam Translate. Grievance category, urgency and
+  duplicates are computed from the text read from the petition, not from typed data.
+- **Duplicates are directional:** only an earlier complaint is "the original"; otherwise both would flag
+  each other on re-check.
+- **Never claim what wasn't checked:** an unread document is "not read yet", never "low confidence"; the
+  queue never says "no issues" without a review; petition text is shown only if actually read.
+- **Sarvam latency:** Doc AI jobs went from ~5 s to several minutes under load (status "running" with a
+  10-minute budget). Intake waits up to 10 minutes, keeps 8 documents in flight (submissions still paced
+  under ~10/min), and — when the citizen labelled the attachment — runs Classify and Extract in parallel,
+  discarding the extraction if Classify disagrees.
+- **Uploads are stored in the database row** (bytea, ≤ 4 MB): no extra blob store for a demo; seeded
+  files stay static. Production would use object storage with virus scanning.
+
+What end-to-end testing of v2 changed:
+- **An unrelated extra paper never sends a file back.** A ration card added to a complete case first
+  flipped the suggestion to "return" — making the citizen travel for nothing. It is still flagged
+  ("can be set aside"), but `DOC_UNRELATED` no longer drives the suggestion.
+- **Findings name only the sources that actually agree.** On the doctored-copy case the message said
+  "documents and record say 80" while the deed copy said 120; it now says "patta and record".
+- **The model re-spelt a name** (முருகேசன் → முருகன்) in one live re-check. The prompt now says to copy
+  names, numbers and extents exactly; regenerated reviews were checked against the records.
+  Not solvable by prompt alone at scale — a post-check that every name in the summary appears in the
+  facts would be the next step.
+- **Finding codes stay in the stored review** (so reasons can be traced to checks) but are hidden on screen.
+- **English mode had Tamil leaking** from what was read off the EC; the English line is now rebuilt from
+  the structured parts (amount, document number, date).
+
 ## UI
-Tailwind, no component library: fewer dependencies, full control over large-type, high-contrast design
-for officers with low digital familiarity. Auto-runs AI analysis when a file opens (fewer clicks).
-Sticky decision bar, three big buttons. Severity uses icon + text + colour.
+Inbox split view (queue left, case right), chosen over a step-by-step portal layout after comparing two
+mockups, then made deliberately minimal: system font stack with Noto Sans Tamil, white surfaces, one
+blue accent, colour only for disagreement and urgency. The AI suggestion is labelled on the decision
+buttons, never pre-selected. Documents open in a viewer with "what was read" beside the image, so every
+value can be checked by eye. Phones: the queue is the home screen, a case is full screen.
 
 ## Auth
-Seeded users, bcrypt, signed httpOnly JWT cookie (jose). Demo-grade by design; the brief needs test
-logins, and a full IdP would not add signal here.
+One seeded account (`tahsildar`, supervisor: desk and audit). bcrypt, signed httpOnly JWT cookie (jose).
+Demo-grade by design.
 
 ## Not done (time budget)
-Reading EC / tax receipts (same pipeline, new schema), Tamil↔English translation of grievances via
-Sarvam Translate (tested, not wired in), real department APIs, notification to citizen, bulk actions,
-e2e browser tests, accessibility audit with a screen reader.
+Real department APIs, notification to the citizen, bulk actions, e2e browser tests, screen-reader audit,
+officer-editable draft replies, object storage for uploads.

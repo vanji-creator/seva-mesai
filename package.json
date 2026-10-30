@@ -12,7 +12,11 @@
     "seed": "npm run db:push && tsx src/db/seed.ts",
     "typecheck": "tsc --noEmit",
     "eval:render": "tsx eval/render.ts",
-    "eval": "SARVAM_SUBMIT_GAP_MS=0 tsx --env-file=.env.local eval/run.ts"
+    "eval": "SARVAM_SUBMIT_GAP_MS=0 tsx --env-file=.env.local eval/run.ts",
+    "render:cases": "tsx scripts/render-cases.ts",
+    "precompute:read": "SARVAM_JOB_TIMEOUT_MS=600000 tsx --env-file=.env.local scripts/precompute-readings.ts",
+    "precompute:review": "tsx --env-file=.env.local scripts/precompute-analyses.ts",
+    "intake": "npm run precompute:read && npm run precompute:review"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.13",

@@ -3,11 +3,11 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // PGlite ships WASM + native fs access; keep it out of the bundle (local dev only).
   serverExternalPackages: ["@electric-sql/pglite"],
-  // The Evals page reads eval/results.json at runtime; make sure it ships with the serverless function.
-  // Sample deeds let reviewers try the reader without their own files.
+  // Files read with fs at runtime must ship with the serverless functions:
+  // eval results for the Evals page; case documents for "read again" and the demo sample uploads.
   outputFileTracingIncludes: {
     "/evals": ["./eval/results.json"],
-    "/applications/[id]": ["./eval/docs/**/*"],
+    "/applications/[id]": ["./public/case-docs/**/*"],
   },
   experimental: { serverActions: { bodySizeLimit: "5mb" } },
 };

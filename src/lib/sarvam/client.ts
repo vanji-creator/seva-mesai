@@ -57,7 +57,11 @@ export async function submitDocJob(kind: DocJobKind, file: DocFile, fields: Reco
   return (JSON.parse(body) as { job_id: string }).job_id;
 }
 
-export async function waitForJob(id: string, timeoutMs = 120_000, everyMs = 2500): Promise<JobStatus> {
+// Jobs usually finish in ~5–15 s, but Sarvam's queue was seen taking several minutes under load
+// (status stays "running" with a 10-minute budget). Batch intake waits longer than an officer's click.
+const JOB_TIMEOUT_MS = Number(process.env.SARVAM_JOB_TIMEOUT_MS ?? 50_000);
+
+export async function waitForJob(id: string, timeoutMs = JOB_TIMEOUT_MS, everyMs = 2500): Promise<JobStatus> {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
     const res = await fetch(`${DOC}/${id}/status`, { headers: headers() });

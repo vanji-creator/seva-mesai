@@ -30,3 +30,7 @@ export async function getT() {
 export function formatDateTime(d: Date | string, locale: Locale): string {
   return new Date(d).toLocaleString(locale === "ta" ? "ta-IN" : "en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" });
 }
+
+export function formatDate(d: Date | string, locale: Locale): string {
+  return new Date(d).toLocaleDateString(locale === "ta" ? "ta-IN" : "en-IN", { timeZone: "Asia/Kolkata", day: "numeric", month: "short", year: "numeric" });
+}
